@@ -1,0 +1,5 @@
+javascript:function loadAnts(){switch(void 0===window.antsLoading&&(void 0===window.antss?window.antsLoading=0:window.antsLoading=4),protocol="http:",void 0!==window.location.protocol&&(protocol=window.location.protocol),window.antsLoading){case 0:case 1:case 2:if(void 0!==window.antss)break;document.getElementsByTagName("head")[0].appendChild(document.createElement("script")).setAttribute("src",protocol+["//www.cs.huji.ac.il/~irush/scripts/jquery-1.6.1.min.js","//www.cs.huji.ac.il/~irush/scripts/jquery.highlight-3.js","//www.cs.huji.ac.il/~irush/scripts/ants.js"][antsLoading]);break;case 3:$("body").highlight("a"),$("body").highlight("e"),$("body").highlight("i"),$("body").highlight("o"),$("body").highlight("u"),$("body").highlight("׳\x90"),$("body").highlight("׳”"),$("body").highlight("׳•"),$("body").highlight("׳™"),new Ants({forage:!0});break;default:antss.length>0&&new Ant(antss[0]);return}window.antsLoading++,setTimeout("loadAnts()",100)}setTimeout("loadAnts()",100);
+
+// Adds ants to your webpage.Sometimes it doesn't work, Just execute it again.
+//  The website's policy settings might break it.
+
