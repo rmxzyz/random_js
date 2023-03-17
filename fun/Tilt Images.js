@@ -1,0 +1,1 @@
+(function(){['', '-ms-', '-webkit-', '-o-', '-moz-'].map(function(prefix){Array.prototype.slice.call(document.querySelectorAll('img')).map(function(el){el.style[prefix + 'transform'] = 'rotate('+(Math.floor(Math.random() * 6.5) - 0.9) +'deg)';});});}())
