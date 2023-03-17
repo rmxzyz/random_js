@@ -2,6 +2,7 @@
 
 Bookmarklets that affect the color of things.
 
+----------------------------------------------------
 Invert light
 
 ```javascript
