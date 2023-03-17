@@ -1,0 +1,1 @@
+javascript:(function () %7B     var script =  document.createElement(%27script%27);    script.src="//cdn.jsdelivr.net/npm/eruda";     document.body.appendChild(script);    script.onload = function () %7B         eruda.init()     %7D %7D)();
