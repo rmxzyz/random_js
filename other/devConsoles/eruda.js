@@ -1,0 +1,1 @@
+javascript:!function(){var e=e=>eruda.initDesktop();if(window.eruda)e();else{var a=document.createElement("script");a.src="https://cdn.jsdelivr.net/gh/BinBashBanana/erudesktop@master/dist/eruda.js",a.onload=e,a.onerror=e=>alert("Failed to load script"),document.body.appendChild(a)}}();
