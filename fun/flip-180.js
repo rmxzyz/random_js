@@ -1,4 +1,1 @@
-	['', '-ms-', '-webkit-', '-o-', '-moz-'].map(function(prefix){
-			document.body.style[prefix + 'transition'] = prefix + 'transform 3s';
-			document.body.style[prefix + 'transform'] = 'rotate(180deg)';
-		});
+javascript:["","-ms-","-webkit-","-o-","-moz-"].map(function(t){document.body.style[t+"transition"]=t+"transform 3s",document.body.style[t+"transform"]="rotate(180deg)"});
