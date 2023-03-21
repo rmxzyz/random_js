@@ -1,0 +1,1 @@
+javascript:var num=prompt("Flood Amount "); done = false; x = window.location.href; for (var i=1; i<=num; i++) {history.pushState(0, 0, i==num?x:i.toString()); if(i==num){done=true}}if(done===true){alert("Flooded "+window.location.href+" now appears in your history "+num+(num==1?" time.":" Times. "))}
