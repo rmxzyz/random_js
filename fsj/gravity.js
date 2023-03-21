@@ -1799,15 +1799,16 @@ setTimeout(function(){
 				var els = document.getElementsByTagName('*');
 				var elsLen = els.length
 
-				for (i = 0, j = 0; i < elsLen; i++) {
-
-					var classes = els[i].className.split(' ');
+				for (i = 0, j = 0; i < elsLen; i++) { var classes;
+                                        if(els[i].className) {
+					 classes = els[i].className.split(' ');
 					for (k = 0; k < classes.length; k++)
 						if ( classes[k] == searchClass )
 							classElements[j++] = els[i];
 				}
 
 				return classElements;
+								    }
 			}
 
 			function getElementProperties( element ) {
