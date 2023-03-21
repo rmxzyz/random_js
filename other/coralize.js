@@ -1,0 +1,1 @@
+javascript:(function(){Qr=prompt('What URL do you want to Coralize?',location.href);if(Qr){ if(Qr.replace('http://','').indexOf('/')==-1)Qr=Qr+'/';location.href=Qr.replace(/^http\:\/\/([^\/\@]+)\/(?:)/,'http://'+'$1'.replace('\:','.')+'.nyud.net:8090/');}})()
