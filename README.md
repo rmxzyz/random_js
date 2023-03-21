@@ -13,6 +13,7 @@ Bookmarklets don't work on all websites. Some may have policies, or just don't w
 
 A bookmarklet is like a bookmark for those websites, but it contains javascript that can be run on the current webpage. They only have one line. if you want to turn javascript into one line, use a javascript compresser then add javascript: infront of the js that was compressed.
 
-
 javascript:alert("Hello, world!")
+
+
 
