@@ -1,0 +1,166 @@
+canvas#WCcanvas {
+     position: absolute;
+     top: 0;
+     left: 0;
+     z-index: 1000;
+}
+
+
+#XRAYHUD {
+     position: fixed;
+     top:100px;
+     left:100px;
+     z-index:1101;
+     border: 1px rgb(0,0,0) solid;
+     padding: 0em 0em 0em;
+     font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+     background-color: rgb(48,53,60);
+     font-size: 8pt;
+     -webkit-box-shadow: 1px 1px 2px #777777;
+     -moz-box-shadow: 0px 0px 2px #777777;
+     box-shadow: 0px 0px 5px #777777;
+     color: #ffffff;
+/*     visibility: hidden;
+*/     cursor: move;
+     width: 42em;
+     background-image: url('images/titlebar.png');
+     background-repeat: repeat-x;
+     line-height: 0em;
+     -webkit-border-top-left-radius: 8px;
+     border-top-left-radius: 8px;
+     -webkit-border-top-right-radius: 8px;
+     border-top-right-radius: 8px;
+     opacity: 0.9; 
+}
+
+
+/*this zeros style that the style seet of the page visited may apply*/
+
+
+#XRAYHUD * {
+     text-align: left;
+     color: white;
+     background-color: transparent;
+     list-style-image: none;
+     font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+     font-size: 1em;
+     line-height: 1.4 
+}
+
+
+#HUDHierarchy {
+     border-bottom: 1px #74777d solid;
+     padding-bottom: .5em 
+}
+
+
+#XRAYHUD p {
+     padding: 0 .5em;
+     margin: 0; 
+}
+
+
+#XRAYHUD .XRAYtitlebar {
+     padding: 0;
+     text-shadow: 1px 1px 1px #bfbfbf;
+     text-align: center;
+     line-height: 0em;
+     margin-bottom: 1em;
+     margin-top: 8px}
+
+
+.XRAYclosebox {
+    margin: -6px 0;
+     padding: 0 0 0 12px;
+     float: right;
+     height: 14px;
+     width: 8px;
+     background-image: url('images/closebox.png');
+     background-repeat: no-repeat;
+     cursor: pointer;}
+
+
+#XRAYHUD p+ul {
+     padding-top: .5em; 
+}
+
+#XRAYHUD ul {
+     padding: 0 .5em;
+     margin: 0 0 .5em 0;
+     }
+
+#XRAYHUD .group ul li {
+     list-style-type: none;
+     list-style-image: none;
+     background-image: none}
+
+#XRAYHUD>.elementInfo {
+     clear: both;
+     margin: .5em 0;
+     border-bottom: 1px #74777c solid;
+     padding-bottom: .5em;
+     font-size: 1.1em;
+     text-align: left; 
+}
+
+
+#XRAYHUD>.elementInfo p {
+     padding-right: 1em; 
+}
+
+
+#XRAYHUD>.group {
+     float: left;
+     margin-top: .5em;
+     margin-left: auto;
+     margin-right: auto}
+
+
+#XRAYHUD #XRAYabout {
+     clear: both;
+     margin: 0;
+     padding-right: .5em;
+     border-top: 1px #74777b solid;
+     padding-top: .5em;
+     font-size: .9em;
+     background-color: rgb(41,45,50);
+     }
+
+#XRAYHUD #XRAYabout p {     text-align: right;
+     padding:6px 0}
+
+
+#XRAYHUD a:link, #XRAYHUD a:visited, #XRAYHUD a:hover,#XRAYHUD a:active {
+     color: white;
+     text-decoration: none; 
+     cursor: pointer;
+     border: none;
+     background-image: none;
+     }
+
+#XRAYHUD .XRAYdetailedLink {
+/*     background-image: url('images/about.png');
+     background-repeat: no-repeat;
+     background-position: right;*/
+     padding-right: 6px;
+}
+
+/*do the labels*/
+
+
+#XRAYWidthLabel, #XRAYHeightLabel, #XRAYTopLeftLabel {
+     position: absolute;
+     z-index: 1002;
+     background-color: #e16820;
+     border: 2px #ffffff solid;
+     color: #ffffff;
+     font-size: 9pt;
+     padding: .2em;
+     -webkit-box-shadow: 1px 1px 3px #5f5f5f;
+     -moz-box-shadow: 1px 1px 3px #5f5f5f;
+     box-shadow: 1px 1px 3px #5f5f5f;
+     visibility: hidden;
+     font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+     -webkit-border-radius: 5px;
+     border-radius: 5px; 
+}
