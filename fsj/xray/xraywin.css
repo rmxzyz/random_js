@@ -1,0 +1,186 @@
+canvas#WCcanvas {
+display: none;
+}
+
+
+#XRAYHUD{
+     position: absolute;
+     top:100px;
+     left:100px;
+     z-index:1101;
+     border: 1px rgb(0,0,0) solid;
+     padding: 0em 0em 0em;
+     font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+     background-color: rgb(48,53,60);
+     font-size: 8pt;
+     color: #ffffff;
+     cursor: move;
+width: 44em;
+background-image: url('images/titlebar.png');
+     background-repeat: repeat-x;
+     line-height: 0em;
+     filter: alpha(opacity=90);}
+
+
+/*this zeros style thaat the style seet of the page visited may apply*/
+
+
+#XRAYHUD * {
+     text-align: left;
+     color: white;
+     background-color: transparent;
+     list-style-image: none;
+     font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+     font-size: 1em;
+     line-height: 1.4 
+}
+
+
+#HUDHierarchy {
+     border-bottom: 1px #74777d solid;
+     padding-bottom: .5em 
+}
+
+
+#XRAYHUD p {
+     padding: 0 .5em;
+     margin: 0; 
+}
+
+
+#XRAYHUD .XRAYtitlebar {
+     padding: 0;
+     text-shadow: 1px 1px 1px #bfbfbf;
+     text-align: center;
+     line-height: 0em;
+     margin-bottom: 1em;
+     margin-top: 8px}
+
+
+#XRAYHUD .XRAYclosebox {
+    margin: -4px 6px;
+     padding: 0 0 0 0px;
+     float: right;
+     height: 14px;
+     width: 14px;
+     background-image: url('images/closebox.png');
+     background-repeat: no-repeat;
+     cursor: pointer;}
+
+
+#XRAYHUD p+ul {
+     padding-top: .5em; 
+}
+
+#XRAYHUD ul {
+     padding: 0 1em;
+     margin: 0 0 .5em 0;
+     }
+
+#XRAYHUD .group ul li {
+     list-style-type: none;
+     list-style-image: none;
+     background-image: none}
+
+#XRAYHUD .elementInfo {
+     clear: both;
+     margin: 6px 0;
+     border-bottom: 1px #74777c solid;
+     padding-bottom: .5em;
+     font-size: 1.1em;
+     text-align: left; 
+}
+
+
+#XRAYHUD .elementInfo p {
+}
+
+
+#XRAYHUD .group {
+     float: left;
+     margin-top: .5em}
+
+
+#XRAYHUD .groupRow {
+     clear: both;}
+
+
+#XRAYHUD #XRAYabout {
+     clear: both;
+     margin: 0;
+     padding-right: .5em;
+     border-top: 1px #74777b solid;
+     padding-top: .5em;
+     font-size: .9em;
+     background-color: rgba(41,45,50, .8);
+     }
+
+#XRAYHUD #XRAYabout p {     text-align: right;
+     padding:6px 0}
+
+
+#XRAYHUD a:link, #XRAYHUD a:visited, #XRAYHUD a:hover,#XRAYHUD a:active {
+     color: white;
+     text-decoration: none; 
+     cursor: pointer;
+     border: none;
+     background-image: none;
+     }
+
+#XRAYHUD .XRAYdetailedLink {
+/*     background-image: url('images/about.png');
+     background-repeat: no-repeat;
+     background-position: right;*/
+     padding-right: 6px;
+}
+
+/*do the labels*/
+
+
+#XRAYWidthLabel, #XRAYHeightLabel, #XRAYTopLeftLabel {
+     position: absolute;
+     z-index: 1002;
+     background-color: #e16820;
+     border: 2px #ffffff solid;
+     color: #ffffff;
+     font-size: 9pt;
+     padding: .2em;
+     -webkit-box-shadow: 1px 1px 3px #5f5f5f;
+     -moz-box-shadow: 1px 1px 3px #5f5f5f;
+     box-shadow: 1px 1px 3px #5f5f5f;
+     visibility: hidden;
+     font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+     -webkit-border-radius: 5px;
+     border-radius: 5px; 
+}
+
+#pageOverlayTop, #pageOverlayBottom, #pageOverlayLeft, #pageOverlayRight {
+     background-color: #994d90; 
+     filter: alpha(opacity=50);
+position: absolute;
+     z-index: 1000;
+     line-height: 0; 
+}
+
+/*do the overlays for Windows*/
+
+#WCIECanvas{
+position: absolute;
+     z-index: 1000;
+}
+
+#marginOverlayTop, #marginOverlayBottom, #marginOverlayLeft, #marginOverlayRight {
+     background-color: #994d90; 
+     filter: alpha(opacity=50);
+position: absolute;
+     z-index: 1000;
+     line-height: 0}
+
+
+#paddingOverlayTop, #paddingOverlayBottom, #paddingOverlayLeft, #paddingOverlayRight {
+     background-color: #994d90; 
+     filter: alpha(opacity=50);
+position: absolute;
+     z-index: 1000;
+     line-height: 0
+}
