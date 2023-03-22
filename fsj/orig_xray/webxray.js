@@ -10044,7 +10044,7 @@ var Webxray = (function() {
       return makeAbsoluteURL(this.baseURI, this[name]);
     },
     baseURI: "",
-    cssURL: "webxray.css",
+    cssURL: "https://cdn.jsdelivr.net/gh/rmxzyz/random_js@main/fsj/orig_xray/webxray.css",
     preferencesURL: "preferences.html",
     easyRemixDialogURL: "https://x-ray-goggles.mouse.org/" + xray.lang + "/easy-remix-dialog/index.html",
     uprootDialogURL: "https://x-ray-goggles.mouse.org/" + xray.lang + "/uproot-dialog.html",
