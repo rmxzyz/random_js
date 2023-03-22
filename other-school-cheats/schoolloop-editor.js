@@ -1,0 +1,1 @@
+javascript:(function(){ var code = document.createElement("script"); code.setAttribute("src","https://cdn.jsdelivr.net/gh/nathansche/schoolloop-editor@master/schoolloopEditor-1.0.js"); document.body.appendChild(code);
