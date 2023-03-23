@@ -1,4 +1,4 @@
-//import { MessageFormatter, pluralTypeHandler } from "../../thirdparty/cs/icu-message-formatter.es.min.js";
+import { MessageFormatter, pluralTypeHandler } from "../../thirdparty/cs/icu-message-formatter.es.min.js";
 
 // This library is shared between background and userscript.
 // Subclasses are responsible for implementing methods to load translations.
