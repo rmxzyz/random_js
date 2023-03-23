@@ -1,0 +1,6 @@
+javascript:{function e(){if(!document.getElementById("ponystyle")){let e=document.createElement("style");e.innerText="#pony.reverse{transform:scaleX(-1);animation:ponyreverse var(--speed) linear}#pony:not(.reverse){animation:pony var(--speed) linear}@keyframes pony{0%{right:-100px}100%{right:calc(100vw + 100px)}}@keyframes ponyreverse{0%{right:calc(100vw + 100px)}100%{right:-100px}}",e.id="ponystyle",(document.head||document.body||document.documentElement).appendChild(e)}let n=new Image;n.src=t(),document.body.appendChild(n),n.id="pony",n.setAttribute("style",`
+    position: fixed;
+    bottom: 0;
+  `),.5>Math.random()&&n.classList.add("reverse");let r=5*Math.random()+10;n.style.setProperty("--speed",`${r}s`);let o=!0,s=!1;setTimeout(()=>{o=!1,n.remove()},1e3*r);let a=()=>{if(s)return;s=!0;let e=100*Math.random()+100,t=3*e;n.style.transition=`bottom ${t}ms ease-out`,n.style.bottom=`${e}px`,setTimeout(()=>{n.style.transition=`bottom ${t}ms ease-in`,n.style.bottom="0px",setTimeout(()=>s=!1,t)},t)};(async()=>{for(;o;)await new Promise(e=>setTimeout(e,5e3*Math.random())),a()})()}function t(){let e=["dl","lw","tj","dg","rs","ni","bm","af","cc","ib","km","jl","mk","mt","rr","cs","tl","kr","mu","zf","nk",];return`https://ssl.gstatic.com/chat/babble/ee/${e[Math.floor(Math.random()*e.length)]}.gif`}e()}
+
+//adds a pony to webpage.
