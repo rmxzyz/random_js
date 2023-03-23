@@ -1,4 +1,4 @@
-import * as _textColor from "./text-color.js";
+//import * as _textColor from "./text-color.js";
 const {
     parseHex,
     convertToHex,
