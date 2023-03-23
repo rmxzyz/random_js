@@ -7,6 +7,7 @@ if(vid) {
   function setPlaybackRate(rate) {vid.playbackRate = rate}
   function setMuted(bool) {vid.muted = bool}
   function setVolume(vol) {vid.volume = vol}
+  function togglePlay() {video.click()}
   
 
   
