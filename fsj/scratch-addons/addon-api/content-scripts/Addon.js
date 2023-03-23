@@ -1,7 +1,7 @@
-//import Addon from "../common/Addon.js";
-//import Tab from "./Tab.js";
-//import Auth from "./Auth.js";
-//import Account from "./Account.js";
+import Addon from "../common/Addon.js";
+import Tab from "./Tab.js";
+import Auth from "./Auth.js";
+import Account from "./Account.js";
 
 /**
  * An addon that loads as a userscript.
