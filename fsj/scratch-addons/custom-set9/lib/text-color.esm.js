@@ -1,4 +1,4 @@
-//import * as _textColor from "./text-color.js";
+import * as _textColor from "./text-color.js";
 const {
     parseHex,
     convertToHex,
@@ -12,7 +12,7 @@ const {
     removeAlpha,
     makeHsv,
     recolorFilter,
-} = globalThis.__scratchAddonsTextColor;
+} = 'white'; //globalThis.__scratchAddonsTextColor
 export {
     parseHex,
     convertToHex,
