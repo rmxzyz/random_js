@@ -146,7 +146,8 @@ class CustomExtension {
                 auto_block('reporter', 'loadscript', 'Load script with link [a]'),
                 auto_block('reporter', 'lastKey', 'Last key pressed'),
 		auto_block('hat', 'whenBool', 'When [a]'),
-		auto_block('reporter', 'colourHex', 'Color [a]')
+		auto_block('reporter', 'colourHex', 'Color [a]'),
+		auto_block('command', 'setTurbo', 'Set turbo mode [a]'),
 	        '---',
 	      	
 	    	],
@@ -186,6 +187,20 @@ class CustomExtension {
         removetimer({a}) {
                 return console.timeEnd(a)
         }
+        setTurbo({a}) {
+		if(a == true) {
+			return vm.setTurboMode(a)
+		}
+		if(a == false) {
+			return vm.setTurboMode(a)
+		}
+		if( a.toLowerCase() == 'true' | a == true | a.toLowerCase() == 'yes' | a.toLowerCase() == 'on' ) {
+		    return vm.setTurboMode(true) }
+		else {
+			return vm.setTurboMode(false)
+		}
+
+	}
 	 whenBool({a}) {
       return a;
     }
