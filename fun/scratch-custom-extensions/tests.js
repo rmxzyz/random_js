@@ -99,14 +99,14 @@ const rotate = (a,v) => {
 
 const letter = i => String.fromCharCode(97+i)
 
-const auto_block = (blockType, opcode, text, args, t3) => ({ //text, ARGS, 
+const auto_block = (blockType, opcode, text, args) => ({ //text, ARGS, 
 	blockType,
 	opcode,
 	text,
 	arguments: Object.fromEntries(
 		new Array(text.split('[').length-1).fill().map((_,i)=> [
 			letter(i), {
-				type: (args && args[i]) || 'string', //number 
+				type: (args && args[i]) || "string", //number 
 				defaultValue: " "
 			}
 		])
@@ -125,25 +125,26 @@ class CustomExtension {
 	    	id: "custom",
 	    	name: "Custom Extension",
 	    	blocks: [
-	        auto_block('reporter', "Prompt", "Prompt [a]", 'string'),
-                auto_block('command', "Alert", "Alert [a]", 'string'),
-                auto_block('reporter', "Sqrt", "Square root [a]", 'number'),
-                auto_block('command', 'js', "Javascript [a]", 'string'),
-                auto_block('command', "href", "Redirect to [a]", 'string'),
-                auto_block('reporter', 'getlist', 'Get List [a]', 'string'),
-                auto_block('reporter', 'setlist', 'Set List [a] to [b]', 'string'), 
-                auto_block('reporter', 'exact', 'Is [a] exactly [b]?', 'string'),
-                auto_block('reporter', 'exponent', '[a] ^ [b]', 'number'),
-                auto_block('reporter', 'date', 'Current Date', 'string'),
+	        auto_block('reporter', "Prompt", "Prompt [a]"),
+                auto_block('command', "Alert", "Alert [a]"),
+		auto_block('reporter', "Confirm", "Confirm [a]"),
+                auto_block('reporter', "Sqrt", "Square root [a]"),
+                auto_block('command', 'jso', "Javascript [a]"),
+                auto_block('command', "href", "Redirect to [a]"),
+                auto_block('reporter', 'getlist', 'Get List [a]'),
+                auto_block('reporter', 'setlist', 'Set List [a] to [b]',), 
+                auto_block('reporter', 'exact', 'Is [a] exactly [b]?'),
+                auto_block('reporter', 'exponent', '[a] ^ [b]'),
+                auto_block('reporter', 'date', 'Current Date'),
                 auto_block('reporter', 'pi', 'π', 'number'),
-                auto_block('reporter', 'currentMillisecond', 'current millisecond', 'number'),
-                auto_block('reporter', 'letters', 'test [a] n [b] n [c]', 'string'),
-                auto_block('command', 'newtimer', 'New timer [a]', 'string'),
-                auto_block('command', 'logtimer', 'Log timer [a]', 'string'),
-                auto_block('command', 'removetimer', 'Remove timer [a]', 'string'),
-                auto_block('reporter', 'js', 'Javascript with output [a]', 'string'),
-                auto_block('reporter', 'loadscript', 'Load script with link [a]', 'string'),
-                auto_block('reporter', 'lastKey', 'Last key pressed', 'string'),
+                auto_block('reporter', 'currentMillisecond', 'current millisecond'),
+                auto_block('reporter', 'letters', 'test [a] n [b] n [c]'),
+                auto_block('command', 'newtimer', 'New timer [a]'),
+                auto_block('command', 'logtimer', 'Log timer [a]'),
+                auto_block('command', 'removetimer', 'Remove timer [a]'),
+                auto_block('reporter', 'js', 'Javascript with output [a]'),
+                auto_block('reporter', 'loadscript', 'Load script with link [a]'),
+                auto_block('reporter', 'lastKey', 'Last key pressed'),
 	        '---',
 	      	
 	    	],
@@ -171,7 +172,9 @@ class CustomExtension {
 
 
         }
-        
+        Confirm({a}) {
+		return confirm(a)
+	}
         logtimer({a}) {
                 return console.timeLog(a)
         }
@@ -194,6 +197,9 @@ class CustomExtension {
        }
        js({a}) {
                return eval(a)
+       }
+       jso({a}) {
+	       return eval(a)
        }
        href({a}) { 
                return document.location.href = 'https://'+a 
