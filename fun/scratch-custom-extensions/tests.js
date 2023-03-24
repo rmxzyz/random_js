@@ -123,7 +123,7 @@ class CustomExtension {
 	getInfo() {
 	    return {
 	    	id: "custom",
-	    	name: "Custom Extension",
+	    	name: "YMX-Blocks",
 	    	blocks: [
 	        auto_block('reporter', "Prompt", "Prompt [a]"),
                 auto_block('command', "Alert", "Alert [a]"),
@@ -145,6 +145,8 @@ class CustomExtension {
                 auto_block('reporter', 'js', 'Javascript with output [a]'),
                 auto_block('reporter', 'loadscript', 'Load script with link [a]'),
                 auto_block('reporter', 'lastKey', 'Last key pressed'),
+		auto_block('hat', 'whenBool', 'When [a]'),
+		auto_block('reporter', 'colourHex', 'Color [a]')
 	        '---',
 	      	
 	    	],
@@ -172,6 +174,9 @@ class CustomExtension {
 
 
         }
+	colourHex(a) {
+              return a;
+        }
         Confirm({a}) {
 		return confirm(a)
 	}
@@ -181,6 +186,10 @@ class CustomExtension {
         removetimer({a}) {
                 return console.timeEnd(a)
         }
+	 whenBool({a}) {
+      return a;
+    }
+
         
 
 	Prompt({a}) {
