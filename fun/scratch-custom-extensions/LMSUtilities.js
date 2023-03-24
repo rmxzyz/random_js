@@ -26,7 +26,23 @@ Scratch.BlockType.BOOLEAN = 'boolean'
 Scratch.BlockType.REPORTER = 'reporter'
 Scratch.TargetType = {}
 Scratch.TargetType.SPRITE = 'sprite'
+  function findReactComponent(element) {
+    let fiber = element[Object.keys(element).find(key => key.startsWith("__reactInternalInstance$"))];
+    if (fiber == null) return null;
 
+    const go = fiber => {
+        let parent = fiber.return;
+        while (typeof parent.type == "string") {
+            parent = parent.return;
+        }
+        return parent;
+    };
+    fiber = go(fiber);
+    while(fiber.stateNode == null) {
+        fiber = go(fiber);
+    }
+    return fiber.stateNode;
+}
 window.vm = findReactComponent(document.getElementsByClassName("stage-header_stage-size-row_14N65")[0]).props.vm;
 vm = window.vm
 var ex2 = (function(Scratch) {
@@ -344,14 +360,14 @@ var ex2 = (function(Scratch) {
             text: 'note [NOTE]',
             arguments: {
               NOTE: {
-                type: Scratch.ArgumentType.NOTE,
+                type: 'note', //NOTE
                 defaultValue: ''
               }
             }
           },
           {
             opcode: 'newlineCharacter',
-            blockType: Scratch.BlockType.REPORTER,
+            blockType: 'reporter',
             text: 'newline character',
             disableMonitor: true
           },
@@ -360,75 +376,75 @@ var ex2 = (function(Scratch) {
 
           {
             opcode: 'equalsExactly',
-            blockType: Scratch.BlockType.BOOLEAN,
+            blockType: 'boolean',
             text: '[ONE] === [TWO]',
             arguments: {
               ONE: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'apple'
               },
               TWO: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'banana'
               }
             }
           },
           {
             opcode: 'notEqualTo',
-            blockType: Scratch.BlockType.BOOLEAN,
+            blockType: 'boolean',
             text: '[INPUTA] ≠ [INPUTB]',
             arguments: {
               INPUTA: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'apple'
               },
               INPUTB: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'banana'
               }
             }
           },
           {
             opcode: 'moreThanEqual',
-            blockType: Scratch.BlockType.BOOLEAN,
+            blockType: 'boolean',
             text: '[INPUTA] ≥ [INPUTB]',
             arguments: {
               INPUTA: {
-                type: Scratch.ArgumentType.NUMBER,
+                type: 'number',
                 defaultValue: '16'
               },
               INPUTB: {
-                type: Scratch.ArgumentType.NUMBER,
+                type: 'number',
                 defaultValue: '25'
               }
             }
           },
           {
             opcode: 'lessThanEqual',
-            blockType: Scratch.BlockType.BOOLEAN,
+            blockType: 'boolean',
             text: '[INPUTA] ≤ [INPUTB]',
             arguments: {
               INPUTA: {
-                type: Scratch.ArgumentType.NUMBER,
+                type: 'number',
                 defaultValue: '16'
               },
               INPUTB: {
-                type: Scratch.ArgumentType.NUMBER,
+                type: 'number',
                 defaultValue: '25'
               }
             }
           },
           {
             opcode: 'stringCheckBoolean',
-            blockType: Scratch.BlockType.BOOLEAN,
+            blockType: 'boolean',
             text: '[INPUT] is [DROPDOWN]',
             arguments: {
               INPUT: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'apple'
               },
               DROPDOWN: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'text',
                 menu: 'stringCheckMenu'
               }
@@ -439,16 +455,16 @@ var ex2 = (function(Scratch) {
 
           {
             opcode: 'encodeToBlock',
-            blockType: Scratch.BlockType.REPORTER,
+            blockType: 'reporter',
             text: 'encode [STRING] to [DROPDOWN]',
             disableMonitor: true,
             arguments: {
               STRING: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: ''
               },
               DROPDOWN: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'base64',
                 menu: 'conversionMenu'
               }
@@ -456,16 +472,16 @@ var ex2 = (function(Scratch) {
           },
           {
             opcode: 'decodeFromBlock',
-            blockType: Scratch.BlockType.REPORTER,
+            blockType: 'string',
             text: 'decode [STRING] from [DROPDOWN]',
             disableMonitor: true,
             arguments: {
               STRING: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: ''
               },
               DROPDOWN: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'base64',
                 menu: 'conversionMenu'
               }
@@ -476,43 +492,43 @@ var ex2 = (function(Scratch) {
 
           {
             opcode: 'exponentBlock',
-            blockType: Scratch.BlockType.REPORTER,
+            blockType: 'reporter',
             text: '[INPUTA] ^ [INPUTB]',
             disableMonitor: true,
             arguments: {
               INPUTA: {
-                type: Scratch.ArgumentType.NUMBER,
+                type: 'number',
                 defaultValue: ''
               },
               INPUTB: {
-                type: Scratch.ArgumentType.NUMBER,
+                type: 'number',
                 defaultValue: ''
               }
             }
           },
           {
             opcode: 'rootBlock',
-            blockType: Scratch.BlockType.REPORTER,
+            blockType: 'reporter',
             text: '[INPUTA] √ [INPUTB]',
             arguments: {
               INPUTA: {
-                type: Scratch.ArgumentType.NUMBER,
+                type: 'number',
                 defaultValue: ''
               },
               INPUTB: {
-                type: Scratch.ArgumentType.NUMBER,
+                type: 'number',
                 defaultValue: ''
               }
             }
           },
           {
             opcode: 'normaliseValue',
-            blockType: Scratch.BlockType.REPORTER,
+            blockType: 'reporter',
             text: 'normalise [INPUT]',
             disableMonitor: true,
             arguments: {
               INPUT: {
-                type: Scratch.ArgumentType.NUMBER,
+                type: 'number',
                 defaultValue: '100'
               }
             }
@@ -522,17 +538,17 @@ var ex2 = (function(Scratch) {
 
           {
             opcode: 'greenFlag',
-            blockType: Scratch.BlockType.COMMAND,
-            text: 'green flag',
+            blockType: 'command',
+            text: 'Green flag',
           },
           {
             opcode: 'setUsername',
-            blockType: Scratch.BlockType.COMMAND,
-            text: 'set username to [INPUT]',
+            blockType: 'command',
+            text: 'Set username to [INPUT]',
             arguments: {
               INPUT: {
-                type: Scratch.ArgumentType.STRING,
-                defaultValue: 'LukeManiaStudios'
+                type: 'string',
+                defaultValue: 'ScratchCat'
               }
             }
           },
@@ -541,34 +557,34 @@ var ex2 = (function(Scratch) {
 
           {
             opcode: 'alertBlock',
-            blockType: Scratch.BlockType.COMMAND,
+            blockType: 'command',
             text: 'alert [STRING]',
             arguments: {
               STRING: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'A red spy is in the base!'
               }
             }
           },
           {
             opcode: 'inputPromptBlock',
-            blockType: Scratch.BlockType.REPORTER,
-            text: 'prompt [STRING]',
+            blockType: 'reporter',
+            text: 'Prompt [STRING]',
             disableMonitor: true,
             arguments: {
               STRING: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'The code is 1, 1, 1.. err... 1!'
               }
             }
           },
           {
             opcode: 'confirmationBlock',
-            blockType: Scratch.BlockType.BOOLEAN,
-            text: 'confirm [STRING]',
+            blockType: 'boolean',
+            text: 'Confirm [STRING]',
             arguments: {
               STRING: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'Are you the red spy?'
               }
             }
@@ -578,23 +594,23 @@ var ex2 = (function(Scratch) {
 
           {
             opcode: 'goToLink',
-            blockType: Scratch.BlockType.COMMAND,
+            blockType: 'command',
             text: 'open link [INPUT] in new tab',
             arguments: {
               INPUT: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: ''
               }
             }
           },
           {
             opcode: 'redirectToLink',
-            blockType: Scratch.BlockType.COMMAND,
-            text: 'redirect to link [INPUT]',
+            blockType: 'command',
+            text: 'Redirect to link [INPUT]',
             arguments: {
               INPUT: {
-                type: Scratch.ArgumentType.STRING,
-                defaultValue: ''
+                type: 'string',
+                defaultValue: 'scratch.mit.edu'
               }
             }
           },
@@ -603,31 +619,31 @@ var ex2 = (function(Scratch) {
 
           {
             opcode: 'setClipboard',
-            blockType: Scratch.BlockType.COMMAND,
-            text: 'set [STRING] to clipboard',
+            blockType: 'command',
+            text: 'Set Clipboard to [STRING]',
             arguments: {
               STRING: {
-                type: Scratch.ArgumentType.STRING,
-                defaultValue: 'apple',
+                type: 'string',
+                defaultValue: 'Scratch is awesome!',
               }
             }
           },
           {
             opcode: 'readClipboard',
-            blockType: Scratch.BlockType.REPORTER,
-            text: 'clipboard'
+            blockType: 'reporter',
+            text: 'Clipboard'
           },
 
           '---',
 
           {
             opcode: 'screenReporter',
-            blockType: Scratch.BlockType.REPORTER,
-            text: 'screen [DROPDOWN]',
+            blockType: 'reporter',
+            text: 'Screen [DROPDOWN]',
             disableMonitor: true,
             arguments: {
               DROPDOWN: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'width',
                 menu: 'screenReporterMenu'
               }
@@ -635,12 +651,12 @@ var ex2 = (function(Scratch) {
           },
           {
             opcode: 'windowReporter',
-            blockType: Scratch.BlockType.REPORTER,
-            text: 'window [DROPDOWN]',
+            blockType: 'reporter',
+            text: 'Window [DROPDOWN]',
             disableMonitor: true,
             arguments: {
               DROPDOWN: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'width',
                 menu: 'screenReporterMenu'
               }
@@ -648,21 +664,21 @@ var ex2 = (function(Scratch) {
           },
           {
             opcode: 'osBrowserDetails',
-            blockType: Scratch.BlockType.REPORTER,
+            blockType: 'reporter',
             text: '[DROPDOWN]',
             disableMonitor: true,
             arguments: {
               DROPDOWN: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'operating system',
                 menu: 'osBrowserMenu'
               }
             }
           },
           {
-            opcode: 'projectURL',
-            blockType: Scratch.BlockType.REPORTER,
-            text: 'project URL',
+            opcode: 'ProjectURL',
+            blockType: 'reporter',
+            text: 'Project URL',
             disableMonitor: true,
           },
 
@@ -670,78 +686,78 @@ var ex2 = (function(Scratch) {
 
           {
             opcode: 'consoleLog',
-            blockType: Scratch.BlockType.COMMAND,
-            text: 'console [DROPDOWN] [INPUT]',
+            blockType: 'command',
+            text: 'Console [DROPDOWN] [INPUT]',
             disableMonitor: true,
             arguments: {
               DROPDOWN: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'log',
                 menu: 'consoleLogMenu'
               },
               INPUT: {
-                type: Scratch.ArgumentType.STRING,
-                defaultValue: 'Apple'
+                type: 'string',
+                defaultValue: 'Hello, world!'
               }
             }
           },
           {
             opcode: 'clearConsole',
-            blockType: Scratch.BlockType.COMMAND,
-            text: 'clear console'
+            blockType: 'command',
+            text: 'Clear Console'
           },
 
           '---',
 
           {
             opcode: 'commentHat',
-            blockType: Scratch.BlockType.HAT,
+            blockType: 'hat',
             text: '// [STRING]',
             arguments: {
               STRING: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'comment',
               }
             }
           },
           {
             opcode: 'commentCommand',
-            blockType: Scratch.BlockType.COMMAND,
+            blockType: 'command',
             text: '// [STRING]',
             arguments: {
               STRING: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'comment',
               }
             }
           },
           {
             opcode: 'commentString',
-            blockType: Scratch.BlockType.REPORTER,
+            blockType: 'reporter',
             text: '// [INPUTA] [INPUTB]',
             disableMonitor: true,
             arguments: {
               INPUTA: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'comment'
               },
               INPUTB: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'input'
               }
             }
           },
           {
             opcode: 'commentBool',
-            blockType: Scratch.BlockType.BOOLEAN,
+            blockType: 'boolean',
             text: '// [INPUTA] [INPUTB]',
             arguments: {
               INPUTA: {
-                type: Scratch.ArgumentType.STRING,
+                type: 'string',
                 defaultValue: 'comment'
               },
               INPUTB: {
-                type: Scratch.ArgumentType.BOOLEAN,
+                type: 'boolean',
               }
             }
           }
@@ -1124,16 +1140,18 @@ var ex2 = (function(Scratch) {
       }
     }
 
-    projectURL() {
+    ProjectURL() {
       return window.location.href;
     }
 
     goToLink(args) {
-      Scratch.openWindow(args.INPUT);
+      //Scratch.openWindow(args.INPUT);
+      window.open('https://'+args.INPUT)
     }
 
     redirectToLink(args) {
-      Scratch.redirect(args.INPUT);
+      //Scratch.redirect(args.INPUT);
+      document.location.href = 'https://'+args.INPUT
     }
 
     greenFlag(args, util) {
@@ -1201,23 +1219,7 @@ var ex2 = (function(Scratch) {
     }
   }
   
-  function findReactComponent(element) {
-    let fiber = element[Object.keys(element).find(key => key.startsWith("__reactInternalInstance$"))];
-    if (fiber == null) return null;
 
-    const go = fiber => {
-        let parent = fiber.return;
-        while (typeof parent.type == "string") {
-            parent = parent.return;
-        }
-        return parent;
-    };
-    fiber = go(fiber);
-    while(fiber.stateNode == null) {
-        fiber = go(fiber);
-    }
-    return fiber.stateNode;
-}
  // Scratch.extensions.register(new LMSUtils());
     var extensionInstance = new LMSUtils(window.vm.extensionManager.runtime)
     var serviceName = window.vm.extensionManager._registerInternalExtension(extensionInstance)
