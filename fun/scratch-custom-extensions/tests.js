@@ -3,6 +3,7 @@ const from_s = s => (''+s).split(' ').map(s=> s.split(',').map(v=> isNaN(+v) ? 0
 const to_s = m => m.map(v=> v.join(',')).join(' ')
 
 const safe_index = (m,i) => m[m.length == 1 ? 0 : i]
+window.vm = findReactComponent(document.getElementsByClassName("stage-header_stage-size-row_14N65")[0]).props.vm;
 
 const component_wise = f => (a,b) => {
 	let [m,n] = a.length > b.length ? [a,b] : [b,a]
