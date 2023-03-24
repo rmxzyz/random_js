@@ -1,4 +1,4 @@
-//Test extensions.
+//Test, only in beta.
 const from_s = s => (''+s).split(' ').map(s=> s.split(',').map(v=> isNaN(+v) ? 0 : +v))
 const to_s = m => m.map(v=> v.join(',')).join(' ')
 
@@ -15,7 +15,42 @@ const add2D = component_wise2D((a,b)=>a+b)
 const sub2D = component_wise2D((a,b)=>a-b)
 const mul2D = component_wise2D((a,b)=>a*b)
 const div2D = component_wise2D((a,b)=>a/b)
+const STRETCH_X = Symbol('stretch.x');
+const STRETCH_Y = Symbol('stretch.y');
+ const implementStretchForTarget = (target, originalTarget) => {
+    if (STRETCH_X in target) {
+      // Target already has stretch. Don't implement again.
+      return;
+    }
 
+    target[STRETCH_X] = originalTarget ? originalTarget[STRETCH_X] : 100;
+    target[STRETCH_Y] = originalTarget ? originalTarget[STRETCH_Y] : 100;
+
+    const original = target._getRenderedDirectionAndScale;
+    target._getRenderedDirectionAndScale = function () {
+      const result = original.call(this);
+
+      result.scale[0] *= this[STRETCH_X] / 100;
+      result.scale[1] *= this[STRETCH_Y] / 100;
+
+      return result;
+    };
+  };
+  vm.runtime.targets.forEach((target) => implementStretchForTarget(target));
+  vm.runtime.on('targetWasCreated', (target, originalTarget) => implementStretchForTarget(target, originalTarget));
+  vm.runtime.on('PROJECT_LOADED', () => {
+    vm.runtime.targets.forEach((target) => implementStretchForTarget(target));
+  });
+ const forceUpdateDirectionAndScale = (target) => {
+    target.setDirection(target.direction);
+  };
+///----------------------------------------------
+
+var key = '';
+document.onkeypress = function (e) {
+e = e || window.event;
+  key = e.key;
+};
 const set = (i,m,v) => {
 	if(m.length == 1) {
 		if(m[0][i-1] != undefined)
@@ -63,14 +98,14 @@ const rotate = (a,v) => {
 
 const letter = i => String.fromCharCode(97+i)
 
-const auto_block = (blockType, opcode, text, args) => ({
+const auto_block = (blockType, opcode, text, args, t3) => ({ //text, ARGS, 
 	blockType,
 	opcode,
 	text,
 	arguments: Object.fromEntries(
 		new Array(text.split('[').length-1).fill().map((_,i)=> [
 			letter(i), {
-				type: (args && args[i]) || "string", //number 
+				type: (args && args[i]) || 'string', //number 
 				defaultValue: " "
 			}
 		])
@@ -89,19 +124,25 @@ class CustomExtension {
 	    	id: "custom",
 	    	name: "Custom Extension",
 	    	blocks: [
-	        auto_block('reporter', "Prompt", "Prompt [a]"),
-                auto_block('command', "Alert", "Alert [a]"),
-                auto_block('reporter', "Sqrt", "Square root [a]"),
-                auto_block('command', 'js', "Javascript [a]"),
-                auto_block('command', "href", "Redirect to [a]"),
-                auto_block('reporter', 'getlist', 'Get List [a]'),
-                auto_block('reporter', 'setlist', 'Set List [a] to [b]'), 
-                auto_block('reporter', 'exact', 'Is [a] exactly [b]?'),
-                auto_block('reporter', 'exponent', '[a] ^ [b]'),
-                auto_block('reporter', 'date', 'Current Date'),
-                auto_block('reporter', 'pi', 'π'),
-                auto_block('reporter', 'currentMillisecond', 'current millisecond'),
-                auto_block('reporter', 'letters', 'Word [STRING] Start [START] End [END]'),
+	        auto_block('reporter', "Prompt", "Prompt [a]", 'string'),
+                auto_block('command', "Alert", "Alert [a]", 'string'),
+                auto_block('reporter', "Sqrt", "Square root [a]", 'number'),
+                auto_block('command', 'js', "Javascript [a]", 'string'),
+                auto_block('command', "href", "Redirect to [a]", 'string'),
+                auto_block('reporter', 'getlist', 'Get List [a]', 'string'),
+                auto_block('reporter', 'setlist', 'Set List [a] to [b]', 'string'), 
+                auto_block('reporter', 'exact', 'Is [a] exactly [b]?', 'string'),
+                auto_block('reporter', 'exponent', '[a] ^ [b]', 'number'),
+                auto_block('reporter', 'date', 'Current Date', 'string'),
+                auto_block('reporter', 'pi', 'π', 'number'),
+                auto_block('reporter', 'currentMillisecond', 'current millisecond', 'number'),
+                auto_block('reporter', 'letters', 'test [a] n [b] n [c]', 'string'),
+                auto_block('command', 'newtimer', 'New timer [a]', 'string'),
+                auto_block('command', 'logtimer', 'Log timer [a]', 'string'),
+                auto_block('command', 'removetimer', 'Remove timer [a]', 'string'),
+                auto_block('reporter', 'js', 'Javascript with output [a]', 'string'),
+                auto_block('reporter', 'loadscript', 'Load script with link [a]', 'string'),
+                auto_block('reporter', 'lastKey', 'Last key pressed', 'string'),
 	        '---',
 	      	
 	    	],
@@ -115,6 +156,28 @@ class CustomExtension {
 		const vars = this.runtime.getTargetById(target_id).getAllVariableNamesInScopeByType('list')
 		return vars.length == 0 ? [" "] : vars
 	}
+        newtimer({a}) {
+                return console.time(a)
+        }
+        trace({a}) {
+               return console.trace(a)
+        }
+        lastKey() {
+                return key;
+        }
+        loadscript({a}) {
+               var el=document.createElement('script');el.type='text/javascript';el.src=a;el.onerror=function(){return 'error';};document.getElementsByTagName('body')[0].appendChild(el); return true
+
+
+        }
+        
+        logtimer({a}) {
+                return console.timeLog(a)
+        }
+        removetimer({a}) {
+                return console.timeEnd(a)
+        }
+        
 
 	Prompt({a}) {
 		return prompt(a)
@@ -122,8 +185,8 @@ class CustomExtension {
         Alert({a}) {
                 return alert(a)
         }
-  letters({STRING, START, END}) {
-      return STRING.slice(Math.max(1, START) - 1, Math.min(STRING.length, END));
+  letters({a, b, c}) {
+      return a.slice(Math.max(1, b) - 1, Math.min(a.length, c));
     }
         Sqrt({a}) {
                 return Math.sqrt(a)
