@@ -1,0 +1,1 @@
+javascript:fun:alert(btoa(encodeURIComponent(prompt('Input'))));
