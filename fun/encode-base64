@@ -1,1 +1,5 @@
+//encode
 javascript:fun:alert(btoa(encodeURIComponent(prompt('Input'))));
+
+//decode
+javascript:fun:alert(btoa(decodeURIComponent(prompt('Input'))));
