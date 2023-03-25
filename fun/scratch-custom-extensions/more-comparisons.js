@@ -18,8 +18,9 @@
     return fiber.stateNode;
 }
   window.vm = findReactComponent(document.getElementsByClassName("stage-header_stage-size-row_14N65")[0]).props.vm;
-
+if(!vm) {
   const vm = window.vm;
+}
   const quadrilateral = "data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSI3Ny4wMjc4MSIgaGVpZ2h0PSI1NC44MDY1NCIgdmlld0JveD0iMCwwLDc3LjAyNzgxLDU0LjgwNjU0Ij48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjAxLjUwNDMsLTE1Mi4yMTk3MykiPjxnIGRhdGEtcGFwZXItZGF0YT0ieyZxdW90O2lzUGFpbnRpbmdMYXllciZxdW90Ozp0cnVlfSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJub256ZXJvIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIHN0eWxlPSJtaXgtYmxlbmQtbW9kZTogbm9ybWFsIj48cGF0aCBkPSJNMjI4LjE3ODc4LDE1NS40NzM3NGw0Ni40MDEwMywxOS44ODYxNmwtMjIuNTM3NjQsMjkuMTY2MzZoLTQ2LjYyMTk5eiIvPjwvZz48L2c+PC9zdmc+";
   class MoreComparisons {
     getInfo() {
@@ -32,19 +33,19 @@
         blocks: [
           {
             opcode: 'true',
-            blockType: 'boolean',
+            blockType: 'Boolean',
             text: 'true',
             arguments: {}
           },
           {
             opcode: 'false',
-            blockType: 'boolean',
+            blockType: 'Boolean',
             text: 'false',
             arguments: {},
           },
           {
-            opcode: 'boolean',
-            blockType: 'boolean',
+            opcode: 'Boolean',
+            blockType: 'Boolean',
             text: '[a]',
             arguments: {
               a: {
@@ -59,14 +60,14 @@
             text: '[a]',
             arguments: {
               a: {
-                type: 'boolean',
+                type: 'Boolean',
               },
             }
           },
           '---',
           {
             opcode: 'equal',
-            blockType: 'boolean',
+            blockType: 'Boolean',
             text: '[a] ⩵ [b]',
             arguments: {
               a: {
