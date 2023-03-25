@@ -68,3 +68,6 @@ Extensions.AddByClass = function(Extension) {
   }
 }
 };
+Extensions.isLoaded = function(id) {
+ return window.vm.extensionManager.isExtensionLoaded(id)
+}
