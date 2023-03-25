@@ -148,6 +148,8 @@ class CustomExtension {
 		auto_block('hat', 'whenBool', 'When [a]'),
 		auto_block('reporter', 'colourHex', 'Color [a]'),
 		auto_block('command', 'setTurbo', 'Set turbo mode [a]'),
+		auto_block('reporter', 'turbo', 'Turbo Mode'),
+		auto_block('reporter', 'clones', 'Clones available?'),
 	        '---',
 	      	
 	    	],
@@ -156,7 +158,9 @@ class CustomExtension {
 	        }
 	    }
 	}
-
+        clones() {
+		return vm.runtime.clonesAvailable()
+	}
 	getVarMenu(target_id) {
 		const vars = this.runtime.getTargetById(target_id).getAllVariableNamesInScopeByType('list')
 		return vars.length == 0 ? [" "] : vars
@@ -260,6 +264,9 @@ class CustomExtension {
     date() {
          return new Date()
     }
+	turbo() {
+		return vm.runtime.turboMode
+	}
     setlist({ a, b }) {
       let parsed;
       try {
