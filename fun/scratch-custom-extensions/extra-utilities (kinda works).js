@@ -18,8 +18,9 @@
     return fiber.stateNode;
 }
   window.vm = findReactComponent(document.getElementsByClassName("stage-header_stage-size-row_14N65")[0]).props.vm;
-
+if(!vm) {
   const vm = window.vm;
+}
   class codegioExtension {
     getInfo () {
       return {
@@ -36,7 +37,7 @@
 
           {
             opcode: "strict_equality",
-            blockType: 'reporter',
+            blockType: 'Boolean',
             text: "Strict Equality | [one]=[two]",
             arguments: {
               one: {
@@ -52,13 +53,13 @@
 
           {
             opcode: "returntrue",
-            blockType: 'operator',
+            blockType: 'Boolean',
             text: "True"
           },
 
           {
             opcode: "returnfalse",
-            blockType: 'operator',
+            blockType: 'Boolean',
             text: "False"
           },
 
@@ -128,7 +129,7 @@
 
           {
             opcode: "confirm_ext",
-            blockType: 'reporter',
+            blockType: 'Boolean',
             text: "Confirm | Text: [one]",
             arguments: {
               one: {
