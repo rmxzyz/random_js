@@ -24,6 +24,11 @@
   // significant justification.
   if (!Scratch) {
     Scratch = {
+      //@ts-expect-error
+      TargetType: {
+        SPRITE: '_sprite_',
+        STAGE: '_stage_',
+      },
       // @ts-expect-error
       BlockType: {
         COMMAND: 'command',
@@ -61,16 +66,17 @@
   if (!Scratch.extensions.unsandboxed) {
     throw new Error('Pen+ must be run unsandboxed');
   }
-
+  if(!vm) {
   const vm = Scratch.vm;
+  }
   const runtime = vm.runtime;
   const canvas = runtime.renderer.canvas;
   const gl = runtime.renderer._gl;
   const STRETCH_X = Symbol('stretch.x');
   const STRETCH_Y = Symbol('stretch.y');
-if(!vm) {
-  const vm = Scratch.vm;
-}
+
+  var sprite = '_sprite_';
+
 
   /**
    * @param {VM.RenderedTarget} target
@@ -111,16 +117,16 @@ if(!vm) {
   class Stretch {
     getInfo() {
       return {
-        id: 'stretch',
+        id: 'stretchAddon',
         name: 'Stretch',
         color1: '#4287f5',
         color2: '#2b62ba',
         color3: '#204785',
         blocks: [
           {
-            opcode: 'setStretch',
+            opcode: 'setSpriteStretch',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'set stretch to x: [X] y: [Y]',
+            text: 'Set stretch to X: [X] Y: [Y]',
             arguments: {
               X: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -131,26 +137,26 @@ if(!vm) {
                 defaultValue: 100,
               },
             },
-            filter: [Scratch.TargetType.SPRITE],
+            filter: [sprite], //TargetType.SPRITE
           },
           {
             opcode: 'getX',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'x stretch',
-            filter: [Scratch.TargetType.SPRITE],
+            text: 'X Stretch',
+            filter: [sprite],
             disableMonitor: true,
           },
           {
             opcode: 'getY',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'y stretch',
-            filter: [Scratch.TargetType.SPRITE],
+            text: 'Y Stretch',
+            filter: [sprite],
             disableMonitor: true,
           },
         ],
       };
     }
-    setStretch(args, util) {
+    setSpriteStretch(args, util) {
       // TODO: move to Scratch.Cast when it's merged
       util.target[STRETCH_X] = +args.X || 0;
       util.target[STRETCH_Y] = +args.Y || 0;
