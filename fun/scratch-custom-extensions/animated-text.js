@@ -1,4 +1,26 @@
-(function(module, exports, __webpack_require__) {
+	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+(function(module, exports, __webpack_require__, Scratch) {
   'use strict';
  function findReactComponent(element) {
     let fiber = element[Object.keys(element).find(key => key.startsWith("__reactInternalInstance$"))];
@@ -343,4 +365,4 @@ var StageLayering = __webpack_require__(105);
   var extensionInstance = new Stretch(window.vm.extensionManager.runtime)
     var serviceName = window.vm.extensionManager._registerInternalExtension(extensionInstance)
     window.vm.extensionManager._loadedExtensions.set(extensionInstance.getInfo().id, serviceName)
-}(window.Scratch)
+}(1,2,__webpack_require__,window.Scratch))
