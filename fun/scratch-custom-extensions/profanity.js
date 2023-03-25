@@ -21,8 +21,9 @@
     return fiber.stateNode;
 }
   window.vm = findReactComponent(document.getElementsByClassName("stage-header_stage-size-row_14N65")[0]).props.vm;
-
+if(!vm) {
   const vm = window.vm;
+}
   // A forewarning for the reader:
   // This list contains some very bad naughty words, so we've encoded it in a way that
   // it requires a tiny bit of work to read. Most of these words will get you banned from
