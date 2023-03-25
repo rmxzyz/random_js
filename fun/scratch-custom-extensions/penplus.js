@@ -61,8 +61,9 @@
   if (!Scratch.extensions.unsandboxed) {
     throw new Error('Pen+ must be run unsandboxed');
   }
-
+if(!vm) {
   const vm = Scratch.vm;
+}
   const runtime = vm.runtime;
   const canvas = runtime.renderer.canvas;
   const gl = runtime.renderer._gl;
