@@ -1,6 +1,7 @@
+
 var Scratch = {}
 Scratch.ArgumentType = {}
-Scratch.ArgumentType.BOOLEAN = 'boolean'
+Scratch.ArgumentType.Boolean = 'Boolean'
 Scratch.ArgumentType.STRING = 'string'
 Scratch.ArgumentType.NUMBER = 'number'
 Scratch.BlockType = {}
@@ -8,13 +9,13 @@ Scratch.BlockType.HAT = 'hat'
 Scratch.BlockType.STACK = 'command'
 Scratch.BlockType.COMMAND = 'command'
 Scratch.BlockType.C = 'c'
-Scratch.BlockType.BOOLEAN = 'boolean'
+Scratch.BlockType.Boolean = 'Boolean'
 Scratch.BlockType.REPORTER = 'reporter'
 Scratch.TargetType = {}
 Scratch.TargetType.SPRITE = 'sprite'
 var Scratch = {}
 Scratch.ArgumentType = {}
-Scratch.ArgumentType.BOOLEAN = 'boolean'
+Scratch.ArgumentType.Boolean = 'Boolean'
 Scratch.ArgumentType.STRING = 'string'
 Scratch.ArgumentType.NUMBER = 'number'
 Scratch.BlockType = {}
@@ -22,10 +23,10 @@ Scratch.BlockType.HAT = 'hat'
 Scratch.BlockType.STACK = 'command'
 Scratch.BlockType.COMMAND = 'command'
 Scratch.BlockType.C = 'c'
-Scratch.BlockType.BOOLEAN = 'boolean'
+Scratch.BlockType.Boolean = 'Boolean'
 Scratch.BlockType.REPORTER = 'reporter'
 Scratch.TargetType = {}
-Scratch.TargetType.SPRITE = 'sprite'
+Scratch.TargetType.SPRITE = '_sprite_'
   function findReactComponent(element) {
     let fiber = element[Object.keys(element).find(key => key.startsWith("__reactInternalInstance$"))];
     if (fiber == null) return null;
@@ -73,7 +74,7 @@ var ex2 = (function(Scratch) {
             isEdgeActivated: true,
             arguments: {
               INPUT: {
-                type: Scratch.ArgumentType.BOOLEAN,
+                type: Scratch.ArgumentType.Boolean,
                 defaultValue: ''
               }
             }
@@ -95,7 +96,7 @@ var ex2 = (function(Scratch) {
 
           {
             opcode: 'trueFalseBoolean',
-            blockType: 'boolean', //BOOLEAN
+            blockType: 'Boolean', //Boolean
             text: '[TRUEFALSE]',
             arguments: {
               TRUEFALSE: {
@@ -107,13 +108,13 @@ var ex2 = (function(Scratch) {
           },
           {
             opcode: 'isClone',
-            blockType: 'boolean',
+            blockType: 'Boolean',
             text: 'is clone?',
             filter: [Scratch.TargetType.SPRITE]
           },
           {
             opcode: 'keyStringPressed',
-            blockType: 'boolean',
+            blockType: 'Boolean',
             text: 'key [KEY_OPTION] pressed?',
             arguments: {
               KEY_OPTION: {
@@ -124,18 +125,18 @@ var ex2 = (function(Scratch) {
           },
           {
             opcode: 'spriteClicked',
-            blockType: 'boolean',
+            blockType: 'Boolean',
             text: 'sprite clicked?',
             filter: ['sprite'] //Scratch.TargetType.SPRITE
           },
           {
             opcode: 'stringIf',
             blockType: 'reporter', //REPORTER
-            text: 'if [BOOLEAN] then [INPUTA]',
+            text: 'if [Boolean] then [INPUTA]',
             disableMonitor: true,
             arguments: {
-              BOOLEAN: {
-                type: 'boolean',
+              Boolean: {
+                type: 'Boolean',
                 defaultValue: ''
               },
               INPUTA: {
@@ -147,11 +148,11 @@ var ex2 = (function(Scratch) {
           {
             opcode: 'stringIfElse',
             blockType: 'reporter',
-            text: 'if [BOOLEAN] then [INPUTA] else [INPUTB]',
+            text: 'if [Boolean] then [INPUTA] else [INPUTB]',
             disableMonitor: true,
             arguments: {
-              BOOLEAN: {
-                type: 'boolean',
+              Boolean: {
+                type: 'Boolean',
                 defaultValue: ''
               },
               INPUTA: {
@@ -248,60 +249,60 @@ var ex2 = (function(Scratch) {
 
           {
             opcode: 'norBoolean',
-            blockType: 'boolean',
+            blockType: 'Boolean',
             text: '[INPUTA] nor [INPUTB]',
             arguments: {
               INPUTA: {
-                type: 'boolean',
+                type: 'Boolean',
                 defaultValue: ''
               },
               INPUTB: {
-                type: 'boolean',
+                type: 'Boolean',
                 defaultValue: ''
               }
             }
           },
           {
             opcode: 'xorBoolean',
-            blockType: 'boolean',
+            blockType: 'Boolean',
             text: '[INPUTA] xor [INPUTB]',
             arguments: {
               INPUTA: {
-                type: 'boolean',
+                type: 'Boolean',
                 defaultValue: ''
               },
               INPUTB: {
-                type: 'boolean',
+                type: 'Boolean',
                 defaultValue: ''
               }
             }
           },
           {
             opcode: 'xnorBoolean',
-            blockType: 'boolean',
+            blockType: 'Boolean',
             text: '[INPUTA] xnor [INPUTB]',
             arguments: {
               INPUTA: {
-                type: 'boolean',
+                type: 'Boolean',
                 defaultValue: ''
               },
               INPUTB: {
-                type: 'boolean',
+                type: 'Boolean',
                 defaultValue: ''
               }
             }
           },
           {
             opcode: 'nandBoolean',
-            blockType: 'boolean',
+            blockType: 'Boolean',
             text: '[INPUTA] nand [INPUTB]',
             arguments: {
               INPUTA: {
-                type: 'boolean',
+                type: 'Boolean',
                 defaultValue: ''
               },
               INPUTB: {
-                type: 'boolean',
+                type: 'Boolean',
                 defaultValue: ''
               }
             }
@@ -376,7 +377,7 @@ var ex2 = (function(Scratch) {
 
           {
             opcode: 'equalsExactly',
-            blockType: 'boolean',
+            blockType: 'Boolean',
             text: '[ONE] === [TWO]',
             arguments: {
               ONE: {
@@ -391,7 +392,7 @@ var ex2 = (function(Scratch) {
           },
           {
             opcode: 'notEqualTo',
-            blockType: 'boolean',
+            blockType: 'Boolean',
             text: '[INPUTA] ≠ [INPUTB]',
             arguments: {
               INPUTA: {
@@ -406,7 +407,7 @@ var ex2 = (function(Scratch) {
           },
           {
             opcode: 'moreThanEqual',
-            blockType: 'boolean',
+            blockType: 'Boolean',
             text: '[INPUTA] ≥ [INPUTB]',
             arguments: {
               INPUTA: {
@@ -421,7 +422,7 @@ var ex2 = (function(Scratch) {
           },
           {
             opcode: 'lessThanEqual',
-            blockType: 'boolean',
+            blockType: 'Boolean',
             text: '[INPUTA] ≤ [INPUTB]',
             arguments: {
               INPUTA: {
@@ -436,7 +437,7 @@ var ex2 = (function(Scratch) {
           },
           {
             opcode: 'stringCheckBoolean',
-            blockType: 'boolean',
+            blockType: 'Boolean',
             text: '[INPUT] is [DROPDOWN]',
             arguments: {
               INPUT: {
@@ -580,7 +581,7 @@ var ex2 = (function(Scratch) {
           },
           {
             opcode: 'confirmationBlock',
-            blockType: 'boolean',
+            blockType: 'Boolean',
             text: 'Confirm [STRING]',
             arguments: {
               STRING: {
@@ -749,7 +750,7 @@ var ex2 = (function(Scratch) {
           },
           {
             opcode: 'commentBool',
-            blockType: 'boolean',
+            blockType: 'Boolean',
             text: '// [INPUTA] [INPUTB]',
             arguments: {
               INPUTA: {
@@ -757,7 +758,7 @@ var ex2 = (function(Scratch) {
                 defaultValue: 'comment'
               },
               INPUTB: {
-                type: 'boolean',
+                type: 'Boolean',
               }
             }
           }
@@ -911,7 +912,7 @@ var ex2 = (function(Scratch) {
     }
 
     stringIf(args) {
-      if (args.BOOLEAN) {
+      if (args.Boolean) {
         return args.INPUTA;
       } else {
         return '';
@@ -919,7 +920,7 @@ var ex2 = (function(Scratch) {
     }
 
     stringIfElse(args) {
-      if (args.BOOLEAN) {
+      if (args.Boolean) {
         return args.INPUTA;
       } else {
         return args.INPUTB;
