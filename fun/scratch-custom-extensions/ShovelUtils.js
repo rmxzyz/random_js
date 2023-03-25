@@ -21,7 +21,20 @@
   window.vm = findReactComponent(document.getElementsByClassName("stage-header_stage-size-row_14N65")[0]).props.vm;
 
   const vm = window.vm;
+var StringToColor = (string, saturation = 100, lightness = 75) => {
+  let hash = 0;
+  for (let i = 0; i < string.length; i++) {
+hash = string.charCodeAt(i) + ((hash << 5) - hash);
+hash = hash & hash;
+  }
+  return `hsl(${(hash % 360)}, ${saturation}%, ${lightness}%)`;
+}
 
+
+// For the sample on stackoverflow
+function colorByHashCode(value) {
+return "<span style='color:" + stringToColor(value) + "'>" + value + "</span>";
+}
   // Based on from https://www.growingwiththeweb.com/2017/12/fast-simple-js-fps-counter.html
   const times = [];
   let fps = vm.runtime.frameLoop.framerate;
@@ -315,7 +328,7 @@
      */
     brightnessByColor({ color }) {
       // https://www.w3.org/TR/AERT/#color-contrast
-      const {r, g, b} = Scratch.Cast.toRgbColorObject(color); //Scratch.Cast.toRgbColorObject(color);
+      const {r, g, b} = StringToColor(color); //Scratch.Cast.toRgbColorObject(color);
       return ((r * 299) + (g * 587) + (b * 114)) / 1000;
     }
 
