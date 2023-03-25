@@ -4,7 +4,9 @@ const to_s = m => m.map(v=> v.join(',')).join(' ')
 
 const safe_index = (m,i) => m[m.length == 1 ? 0 : i]
 window.vm = findReactComponent(document.getElementsByClassName("stage-header_stage-size-row_14N65")[0]).props.vm;
-
+if(!vm) {
+	vm = window.vm
+}
 const component_wise = f => (a,b) => {
 	let [m,n] = a.length > b.length ? [a,b] : [b,a]
 	return m.map((v,i)=>  safe_index(n,i) == undefined ? v : f(safe_index(a,i), safe_index(b,i)))
