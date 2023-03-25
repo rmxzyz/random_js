@@ -473,8 +473,8 @@ var ex2 = (function(Scratch) {
           },
           {
             opcode: 'decodeFromBlock',
-            blockType: 'operator',
-            text: 'decode [STRING] from [DROPDOWN]',
+            blockType: 'reporter',
+            text: 'Decode [STRING] from [DROPDOWN]',
             disableMonitor: true,
             arguments: {
               STRING: {
