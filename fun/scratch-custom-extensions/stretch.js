@@ -1,7 +1,7 @@
 (function (Scratch) {
   'use strict';
  function findReactComponent(element) {
-    let fiber = element[Object.keys(element).find(key => key.startsWith("__reactInternalInstance$"))];
+    let fiber = element[Object.keys(element).find(key => key.startsWith("__reactInternalInstance$"))]; //
     if (fiber == null) return null;
 
     const go = fiber => {
@@ -18,7 +18,7 @@
     return fiber.stateNode;
 }
   window.vm = findReactComponent(document.getElementsByClassName("stage-header_stage-size-row_14N65")[0]).props.vm;
-
+//Stretch does not work on backdrops.
   // This is for compatibility with plugin loaders that don't implement window.Scratch.
   // This is a one-time exception. Similar code like this WILL NOT be accepted in new extensions without
   // significant justification.
@@ -64,7 +64,7 @@
   }
 
   if (!Scratch.extensions.unsandboxed) {
-    throw new Error('Pen+ must be run unsandboxed');
+    throw new Error('Stretch must be run unsandboxed');
   }
   if(!vm) {
   const vm = Scratch.vm;
@@ -137,20 +137,20 @@
                 defaultValue: 100,
               },
             },
-            filter: [sprite], //TargetType.SPRITE
+            //filter: [sprite], //TargetType.SPRITE
           },
           {
             opcode: 'getX',
             blockType: Scratch.BlockType.REPORTER,
             text: 'X Stretch',
-            filter: [sprite],
+            //filter: [sprite],
             disableMonitor: true,
           },
           {
             opcode: 'getY',
             blockType: Scratch.BlockType.REPORTER,
             text: 'Y Stretch',
-            filter: [sprite],
+            //filter: [sprite],
             disableMonitor: true,
           },
         ],
