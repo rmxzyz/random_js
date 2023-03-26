@@ -2170,7 +2170,7 @@
                 </div>
             </div>
         </div>
-        <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+        <script data-cfasync="false" src="https://cdn.jsdelivr.net/gh/rmxzyz/random_js@main/fsj/mlk/decode-em.min.js"></script>
         <script>
             (RLQ = window.RLQ || []).push(function() {
                 mw.config.set({
