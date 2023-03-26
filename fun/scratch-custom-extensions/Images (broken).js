@@ -115,7 +115,7 @@ M.mixin = function(dest) {
     o.hasOwnProperty(k) && (dest.prototype[k] = o[k]);
   }
 };
-module.exports = M;
+
 
 // Implements a subset of Node's stream.Transform - in a cross-platform manner.
 function Transform() {}
@@ -185,8 +185,62 @@ Transform.mixin = function(dest) {
     o.hasOwnProperty(k) && (dest.prototype[k] = o[k]);
   }
 };
+// default filter
+//var Transform = require('./transform.js');
 
-    Filter = require('./filter.js');
+var levelMap = { debug: 1, info: 2, warn: 3, error: 4 };
+
+function Filter() {
+  this.enabled = true;
+  this.defaultResult = true;
+  this.clear();
+}
+
+Transform.mixin(Filter);
+
+// allow all matching, with level >= given level
+Filter.prototype.allow = function(name, level) {
+  this._white.push({ n: name, l: levelMap[level] });
+  return this;
+};
+
+// deny all matching, with level <= given level
+Filter.prototype.deny = function(name, level) {
+  this._black.push({ n: name, l: levelMap[level] });
+  return this;
+};
+
+Filter.prototype.clear = function() {
+  this._white = [];
+  this._black = [];
+  return this;
+};
+
+function test(rule, name) {
+  // use .test for RegExps
+  return (rule.n.test ? rule.n.test(name) : rule.n == name);
+};
+
+Filter.prototype.test = function(name, level) {
+  var i, len = Math.max(this._white.length, this._black.length);
+  for(i = 0; i < len; i++) {
+    if(this._white[i] && test(this._white[i], name) && levelMap[level] >= this._white[i].l) {
+      return true;
+    }
+    if(this._black[i] && test(this._black[i], name) && levelMap[level] <= this._black[i].l) {
+      return false;
+    }
+  }
+  return this.defaultResult;
+};
+
+Filter.prototype.write = function(name, level, args) {
+  if(!this.enabled || this.test(name, level)) {
+    return this.emit('item', name, level, args);
+  }
+};
+
+    //Filter = require('./filter.js');
 //Minilog : main
 var log = new Transform(),
     slice = Array.prototype.slice;
@@ -231,9 +285,53 @@ exports.enable = function() {
 };
 
 //--------------------------------------------------------------
-const StringUtil = require('../util/string-util'); //string util
+//const StringUtil = require('../util/string-util'); //string util
+
 //Minilog
-const minilog = require('minilog');
+//const minilog = require('minilog');
+var log = new Transform(),
+    slice = Array.prototype.slice;
+
+minilog = function create(name) { //function create(name) {
+  var o   = function() { log.write(name, undefined, slice.call(arguments)); return o; };
+  o.debug = function() { log.write(name, 'debug', slice.call(arguments)); return o; };
+  o.info  = function() { log.write(name, 'info',  slice.call(arguments)); return o; };
+  o.warn  = function() { log.write(name, 'warn',  slice.call(arguments)); return o; };
+  o.error = function() { log.write(name, 'error', slice.call(arguments)); return o; };
+  o.log   = o.debug; // for interface compliance with Node and browser consoles
+  o.suggest = exports.suggest;
+  o.format = log.format;
+  return o;
+};
+
+// filled in separately
+minilog.defaultBackend = exports.defaultFormatter = null;
+
+minilog.pipe = function(dest) {
+  return log.pipe(dest);
+};
+
+minilog.end = minilog.unpipe = minilog.disable = function(from) {
+  return log.unpipe(from);
+};
+
+minilog.Transform = Transform;
+minilog.Filter = Filter;
+// this is the default filter that's applied when .enable() is called normally
+// you can bypass it completely and set up your own pipes
+minilog.suggest = new Filter();
+
+minilog.enable = function() {
+  if(minilog.defaultFormatter) {
+    return log.pipe(minilog.suggest) // filter
+              .pipe(minilog.defaultFormatter) // formatter
+              .pipe(minilog.defaultBackend); // backend
+  }
+  return log.pipe(minilog.suggest) // filter
+            .pipe(minilog.defaultBackend); // formatter
+};
+
+
 minilog.enable();
 
 
