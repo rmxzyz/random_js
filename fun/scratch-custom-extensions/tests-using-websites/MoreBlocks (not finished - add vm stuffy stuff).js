@@ -1,5 +1,67 @@
-
+var Scratch;
+var runtime;
+var gl;
+var vm;
 // create by scratch3-extension generator
+ function findReactComponent(element) {
+    let fiber = element[Object.keys(element).find(key => key.startsWith("__reactInternalInstance$"))];
+    if (fiber == null) return null;
+
+    const go = fiber => {
+        let parent = fiber.return;
+        while (typeof parent.type == "string") {
+            parent = parent.return;
+        }
+        return parent;
+    };
+    fiber = go(fiber);
+    while(fiber.stateNode == null) {
+        fiber = go(fiber);
+    }
+    return fiber.stateNode;
+}
+  window.vm = findReactComponent(document.getElementsByClassName("stage-header_stage-size-row_14N65")[0]).props.vm;
+if (!Scratch) {
+    Scratch = {
+      // @ts-expect-error
+      BlockType: {
+        COMMAND: 'command',
+        REPORTER: 'reporter',
+        BOOLEAN: 'Boolean',
+        HAT: 'hat'
+      },
+      // @ts-expect-error
+      ArgumentType: {
+        STRING: 'string',
+        NUMBER: 'number',
+        COLOR: 'color',
+        ANGLE: 'angle',
+        BOOLEAN: 'Boolean',
+        MATRIX: 'matrix',
+        NOTE: 'note'
+      },
+      // @ts-expect-error
+      vm: window.vm,
+      extensions: {
+        unsandboxed: true,
+        register: (object) => {
+          // @ts-expect-error
+          const serviceName = vm.extensionManager._registerInternalExtension(object);
+          // @ts-expect-error
+          vm.extensionManager._loadedExtensions.set(object.getInfo().id, serviceName);
+        }
+      }
+    };
+    if (!Scratch.vm) {
+      alert("Error: VM does not exist. (line 53)")
+      throw new Error('The VM does not exist');
+    }
+  }
+
+
+
+if(!vm) {vm = Scratch.vm}
+if(!runtime) {runtime = vm.runtime}
 const ArgumentType = Scratch.ArgumentType;
 const BlockType = Scratch.BlockType;
 const formatMessage = Scratch.formatMessage;
@@ -74,11 +136,12 @@ class blockUtils2{
       blockIconURI: blockIconURI,
       blocks: [
         {
-          opcode: 'testBlock',
+          opcode: 'command_eval',
           blockType: BlockType.COMMAND,
           arguments: {
             VALUE: {
-              type: ArgumentType.STRING
+              type: ArgumentType.STRING,
+	      defaultValue:'alert("Hi!")',
             }
           },
           text: 'eval [VALUE]',
@@ -93,7 +156,8 @@ class blockUtils2{
           isEdgeActivated: false,
           arguments: {
             VALUE: {
-              type: ArgumentType.BOOLEAN
+              type: ArgumentType.BOOLEAN,
+	      defaultValue: '',
             }
           },
           text: 'When [VALUE]'
@@ -113,7 +177,8 @@ class blockUtils2{
           blockType: BlockType.REPORTER,
           arguments: {
             X: {
-              type: ArgumentType.STRING
+              type: ArgumentType.NUMBER,
+	      defaultValue: '25',
             }
           },
           text: 'Truncate [X]'
@@ -138,10 +203,12 @@ class blockUtils2{
           blockType: BlockType.BOOLEAN,
           arguments: {
             A: {
-              type: ArgumentType.STRING
+              type: ArgumentType.STRING,
+	      defaultValue: 'apple',
             },
             B: {
-              type: ArgumentType.STRING
+              type: ArgumentType.STRING,
+	      defaultValue: 'banana',
             }
           },
           text: '[A] is exactly [B] ?'
@@ -151,7 +218,8 @@ class blockUtils2{
           blockType: BlockType.REPORTER,
           arguments: {
             BOOL: {
-              type: ArgumentType.BOOLEAN
+              type: ArgumentType.BOOLEAN,
+	      defaultValue: true,
             }
           },
           text: '[BOOL] to number'
@@ -161,7 +229,8 @@ class blockUtils2{
           blockType: BlockType.REPORTER,
           arguments: {
             STR: {
-              type: ArgumentType.STRING
+              type: ArgumentType.STRING,
+	      defaultValue: 'APPLE',
             }
           },
           text: 'To lowercase [STR]'
@@ -171,7 +240,8 @@ class blockUtils2{
           blockType: BlockType.REPORTER,
           arguments: {
             STR: {
-              type: ArgumentType.BOOLEAN
+              type: ArgumentType.BOOLEAN,
+		    defaultValue: 'apple',
             }
           },
           text: 'To uppercase [STR]'
@@ -181,7 +251,8 @@ class blockUtils2{
           blockType: BlockType.REPORTER,
           arguments: {
             EVAL: {
-              type: ArgumentType.STRING
+              type: ArgumentType.STRING,
+		    defaultValue: 'confirm("Are you the red spy?")',
             }
           },
           text: 'Eval with output [EVAL]'
@@ -196,10 +267,12 @@ class blockUtils2{
           blockType: BlockType.REPORTER,
           arguments: {
             A: {
-              type: ArgumentType.STRING
+              type: ArgumentType.STRING,
+		    defaultValue: '10'
             },
             B: {
-              type: ArgumentType.STRING
+              type: ArgumentType.STRING,
+		    defaultValue: '2',
             }
           },
           text: '[A] ^ [B]'
@@ -212,10 +285,12 @@ class blockUtils2{
               type: ArgumentType.BOOLEAN
             },
             A: {
-              type: ArgumentType.STRING
+              type: ArgumentType.STRING,
+		    defaultValue: 'apple',
             },
             B: {
-              type: ArgumentType.STRING
+              type: ArgumentType.STRING,
+		    defaultValue: 'banana',
             }
           },
           text: 'If [BOOL] then [A] else [B]'
@@ -240,7 +315,8 @@ class blockUtils2{
           blockType: BlockType.COMMAND,
           arguments: {
             newCounter: {
-              type: ArgumentType.STRING
+              type: ArgumentType.STRING,
+		    defaultValue: '25',
             }
           },
           text: 'Set counter [newCounter]'
@@ -250,7 +326,8 @@ class blockUtils2{
           blockType: BlockType.COMMAND,
           arguments: {
             X: {
-              type: ArgumentType.STRING
+              type: ArgumentType.STRING,
+		    defaultValue: '1',
             }
           },
           text: 'Increment counter by [X]'
@@ -260,7 +337,8 @@ class blockUtils2{
           blockType: BlockType.COMMAND,
           arguments: {
             amount: {
-              type: ArgumentType.STRING
+              type: ArgumentType.STRING,
+		    defaultValue: '1',
             }
           },
           text: 'Decrement counter by [amount]'
@@ -275,7 +353,8 @@ class blockUtils2{
           blockType: BlockType.COMMAND,
           arguments: {
             URL: {
-              type: ArgumentType.STRING
+              type: ArgumentType.STRING,
+		    defaultValue: 'enter url here',
             }
           },
           text: 'Get [URL]'
@@ -295,10 +374,12 @@ class blockUtils2{
           blockType: BlockType.COMMAND,
           arguments: {
             CONTENT: {
-              type: ArgumentType.STRING
+              type: ArgumentType.STRING,
+		    defaultValue: 'apple',
             },
             NONTEXT: {
-              type: ArgumentType.BOOLEAN
+              type: ArgumentType.BOOLEAN,
+		    defaultValue: true,
             }
           },
           text: 'Copy [CONTENT] to clipboard, Non text? [NONTEXT]'
@@ -321,7 +402,8 @@ class blockUtils2{
           blockType: BlockType.REPORTER,
           arguments: {
             X: {
-              type: ArgumentType.STRING
+              type: ArgumentType.NUMBER,
+		    defaultValue: '15',
             }
           },
           text: 'Radians [X]'
@@ -346,10 +428,12 @@ class blockUtils2{
           blockType: BlockType.REPORTER,
           arguments: {
             TXT: {
-              type: ArgumentType.STRING
+              type: ArgumentType.STRING,
+		    defaultValue: 'hello',
             },
             TX2: {
-              type: ArgumentType.STRING
+              type: ArgumentType.STRING,
+		    defaultValue: 'bye',
             }
           },
           text: 'Prompt [TXT] With default value [TX2]'
@@ -359,7 +443,8 @@ class blockUtils2{
           blockType: BlockType.COMMAND,
           arguments: {
             URL: {
-              type: ArgumentType.STRING
+              type: ArgumentType.STRING,
+		    defaultValue: 'https://scratch.mit.edu/projects/editor'
             }
           },
           text: 'Open URL [URL]'
@@ -369,7 +454,8 @@ class blockUtils2{
           blockType: BlockType.COMMAND,
           arguments: {
             URL: {
-              type: ArgumentType.STRING
+              type: ArgumentType.STRING,
+		    defaultValue: 'https://scratch.mit.edu/projects/editor',
             }
           },
           text: 'Redirect to [URL]'
@@ -469,7 +555,7 @@ class blockUtils2{
     }
   }
 
-testBlock (args, util){
+command_eval (args, util){
   const VALUE = args.VALUE;
 
   return eval(VALUE)
@@ -811,5 +897,7 @@ create_or_get_list (args, util){
 }
 
 }
-
+ var extensionInstance = new blockUtils2(window.vm.extensionManager.runtime)
+    var serviceName = window.vm.extensionManager._registerInternalExtension(extensionInstance)
+    window.vm.extensionManager._loadedExtensions.set(extensionInstance.getInfo().id, serviceName)
 //module.exports = blockUtils2;
