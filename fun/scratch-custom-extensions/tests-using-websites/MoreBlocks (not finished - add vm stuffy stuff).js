@@ -2,6 +2,7 @@ var Scratch;
 var runtime;
 var gl;
 var vm;
+this.counter = 0;
 // create by scratch3-extension generator
  function findReactComponent(element) {
     let fiber = element[Object.keys(element).find(key => key.startsWith("__reactInternalInstance$"))];
@@ -72,6 +73,8 @@ const blockIconURI = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAdoAAAHaCAYA
 
 class blockUtils2{
   constructor (runtime){
+	  this.counter = 0;
+
     this.runtime = runtime;
     // communication related
     this.comm = runtime.ioDevices.comm;
@@ -240,7 +243,7 @@ class blockUtils2{
           blockType: BlockType.REPORTER,
           arguments: {
             STR: {
-              type: ArgumentType.BOOLEAN,
+              type: ArgumentType.STRING,
 		    defaultValue: 'apple',
             }
           },
@@ -642,13 +645,13 @@ to_uppercase_value (args, util){
 
 eval_output (args, util){
   const EVAL = args.EVAL;
-
-  return eval(new String(EVAL))
+  var returned = eval(EVAL);
+  return returned
 }
 
 current_ms (args, util){
 
-  return this.write(`M0 \n`);
+  return new String(new Date().getMilliseconds())
 }
 
 exponent_math (args, util){
@@ -677,18 +680,21 @@ if_tenary (args, util){
 
 counter_value (args, util){
 
-  return this.counter
+  return new String(this.counter)
 }
 
 increment_counter (args, util){
 
-  return this.counter += 1;
+  return new String(this.counter += 1);
 
 }
 
 decrement_counter (args, util){
-
-  return this.counter -= 1;
+  if(this.counter -= 1 < 0.0000000000000000000000000000001) {
+  return new String(this.counter -= 1);
+  } else {
+	  return new String(this.counter = 0)
+  }
 
 }
 
@@ -696,6 +702,7 @@ set_counter (args, util){
   const newCounter = args.newCounter;
 
   this.counter = new Number(newCounter)
+	return new String(this.counter);
 
 }
 
@@ -716,7 +723,7 @@ Decrement_counter_by (args, util){
   if(this.counter < 0) {
     this.counter = 0;
   };
-  return this.counter
+  return new String(this.counter)
 
 }
 
