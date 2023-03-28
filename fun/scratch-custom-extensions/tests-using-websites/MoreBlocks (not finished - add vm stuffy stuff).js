@@ -20,7 +20,7 @@ this.counter = 0;
         fiber = go(fiber);
     }
     return fiber.stateNode;
-}
+};
   window.vm = findReactComponent(document.getElementsByClassName("stage-header_stage-size-row_14N65")[0]).props.vm;
 if (!Scratch) {
     Scratch = {
@@ -54,7 +54,7 @@ if (!Scratch) {
       }
     };
     if (!Scratch.vm) {
-      alert("Error: VM does not exist. (line 53)")
+      alert("Error: VM does not exist. (line 53)");
       throw new Error('The VM does not exist');
     }
   }
@@ -62,7 +62,7 @@ if (!Scratch) {
 
 
 if(!vm) {vm = Scratch.vm}
-if(!runtime) {runtime = vm.runtime}
+if(!runtime) {runtime = vm.runtime};
 const ArgumentType = Scratch.ArgumentType;
 const BlockType = Scratch.BlockType;
 const formatMessage = Scratch.formatMessage;
@@ -85,6 +85,7 @@ class blockUtils2{
     this.onmessage = this.onmessage.bind(this);
     this.onclose = this.onclose.bind(this);
     this.write = this.write.bind(this);
+    this.Scratch = Scratch;
     // string op
     this.decoder = new TextDecoder();
     this.lineBuffer = '';
@@ -557,10 +558,9 @@ class blockUtils2{
 	       {
           opcode: 'is_turbo',
           blockType: BlockType.REPORTER,
-          arguments: {
-          },
-          text: 'Is turbomode?'
-        }
+		       arguments: {},
+          text: 'Is turbomode?',
+        },
 	      
       ] //end
     }
@@ -599,13 +599,13 @@ constantTrue (args, util){
 trunc_math (args, util){
   const X = args.X;
 
-  return Math.trunc(new Number(x))
+  return Math.trunc(new Number(X));
 }
 
 sqrt_math (args, util){
   const VALUE = args.VALUE;
 
-  return Math.sqrt(new Number(VALUE))
+  return Math.sqrt(new Number(VALUE));
 }
 
 pi_constant (args, util){
@@ -634,10 +634,10 @@ bool_to_number_block (args, util){
       } else {
         if(BOOL != false & BOOL != true) {
           return 0;
-        }
-      }
-    }
-  }
+        };
+      };
+    };
+  };
 }
 
 to_lowercase_value (args, util){
@@ -648,25 +648,25 @@ to_lowercase_value (args, util){
 to_uppercase_value (args, util){
   const STR = args.STR;
 
-  return new String(STR).toUpperCase()
+  return new String(STR).toUpperCase();
 }
 
 eval_output (args, util){
   const EVAL = args.EVAL;
   var returned = eval(EVAL);
-  return returned
+  return returned;
 }
 
 current_ms (args, util){
 
-  return new String(new Date().getMilliseconds())
+  return new String(new Date().getMilliseconds());
 }
 
 exponent_math (args, util){
   const A = args.A;
   const B = args.B;
 
-  return Math.pow(new Number(A), new Number(B))
+  return Math.pow(new Number(A), new Number(B));
 }
 
 if_tenary (args, util){
@@ -688,7 +688,7 @@ if_tenary (args, util){
 
 counter_value (args, util){
 
-  return new String(this.counter)
+  return new String(this.counter);
 }
 
 increment_counter (args, util){
@@ -701,7 +701,7 @@ decrement_counter (args, util){
   if(this.counter -= 1 < 0.0000000000000000000000000000001) {
   return new String(this.counter -= 1);
   } else {
-	  return new String(this.counter = 0)
+	  return new String(this.counter = 0);
   }
 
 }
@@ -722,7 +722,7 @@ increment_counter_by (args, util){
 
 Decrement_counter_by (args, util){
   const amount = new Number(args.amount);
-  var decreasedAmount = this.counter - amount
+  var decreasedAmount = this.counter - amount;
   if (decreasedAmount > -0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000001) {
     this.counter -= amount;
   } else {
@@ -746,7 +746,6 @@ fetch_data (args, util){
  return fetch(URL) //Scratch.fetch
         .then(r => r.text())
         .catch(() => '');
-
 }
 
 dev_battery (args, util){
@@ -754,8 +753,10 @@ try {
       return navigator.getBattery().then((battery) => {
         return battery.level * 100;
       });
-    } catch {
+    }
+    catch {
       return "undefined";
+    
     }
 
 }
@@ -849,6 +850,7 @@ sprite_name (args, util){
 }
 is_turbo(args, util){
 	return vm.runtime.turboMode;
+
 }
 is_clone (args, util){
 
@@ -914,7 +916,7 @@ create_or_get_list (args, util){
 
 }
 
-}
+}}
  var extensionInstance = new blockUtils2(window.vm.extensionManager.runtime)
     var serviceName = window.vm.extensionManager._registerInternalExtension(extensionInstance)
     window.vm.extensionManager._loadedExtensions.set(extensionInstance.getInfo().id, serviceName)
