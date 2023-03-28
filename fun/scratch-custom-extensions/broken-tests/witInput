@@ -1,0 +1,605 @@
+
+var Scratch;
+
+ function findReactComponent(element) {
+    let fiber = element[Object.keys(element).find(key => key.startsWith("__reactInternalInstance$"))];
+    if (fiber == null) return null;
+
+    const go = fiber => {
+        let parent = fiber.return;
+        while (typeof parent.type == "string") {
+            parent = parent.return;
+        }
+        return parent;
+    };
+    fiber = go(fiber);
+    while(fiber.stateNode == null) {
+        fiber = go(fiber);
+    }
+    return fiber.stateNode;
+}
+  
+if(!vm) {window.vm = findReactComponent(document.getElementsByClassName("stage-header_stage-size-row_14N65")[0]).props.vm;}
+if (!Scratch) {
+    Scratch = {
+      // @ts-expect-error
+      BlockType: {
+        COMMAND: 'command',
+        REPORTER: 'reporter',
+        BOOLEAN: 'Boolean',
+        HAT: 'hat'
+      },
+      // @ts-expect-error
+      ArgumentType: {
+        STRING: 'string',
+        NUMBER: 'number',
+        COLOR: 'color',
+        ANGLE: 'angle',
+        BOOLEAN: 'Boolean',
+        MATRIX: 'matrix',
+        NOTE: 'note'
+      },
+      // @ts-expect-error
+      vm: window.vm,
+      extensions: {
+        unsandboxed: true,
+        register: (object) => {
+          // @ts-expect-error
+          const serviceName = vm.extensionManager._registerInternalExtension(object);
+          // @ts-expect-error
+          vm.extensionManager._loadedExtensions.set(object.getInfo().id, serviceName);
+        }
+      }
+    };
+    if (!Scratch.vm) {
+      throw new Error('The VM does not exist');
+    }
+  }
+
+  if (!Scratch.extensions.unsandboxed) {
+    throw new Error('Pen+ must be run unsandboxed');
+  }
+
+  if (!vm) {const vm = Scratch.vm;}
+  if(!runtime) {const runtime = vm.runtime;}
+  if(!canvas) {const canvas = runtime.renderer.canvas;}
+  if(!gl) {const gl = runtime.renderer._gl;}
+  var t = document.getElementsByClassName("WitCatInput")
+e = t;
+var e = document.getElementById("WitCatInput".concat(t.id));
+
+var n = e.style.left.split("%")[0]
+
+  class WitCatInput {
+    getInfo() {
+                    return {
+                        id: "WitCatInput",
+                        name: this.formatMessage("WitCatInput.name"),
+                        docsURI: "https://www.ccw.site/post/6153a7a6-05fb-462e-b785-b97700b12bc2",
+                        blockIconURI: i.q,
+                        menuIconURI: i.q,
+                        color1: "#52baba",
+                        color2: "#ffffff",
+                        blocks: [{
+                            opcode: "createinput",
+                            blockType: "command",
+                            text: this.formatMessage("WitCatInput.createinput"),
+                            arguments: {
+                                id: {
+                                    type: "string",
+                                    defaultValue: "i"
+                                },
+                                type: {
+                                    type: "string",
+                                    menu: "type"
+                                },
+                                x: {
+                                    type: "number",
+                                    defaultValue: "0"
+                                },
+                                y: {
+                                    type: "number",
+                                    defaultValue: "0"
+                                },
+                                width: {
+                                    type: "number",
+                                    defaultValue: "100"
+                                },
+                                height: {
+                                    type: "number",
+                                    defaultValue: "20"
+                                },
+                                text: {
+                                    type: "string",
+                                    defaultValue: "hello world!"
+                                },
+                                color: {
+                                    type: "string",
+                                    defaultValue: "#000000"
+                                },
+                                texts: {
+                                    type: "string",
+                                    defaultValue: "hello world!"
+                                },
+                                size: {
+                                    type: "number",
+                                    defaultValue: "16"
+                                }
+                            }
+                        }, {
+                            opcode: "setinput",
+                            blockType: "command",
+                            text: this.formatMessage("WitCatInput.setinput"),
+                            arguments: {
+                                id: {
+                                    type: "string",
+                                    defaultValue: "i"
+                                },
+                                type: {
+                                    type: "string",
+                                    menu: "typess"
+                                },
+                                text: {
+                                    type: "string",
+                                    defaultValue: "10"
+                                }
+                            }
+                        }, {
+                            opcode: "setread",
+                            blockType: "command",
+                            text: this.formatMessage("WitCatInput.setread"),
+                            arguments: {
+                                id: {
+                                    type: "string",
+                                    defaultValue: "i"
+                                },
+                                read: {
+                                    type: "string",
+                                    menu: "read"
+                                }
+                            }
+                        }, {
+                            opcode: "compute",
+                            blockType: "reporter",
+                            text: this.formatMessage("WitCatInput.compute"),
+                            arguments: {
+                                size: {
+                                    type: "number",
+                                    defaultValue: "16"
+                                }
+                            }
+                        }, {
+                            opcode: "deleteinput",
+                            blockType: "command",
+                            text: this.formatMessage("WitCatInput.deleteinput"),
+                            arguments: {
+                                id: {
+                                    type: "string",
+                                    defaultValue: "i"
+                                }
+                            }
+                        }, {
+                            opcode: "getinput",
+                            blockType: "reporter",
+                            text: this.formatMessage("WitCatInput.getinput"),
+                            arguments: {
+                                id: {
+                                    type: "string",
+                                    defaultValue: "i"
+                                },
+                                type: {
+                                    type: "string",
+                                    menu: "types"
+                                }
+                            }
+                        }, {
+                            opcode: "number",
+                            blockType: "reporter",
+                            text: this.formatMessage("WitCatInput.number"),
+                            arguments: {
+                                num: {
+                                    type: "number",
+                                    defaultValue: "1"
+                                },
+                                type: {
+                                    type: "string",
+                                    menu: "types"
+                                }
+                            }
+                        }, {
+                            opcode: "numbers",
+                            blockType: "reporter",
+                            text: this.formatMessage("WitCatInput.numbers"),
+                            arguments: {}
+                        }, {
+                            opcode: "isinput",
+                            blockType: "Boolean",
+                            text: this.formatMessage("WitCatInput.isinput"),
+                            arguments: {
+                                id: {
+                                    type: "string",
+                                    defaultValue: "i"
+                                }
+                            }
+                        }, {
+                            opcode: "whatinput",
+                            blockType: "reporter",
+                            text: this.formatMessage("WitCatInput.whatinput"),
+                            arguments: {}
+                        }, {
+                            opcode: "nowinput",
+                            blockType: "command",
+                            text: this.formatMessage("WitCatInput.nowinput"),
+                            arguments: {
+                                id: {
+                                    type: "string",
+                                    defaultValue: "i"
+                                }
+                            }
+                        }, {
+                            opcode: "key",
+                            blockType: "Boolean",
+                            text: this.formatMessage("WitCatInput.key"),
+                            arguments: {
+                                type: {
+                                    type: "string",
+                                    defaultValue: "KeyA"
+                                }
+                            }
+                        }, {
+                            opcode: "mousewheel",
+                            blockType: "reporter",
+                            text: this.formatMessage("WitCatInput.mousewheel"),
+                            arguments: {}
+                        }, {
+                            opcode: "keys",
+                            blockType: "hat",
+                            text: this.formatMessage("WitCatInput.keys"),
+                            func: !1,
+                            arguments: {
+                                type: {
+                                    type: "string",
+                                    defaultValue: "KeyA"
+                                }
+                            }
+                        }, {
+                            opcode: "lastkey",
+                            blockType: "reporter",
+                            text: this.formatMessage("WitCatInput.lastkey"),
+                            func: !1,
+                            arguments: {}
+                        }, {
+                            opcode: "deleteallinput",
+                            blockType: "command",
+                            text: this.formatMessage("WitCatInput.deleteallinput"),
+                            arguments: {}
+                        }],
+                        menus: {
+                            type: [{
+                                text: this.formatMessage("WitCatInput.type.1"),
+                                value: "input"
+                            }, {
+                                text: this.formatMessage("WitCatInput.type.2"),
+                                value: "Textarea"
+                            }],
+                            types: [{
+                                text: this.formatMessage("WitCatInput.number.10"),
+                                value: "ID"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.1"),
+                                value: "X"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.2"),
+                                value: "Y"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.3"),
+                                value: "width"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.4"),
+                                value: "height"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.5"),
+                                value: "content"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.6"),
+                                value: "color"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.7"),
+                                value: "prompt"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.8"),
+                                value: "font-size"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.11"),
+                                value: "rp"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.12"),
+                                value: "th"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.13"),
+                                value: "cp"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.14"),
+                                value: "op"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.9"),
+                                value: "json"
+                            }],
+                            typess: [{
+                                text: this.formatMessage("WitCatInput.number.1"),
+                                value: "X"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.2"),
+                                value: "Y"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.3"),
+                                value: "width"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.4"),
+                                value: "height"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.5"),
+                                value: "content"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.6"),
+                                value: "color"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.7"),
+                                value: "prompt"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.8"),
+                                value: "font-size"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.11"),
+                                value: "rp"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.13"),
+                                value: "cp"
+                            }, {
+                                text: this.formatMessage("WitCatInput.number.14"),
+                                value: "op"
+                            }],
+                            read: [{
+                                text: this.formatMessage("WitCatInput.read.1"),
+                                value: "eb"
+                            }, {
+                                text: this.formatMessage("WitCatInput.read.2"),
+                                value: "ue"
+                            }]
+                        }
+                    }
+                }
+            } //------- error
+            {
+                key: "createinput",
+                value = function(t) {
+                    var e = t.x
+                      , n = t.y
+                      , i = t.width
+                      , a = t.height;
+                    t.x > this.runtime.stageWidth && (e = this.runtime.stageWidth),
+                    t.x < 0 && (e = 0),
+                    t.y > this.runtime.stageHeight && (n = this.runtime.stageHeight),
+                    t.y < 0 && (n = 0),
+                    Number(t.x) + Number(t.width) > this.runtime.stageWidth && (i = this.runtime.stageWidth - e),
+                    t.width < 0 && (i = 0),
+                    Number(t.y) + Number(t.height) > this.runtime.stageHeight && (a = this.runtime.stageHeight - n),
+                    t.height < 0 && (a = 0),
+                    e = e / this.runtime.stageWidth * 100,
+                    n = n / this.runtime.stageHeight * 100,
+                    i = i / this.runtime.stageWidth * 100,
+                    a = a / this.runtime.stageHeight * 100;
+                    var u = "background-color: transparent;border:0px;text-shadow: 0 0 0 #000;outline: none;position:absolute; left:".concat(e, "%; top:").concat(n, "%; width:").concat(i, "%; height:").concat(a, "%;font-size: ").concat(t.size, "px;resize:none;color:").concat(t.color, ";opacity:1;")
+                      , s = document.getElementById("WitCatInput".concat(t.id));
+                    if (null !== s)
+                        if (s.name === t.type)
+                            s.style = u,
+                            s.value = t.text,
+                            s.placeholder = t.texts;
+                        else {
+                            r.parentNode.removeChild(s);
+                            var p = document.createElement(t.type);
+                            "input" === t.type && (p.type = "text"),
+                            p.style = u,
+                            p.id = "WitCatInput".concat(t.id),
+                            p.value = t.text,
+                            p.className = "WitCatInput",
+                            p.name = t.type,
+                            p.placeholder = t.texts,
+                            r.parentNode.appendChild(p)
+                        }
+                    else {
+                        var o = document.createElement(t.type);
+                        "input" === t.type && (o.type = "text"),
+                        o.style = u,
+                        o.id = "WitCatInput".concat(t.id),
+                        o.value = t.text,
+                        o.className = "WitCatInput",
+                        o.name = t.type,
+                        o.placeholder = t.texts,
+                        r.parentNode.appendChild(o)
+                    }
+                }
+            } {
+                key: "deleteinput",
+                value = function(t) {
+                    var e = document.getElementById("WitCatInput".concat(t.id));
+                    null !== e && r.parentNode.removeChild(e)
+                }
+            } {
+                key: "getinput",
+                value = function(t) {
+                    var e = document.getElementById("WitCatInput".concat(t.id));
+                    return null !== e ? "X" === t.type ? e.style.left.split("%")[0] / 100 * this.runtime.stageWidth : "Y" === t.type ? e.style.top.split("%")[0] / 100 * this.runtime.stageHeight : "width" === t.type ? e.style.width.split("%")[0] / 100 * this.runtime.stageWidth : "height" === t.type ? e.style.height.split("%")[0] / 100 * this.runtime.stageHeight : "content" === t.type ? e.value : "color" === t.type ? e.style.color.colorHex() : "prompt" === t.type ? e.placeholder : "font-size" === t.type ? e.style.fontSize.split("px")[0] : "ID" === t.type ? e.id.split("WitCatInput")[1] : "rp" === t.type ? e.scrollTop : "th" === t.type ? e.scrollHeight : "cp" === t.type ? JSON.stringify([e.selectionStart, e.selectionEnd]) : "op" === t.type ? 100 - 100 * e.style.opacity : "".concat('{"X":"').concat(e.style.left.split("%")[0] / 100 * this.runtime.stageWidth, '",') + '"Y' + '":"'.concat(e.style.top.split("%")[0] / 100 * this.runtime.stageHeight, '",') + '"width' + '":"'.concat(e.style.width.split("%")[0] / 100 * this.runtime.stageWidth, '",') + '"height' + '":"'.concat(e.style.height.split("%")[0] / 100 * this.runtime.stageHeight, '",') + '"content' + '":'.concat(JSON.stringify(e.value), ",") + '"color' + '":"'.concat(e.style.color.colorHex(), '",') + '"prompt' + '":"'.concat(e.placeholder, '",') + '"font-size' + '":"'.concat(e.style.fontSize.split("px")[0], '",') + '"ID' + '":"'.concat(e.id.split("WitCatInput")[1], '",') + '"Rolling position' + '":"'.concat(e.scrollTop, '",') + '"Text height' + '":"'.concat(e.scrollHeight, '",') + '"cursor position' + '":"'.concat(JSON.stringify([e.selectionStart, e.selectionEnd]), '"}') : ""
+                }
+            } {
+                key: "isinput",
+                value = function(t) {
+                    var e = document.getElementById("WitCatInput".concat(t.id));
+                    return null !== e && e === document.activeElement
+                }
+            } {
+                key: "whatinput",
+                value = function() {
+                    return "WitCatInput" === document.activeElement.className ? document.activeElement.id.split("WitCatInput")[1] : ""
+                }
+            } {
+                key: "nowinput",
+                value = function(t) {
+                    var e = document.getElementById("WitCatInput".concat(t.id));
+                    null !== e ? e.focus() : "WitCatInput" === document.activeElement.className && document.activeElement.blur()
+                }
+            } {
+                key: "deleteallinput",
+                value = function() {
+                    var t = document.getElementsByClassName("WitCatInput")
+                      , e = 0;
+                    for (e = t.length - 1; e >= 0; e--)
+                        t[e].parentNode.removeChild(t[e])
+                }
+            } {
+                key: "compute",
+                value = function(t) {
+                    return r.style.width.split("px")[0] / 360 * t.size
+                }
+            } {
+                key: "number",
+                value = function(t) {
+                    var e = document.getElementsByClassName("WitCatInput");
+                    return e.length >= t.num && t.num > 0 ? "X" === t.type ? e[t.num - 1].style.left.split("%")[0] / 100 * this.runtime.stageWidth : "Y" === t.type ? e[t.num - 1].style.top.split("%")[0] / 100 * this.runtime.stageHeight : "width" === t.type ? e[t.num - 1].style.width.split("%")[0] / 100 * this.runtime.stageWidth : "height" === t.type ? e[t.num - 1].style.height.split("%")[0] / 100 * this.runtime.stageHeight : "content" === t.type ? e[t.num - 1].value : "color" === t.type ? e[t.num - 1].style.color.colorHex() : "prompt" === t.type ? e[t.num - 1].placeholder : "font-size" === t.type ? e[t.num - 1].style.fontSize.split("px")[0] : "ID" === t.type ? e[t.num - 1].id.split("WitCatInput")[1] : "rp" === t.type ? e[t.num - 1].scrollTop : "th" === t.type ? e[t.num - 1].scrollHeight : "cp" === t.type ? JSON.stringify([e[t.num - 1].selectionStart, e[t.num - 1].selectionEnd]) : "op" === t.type ? 100 - 100 * e[t.num - 1].style.opacity : "".concat('{"X":"').concat(e[t.num - 1].style.left.split("%")[0] / 100 * this.runtime.stageWidth, '",') + '"Y' + '":"'.concat(e[t.num - 1].style.top.split("%")[0] / 100 * this.runtime.stageHeight, '",') + '"width' + '":"'.concat(e[t.num - 1].style.width.split("%")[0] / 100 * this.runtime.stageWidth, '",') + '"height' + '":"'.concat(e[t.num - 1].style.height.split("%")[0] / 100 * this.runtime.stageHeight, '",') + '"content' + '":'.concat(JSON.stringify(e[t.num - 1].value), ",") + '"color' + '":"'.concat(e[t.num - 1].style.color.colorHex(), '",') + '"prompt' + '":"'.concat(e[t.num - 1].placeholder, '",') + '"font-size' + '":"'.concat(e[t.num - 1].style.fontSize.split("px")[0], '",') + '"ID' + '":"'.concat(e[t.num - 1].id.split("WitCatInput")[1], '",') + '"Rolling position' + '":"'.concat(e[t.num - 1].scrollTop, '",') + '"Text height' + '":"'.concat(e[t.num - 1].scrollHeight, '",') + '"cursor position' + '":"'.concat(JSON.stringify([e[t.num - 1].selectionStart, e[t.num - 1].selectionEnd]), '"}') : ""
+                }
+            } {
+                key: "numbers",
+                value = function() {
+                    return document.getElementsByClassName("WitCatInput").length
+                }
+            } {
+                key: "key",
+                value = function(t) {
+                    return t.type in s
+                }
+            } {
+                key: "keys",
+                value = function(t) {
+                    return t.type in s
+                }
+            } {
+                key: "lastkey",
+                value = function() {
+                    return p
+                }
+            } {//,
+                key: "mousewheel",
+                value = function() {
+                    return o
+                }
+            } {
+                key: "setinput",
+                value = function(t) {
+                    var e = document.getElementById("WitCatInput".concat(t.id));
+                    if (null !== e) {
+                        var n = e.style.left.split("%")[0]
+                          , i = e.style.top.split("%")[0]
+                          , a = e.style.width.split("%")[0]
+                          , u = e.style.height.split("%")[0]
+                          , s = e.value
+                          , p = e.placeholder
+                          , o = e.style.color.colorHex()
+                          , r = e.style.fontSize.split("px")[0]
+                          , l = e.scrollTop
+                          , c = e.style.opacity;
+                        if ("X" === t.type)
+                            n = t.text,
+                            t.text > this.runtime.stageWidth && (n = this.runtime.stageWidth),
+                            t.text < 0 && (n = 0),
+                            n = n / this.runtime.stageWidth * 100;
+                        else if ("Y" === t.type)
+                            i = t.text,
+                            t.text > this.runtime.stageHeight && (i = this.runtime.stageHeight),
+                            t.text < 0 && (i = 0),
+                            i = i / this.runtime.stageHeight * 100;
+                        else if ("width" === t.type)
+                            a = t.text,
+                            Number(n) + Number(t.text) > this.runtime.stageWidth && (a = this.runtime.stageWidth - n),
+                            t.text < 0 && (a = 0),
+                            a = a / this.runtime.stageWidth * 100;
+                        else if ("height" === t.type)
+                            u = t.text,
+                            Number(i) + Number(t.text) > this.runtime.stageHeight && (u = this.runtime.stageHeight - i),
+                            t.text < 0 && (u = 0),
+                            u = u / this.runtime.stageHeight * 100;
+                        else if ("content" === t.type)
+                            s = t.text;
+                        else if ("prompt" === t.type)
+                            p = t.text;
+                        else if ("color" === t.type)
+                            o = t.text;
+                        else if ("font-size" === t.type)
+                            r = t.text;
+                        else if ("rp" === t.type)
+                            l = t.text;
+                        else if ("op" === t.type)
+                            c = isNaN(t.text) ? 1 : 1 - t.text / 100;
+                        else if ("cp" === t.type)
+                            try {
+                                JSON.parse(t.text).length >= 2 ? e.setSelectionRange(JSON.parse(t.text)[0], JSON.parse(t.text)[1]) : e.setSelectionRange(t.text, t.text)
+                            } catch (t) {
+                                return
+                            }
+                        var m = "background-color: transparent;border:0px;text-shadow: 0 0 0 #000;outline: none;position:absolute; left:".concat(n, "%; top:").concat(i, "%; width:").concat(a, "%; height:").concat(u, "%;font-size: ").concat(r, "px;resize:none;color:").concat(o, ";opacity:").concat(c, ";");
+                        e.style = m,
+                        e.value = s,
+                        e.placeholder = p,
+                        e.scrollTop = l
+                    }
+                }
+            } { //, <
+                key: "setread",
+                value = function(t) {
+                    var e = document.getElementById("WitCatInput".concat(t.id));
+                    null !== e && ("eb" === t.read ? e.disabled = !1 : e.disabled = !0)
+                }
+            }//],
+            
+            n && a(e.prototype, n),
+            Object.defineProperty(e, "prototype", {
+                writable: !1
+            }),
+            t
+        //();
+        String.prototype.colorHex = function() {
+            var t = this;
+            if (/^(rgb|RGB)/.test(t)) {
+                for (var e = "#", n = t.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(","), i = 0; i < n.length; i++) {
+                    var a = Number(n[i]).toString(16);
+                    "0" === a && (a += a),
+                    e += a
+                }
+                return e
+            }
+            return String(t)
+        }
+        ,
+        document.addEventListener("keydown", (function(t) {
+            s[t.code] = !0,
+            p = t.code
+        }
+        )),
+        document.addEventListener("keyup", (function(t) {
+            delete s[t.code]
+        }
+        ));
+        var m = function(t) {
+            (t = t || window.event).wheelDelta ? o = t.wheelDelta : t.detail && (o = t.detail),
+            clearTimeout(u),
+            u = setTimeout((function() {
+                o = 0
+            }
+            ), 30)
+        };
+        r.parentNode.addEventListener && r.parentNode.addEventListener("DOMMouseScroll", m, !1),
+        r.parentNode.onmousewheel = m
+   // }
+//}]);
+//}
+    
