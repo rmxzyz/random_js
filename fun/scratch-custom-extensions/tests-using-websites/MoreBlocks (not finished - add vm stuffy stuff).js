@@ -748,29 +748,23 @@ fetch_data (args, util){
         .catch(() => '');
 }
 
-dev_battery (args, util){
-try {
-      return navigator.getBattery().then((battery) => {
-        return battery.level * 100;
-      });
-    }
-    catch {
-      return "undefined";
-    
-    }
-
+dev_battery(args, util){
+try{
+    return navigator.getBattery().then((battery) => {
+        return battery.level *100
+    });
+} catch(error) {
+    return error;
+}
 }
 
-dev_platform (args, util){
-
-  try {
-      return navigator.platform;
-    } catch {
-      return "undefined";
+dev_platform(args, util){
+    try {
+        return navigator.platform;
+    } catch(error) {
+        return error
     }
-  
 }
-
 copy_clipboard (args, util){
   const CONTENT = args.CONTENT;
   const NONTEXT = args.NONTEXT;
@@ -845,7 +839,7 @@ redirect_link (args, util){
 
 sprite_name (args, util){
 
-  return vm.editingTarget.sprite.name,
+  return vm.editingTarget.sprite.name;
 	  //console.log(util._nowObj())
 }
 is_turbo(args, util){
@@ -916,7 +910,7 @@ create_or_get_list (args, util){
 
 }
 
-}}
+}
  var extensionInstance = new blockUtils2(window.vm.extensionManager.runtime)
     var serviceName = window.vm.extensionManager._registerInternalExtension(extensionInstance)
     window.vm.extensionManager._loadedExtensions.set(extensionInstance.getInfo().id, serviceName)
