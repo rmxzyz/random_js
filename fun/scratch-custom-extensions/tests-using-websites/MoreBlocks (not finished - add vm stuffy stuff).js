@@ -553,8 +553,16 @@ class blockUtils2{
             }
           },
           text: 'Create or lookup list by name [NAME]'
+        }, //next
+	       {
+          opcode: 'is_turbo',
+          blockType: BlockType.REPORTER,
+          arguments: {
+          },
+          text: 'Is turbomode?'
         }
-      ]
+	      
+      ] //end
     }
   }
 
@@ -836,9 +844,12 @@ redirect_link (args, util){
 
 sprite_name (args, util){
 
-  return vm.editingTarget.sprite.name
+  return vm.editingTarget.sprite.name,
+	  //console.log(util._nowObj())
 }
-
+is_turbo(args, util){
+	return vm.runtime.turboMode;
+}
 is_clone (args, util){
 
   return !vm.editingTarget.isOriginal
