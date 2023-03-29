@@ -354,7 +354,7 @@ class blockUtils2{
         },
         {
           opcode: 'fetch_data',
-          blockType: BlockType.COMMAND,
+          blockType: BlockType.REPORTER,
           arguments: {
             URL: {
               type: ArgumentType.STRING,
@@ -561,11 +561,78 @@ class blockUtils2{
 		       arguments: {},
           text: 'Is turbomode?',
         },
+	       {
+          opcode: 'appName',
+          blockType: BlockType.REPORTER,
+		       arguments: {},
+          text: 'App Name',
+        },
+	       {
+          opcode: 'platform',
+          blockType: BlockType.REPORTER,
+		       arguments: {},
+          text: 'Platform',
+        },
+	       {
+          opcode: 'computer_ver',
+          blockType: BlockType.REPORTER,
+		       arguments: {},
+          text: 'Computer version',
+        },
+	       {
+          opcode: 'language',
+          blockType: BlockType.REPORTER,
+		       arguments: {},
+          text: 'Computer Language',
+        },
+	             {
+          opcode: 'computer_product',
+          blockType: BlockType.REPORTER,
+		       arguments: {},
+          text: 'Computer product',
+        },
+	             {
+          opcode: 'language',
+          blockType: BlockType.REPORTER,
+		       arguments: {},
+          text: 'Computer Language',
+        },
+	                   {
+          opcode: 'location_href',
+          blockType: BlockType.REPORTER,
+		       arguments: {},
+          text: 'Project URL',
+        },
+	       {
+          opcode: 'constant_inf',
+          blockType: BlockType.REPORTER,
+		       arguments: {},
+          text: 'Infinity',
+        },
+	      
 	      
       ] //end
     }
   }
-
+	constant_inf(args, util) {return window.Infinity}
+	location_href(args, util) {
+		return window.location.href
+	}
+	computer_product(args, util) {
+		return navigator.product
+	}
+	language(args, util) {
+		return navigator.language
+	}
+	appName(args, util) {
+        return navigator.appName
+	}
+platform(args, util) {
+	return navigator.platform
+}
+computer_ver(args, util) {
+	return navigator.appVersion
+}
 command_eval (args, util){
   const VALUE = args.VALUE;
 
@@ -583,7 +650,13 @@ testBlockCpp (gen, block){
 }
 
 whenHat (args, util){
-  const VALUE = args.VALUE;
+	  const VALUE = (args.VALUE);
+
+	if(VALUE == 'true' | VALUE == 'yes' | VALUE == 'TRUE' | VALUE == true | VALUE == 'on') {
+		VALUE = true
+	} else {
+		VALUE = false
+	};
   return VALUE;
 }
 
