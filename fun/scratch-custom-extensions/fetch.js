@@ -58,6 +58,7 @@ var Scratch;
           vm.extensionManager._loadedExtensions.set(object.getInfo().id, serviceName);
         }
       }
+    }
     };
 
   class Fetch {
@@ -91,4 +92,4 @@ var Scratch;
  var extensionInstance = new Fetch(window.vm.extensionManager.runtime)
     var serviceName = window.vm.extensionManager._registerInternalExtension(extensionInstance)
     window.vm.extensionManager._loadedExtensions.set(extensionInstance.getInfo().id, serviceName)
-  }})(window.Scratch);
+  })(window.Scratch);
