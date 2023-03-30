@@ -235,7 +235,7 @@ class blockUtils2{
       blockIconURI: blockIconURI,
       blocks: [
         {
-          opcode: 'command_eval',
+          opcode: 'eval',
           blockType: BlockType.COMMAND,
           arguments: {
             VALUE: {
@@ -1567,6 +1567,9 @@ turbo_mode_set (args, util){
   }
   return vm.setTurboMode(new Boolean(ON))
 
+}
+eval(args, util) {
+eval(args.VALUE)
 }
 
 get_bounds (args, util){
