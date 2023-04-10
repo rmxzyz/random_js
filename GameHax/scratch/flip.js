@@ -1,0 +1,1 @@
+javascript:void(document.querySelector("[class^=target-pane_target-pane]").style.flexDirection=document.querySelector("[class^=gui_flex-wrapper]").style.flexDirection=(flipped=!window.flipped)?'row-reverse':null)
