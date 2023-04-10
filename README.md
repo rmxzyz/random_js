@@ -18,7 +18,7 @@ javascript:alert("Hello, world!")
 # Links
 -----------------
 More bookmarklets page 1
-https://docs.google.com/document/d/1lWIx-PQDRpd3GBmM2TMDs2VKFTzlcpG-eN-p5_FU7w0/edit
+https://docs.google.com/document/d/1lWIx-PQDRpd3GBmM2TMDs2VKFTzlcpG-eN-p5_FU7w0
 More bookmarklets page 2
-https://docs.google.com/document/d/1WSuXiAgFsh3eg17S5beAFezGV48OXghk7ieEEpUlEUQ/edit
+https://docs.google.com/document/d/1WSuXiAgFsh3eg17S5beAFezGV48OXghk7ieEEpUlEUQ
 
