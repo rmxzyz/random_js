@@ -19,6 +19,16 @@ javascript:alert("Hello, world!")
 -----------------
 More bookmarklets page 1
 https://docs.google.com/document/d/1lWIx-PQDRpd3GBmM2TMDs2VKFTzlcpG-eN-p5_FU7w0
+----
 More bookmarklets page 2
 https://docs.google.com/document/d/1WSuXiAgFsh3eg17S5beAFezGV48OXghk7ieEEpUlEUQ
+----
+Google Drive Files
+https://drive.google.com/drive/folders/139QIektdovS5D_XuzxE3T7fzVFPI603pQgIk9vxVxuXAV8hqL4FVR3X_iNcvJU5TNbh5sAB1
+----
+For drive (untested)
+DMG TO EXE 1
+https://anyconv.com/dmg-converter/
+Other Converter
+https://www.converter365.com/archive-converter/rar/rar-to-dmg
 
