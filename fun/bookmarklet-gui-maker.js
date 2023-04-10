@@ -1,0 +1,1 @@
+ var hr = '<iframe src="https://w-shadow.com/bookmarklet-combiner/" width="800" height="330" frameborder="0" allowtransparency="true"></iframe>';var player = document.createElement('div');player.classList.add('spotiplayer');player.innerHTML = hr; document.body.appendChild(player)
