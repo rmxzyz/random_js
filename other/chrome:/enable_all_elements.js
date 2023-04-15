@@ -12,7 +12,9 @@ const submit = document.querySelectorAll('submit');
 const options = document.querySelectorAll('option');
 const select = document.querySelectorAll('select');
 const crtoggles = document.querySelectorAll('cr-toggle');
-const i = [crtoggles, select, options, submit, fields, groups, textareas, allElems, inputs, keygens, crbuttons, buttons];
+const a = document.querySelectorAll('a') //yep, these can be disabled.
+const spans = const a = document.querySelectorAll('span') //yep, these can be disabled.
+const i = [crtoggles, select, options, submit, fields, groups, textareas, allElems, inputs, keygens, crbuttons, buttons, a, spans];
 
 i.forEach((value, index, arr) => {
   if (value.length) {}
@@ -37,7 +39,10 @@ i.forEach((value, index, arr) => {
       const options2 = root.querySelectorAll('option');
       const select2 = root.querySelectorAll('select');
       const crtoggles2 = root.querySelectorAll('cr-toggle');
-      const i2 = [crtoggles2, select2, options2, submit2, fields2, groups2, textareas2, allElems2, inputs2, keygens2, crbuttons2, buttons2];
+      const a2 = root.querySelectorAll('a') //yep, these can be disabled.
+      const spans2 = const a = document.querySelectorAll('span') //yep, these can be disabled.
+
+      const i2 = [crtoggles2, select2, options2, submit2, fields2, groups2, textareas2, allElems2, inputs2, keygens2, crbuttons2, buttons2, a2, spans2];
       allElems2.forEach((item, index, arr) => {
         if (item) { item.removeAttribute('disabled'); item.setAttribute('aria-disabled', false); }
         if (item.shadowRoot) {
