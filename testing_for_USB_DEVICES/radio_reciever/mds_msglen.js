@@ -11,5 +11,5 @@ const SHORT_MSG_BITS = 56;
 // stick to these rules, meaning that the most significant bit of the DF
 // indicates the length.
 function msgLen(type) {
-  return type & 0x10 ? LONG_MSG_BITS : SHORT_MSG_BITS;
+  return type & 0x10 ? LONG_MSG_BITS : SHORT_MSG_BITS; 
 }
