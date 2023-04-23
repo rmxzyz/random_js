@@ -1,12 +1,19 @@
 "use strict";
-import { Decoder, UNIT_FEET, UNIT_METERS } from "./decoder.js";
+//import { Decoder, UNIT_FEET, UNIT_METERS } from "./decoder.js";
 
-import {
+/*import {
     msgLen,
     LONG_MSG_BITS as long_msg_bits,
     SHORT_MSG_BITS as short_msg_bits,
 } from "./mode-s-msglen.js";
-
+*/
+if(!window.msgLen) {
+    throw new Error(":/msgLen is not defined")
+}
+if(!window.long_msg_bits && window.LONG_MSG_BITS) 
+    window.long_msg_bits = window.LONG_MSG_BITS;
+if(!window.short_msg_bits && window.SHORT_MSG_BITS)
+    window.short_msg_bits = window.SHORT_MSG_BITS;
 const PREAMBLE_US = 8; // microseconds
 const FULL_LEN = PREAMBLE_US + long_msg_bits;
 
@@ -27,7 +34,7 @@ for (let i = 0; i <= 128; i++) {
 Demodulator.UNIT_FEET = UNIT_FEET;
 Demodulator.UNIT_METERS = UNIT_METERS;
 
-export function Demodulator(opts) {
+function Demodulator(opts) {
     if (!(this instanceof Demodulator)) return new Demodulator(opts);
 
     if (!opts) opts = {};
