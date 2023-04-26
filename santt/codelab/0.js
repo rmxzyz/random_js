@@ -22979,7 +22979,7 @@ sceneApi.config({
 }),
 sceneApi.ready(async e=>{
     game.start(e && e.level || 1)
-};
+});
 window.sceneApi = sceneApi;
 window.Game = Game;
 
