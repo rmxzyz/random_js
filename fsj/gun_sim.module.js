@@ -1,5 +1,5 @@
 //SCRIPT TYPE: MODULE
-
+document = window.open('');
 document.write('<!DOCTYPE HTML> \n <html> \n <head> \n </head> \n <body> \n </body> \n </html>')
 // Style, And the canvas.
 var canva = document.createElement('canvas');
