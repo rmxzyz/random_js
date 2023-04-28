@@ -3,6 +3,8 @@ style.innerHTML = "body, html, #app {\n margin: 0;\n width: 100%;\n height: 100%
 document.head.appendChild(style);
 var app = document.createElement('div');
 app.id = "app";
+app.style.position = 'fixed';
+app.style.zIndex = -1;
 document.body.appendChild(app)
 import { neonCursor } from 'https://unpkg.com/threejs-toys@0.0.8/build/threejs-toys.module.cdn.min.js'
 
