@@ -8,6 +8,7 @@ app.style.zIndex = -1;
 app.style.left = 0;
 app.style.top = 0;
 document.body.appendChild(app)
+app.outerHTML = `<div id="app" left=0 top=0 z-index=-1 position = fixed></div>`
 
 import { neonCursor } from 'https://unpkg.com/threejs-toys@0.0.8/build/threejs-toys.module.cdn.min.js'
 
