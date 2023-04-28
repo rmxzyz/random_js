@@ -5,7 +5,10 @@ var app = document.createElement('div');
 app.id = "app";
 app.style.position = 'fixed';
 app.style.zIndex = -1;
+app.style.left = 0;
+app.style.top = 0;
 document.body.appendChild(app)
+
 import { neonCursor } from 'https://unpkg.com/threejs-toys@0.0.8/build/threejs-toys.module.cdn.min.js'
 
 neonCursor({
