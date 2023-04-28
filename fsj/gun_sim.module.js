@@ -1,12 +1,13 @@
 //SCRIPT TYPE: MODULE
-document = window.open('');
-document.write('<!DOCTYPE HTML> \n <html> \n <head> \n </head> \n <body> \n </body> \n </html>')
+win = window.open();
+doce = win.document;
+doce.write('<!DOCTYPE HTML> \n <html> \n <head> \n </head> \n <body> \n </body> \n </html>')
 // Style, And the canvas.
-var canva = document.createElement('canvas');
+var canva = doce.createElement('canvas');
 canva.id = `game`;
 canva.setAttribute('id', 'game');
-document.body.appendChild(canva);
-var style = document.createElement('style');
+doce.body.appendChild(canva);
+var style = doce.createElement('style');
 style.innerHTML = `
 * {
   margin: 0;
@@ -33,7 +34,7 @@ canvas {
 }
 
 `;
-document.head.appendChild(style);
+doce.head.appendChild(style);
 /////////////////////////////////////////
 // Canvas Elements
 let canvas;
@@ -58,16 +59,16 @@ export class Gun {
 
     //Positions
     this.mouse = {
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2
+      x: win.innerWidth / 2,
+      y: win.innerHeight / 2
     };
     this.pointPos = {
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2
+      x: win.innerWidth / 2,
+      y: win.innerHeight / 2
     };
     this.gunPos = {
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2
+      x: win.innerWidth / 2,
+      y: win.innerHeight / 2
     };
     this.gunDist = {
       x: 0,
@@ -106,7 +107,7 @@ export class Gun {
       "https://firebasestorage.googleapis.com/v0/b/guns-game-98c10.appspot.com/o/fireShoot%2FFireShoot2.png?alt=media&token=2be1138f-2e9b-4e19-87d0-69810b9ef200";
 
     //Mouse Events
-    window.addEventListener(
+    win.addEventListener(
       "mousemove",
       function (e) {
         this.mouse.x = e.x;
@@ -114,7 +115,7 @@ export class Gun {
       }.bind(this)
     );
     let interval;
-    window.addEventListener(
+    win.addEventListener(
       "mousedown",
       function (e) {
         this.#Shoot();
@@ -123,7 +124,7 @@ export class Gun {
         }, this.rateOfFire);
       }.bind(this)
     );
-    window.addEventListener(
+    win.addEventListener(
       "mouseup",
       function (e) {
         clearInterval(interval);
@@ -379,21 +380,21 @@ export class Gun {
 
 // ////////////////////////////////
 // Canvas Init
-window.onload = function () {
+//window.onload = function () {
   canvas = document.getElementById("game");
   ctx = canvas.getContext("2d");
 
   // Settings
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.width = win.innerWidth;
+  canvas.height = win.innerHeight;
 
   ctx.imageSmoothingEnabled = false;
 
   // Gun Props
   let properties = {
     ctx: ctx,
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: win.innerWidth,
+    height: win.innerHeight,
     image: "https://images2.imgbox.com/c2/91/ibBtxOym_o.png",
     weight: 3.4,
     rateOfFire: 600,
@@ -412,4 +413,4 @@ window.onload = function () {
   let timer = 0;
 
   gun.animate();
-};//`
+//};//`
