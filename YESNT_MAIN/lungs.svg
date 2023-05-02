@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-200 0 400 354" width="399.282" height="354" fill="none" stroke-width="20" stroke-linejoin="round" stroke-linecap="round" stroke="white">
+  <path d="M -70 175 L -20 147 L -20 300 L -150 350 C -160 320 -200 230 -190 170 C -180 110 -140 65 -80 40 L -20 55 L -20 90 L -100 140"/>
+  <path d="M 70 175 L 20 147 L 20 300 L 150 350 C 160 320 200 230 190 170 C 180 110 140 65 80 40 L 20 55 L 20 90 L 100 140"/>
+
+  <path d="M -20 5 L -20 90 L -100 140"/>
+  <path d="M 20 5 L 20 90 L 100 140"/>
+  <path d="M -70 175 L 0 135 L 70 175"/>
+</svg>

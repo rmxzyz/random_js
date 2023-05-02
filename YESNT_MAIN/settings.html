@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>YESNT / Settings</title>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+
+    <meta name="description" content="Introductory settings page shown to users before they are fully exposed to YESNT."/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link href="https://fonts.googleapis.com/css?family=Karla:400&display=swap" rel="stylesheet">
+    <style media="screen">
+      body {
+        margin: 0;
+        font-size: 0;
+        background-color: black;
+        font-family: 'Karla', sans-serif;
+        color: white;
+      }
+      .container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 0 20px 40px 20px;
+      }
+      p {
+        font-size: 14px;
+        margin: 0;
+        margin-top: 20px;
+      }
+      input[type=radio] {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+      }
+      .icon {
+        vertical-align: middle;
+      }
+
+      .logo {
+        -ms-interpolation-mode: bicubic;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+        image-rendering: pixelated;
+        width: 100%;
+      }
+
+      .block-choices {
+        display: flex;
+        align-items: stretch;
+      }
+      .block-choices:focus-within {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+      .block-choice {
+        flex: 1 0 0;
+        margin: 10px;
+      }
+      .block {
+        background-color: rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        padding: 10px;
+        height: 100%;
+        box-sizing: border-box;
+      }
+      input[type=radio]:checked + .block {
+        background-color: rgba(255, 255, 255, 0.15);
+        box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.1);
+        cursor: auto;
+      }
+      .choice-name {
+        font-size: 16px;
+        text-transform: uppercase;
+      }
+      .block img {
+        width: 100%;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.5);
+        margin: 10px 0;
+      }
+      .choice-desc {
+        font-size: 14px;
+      }
+
+      .checkboxes {
+        padding: 1px 0;
+      }
+      .checkboxes:focus-within {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+      .option {
+        background-color: rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        padding: 10px;
+        margin: 10px;
+      }
+      input[type=radio]:checked + .option {
+        background-color: rgba(255, 255, 255, 0.15);
+        box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.1);
+        cursor: auto;
+      }
+      .name {
+        font-size: 16px;
+        margin-right: 10px;
+      }
+      .desc {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      .button {
+        -webkit-appearance: none;
+        border: none;
+        background: none;
+        background-color: rgba(255, 255, 255, 0.1);
+        font: inherit;
+        color: inherit;
+        font-size: 20px;
+        margin-top: 20px;
+        width: 100%;
+        padding: 10px 0;
+        box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        text-transform: uppercase;
+      }
+      .button:hover,
+      .button:focus {
+        background-color: rgba(255, 255, 255, 0.2);
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img src="./images/yesnt-logo-white.png" alt="YESNT logo" class="logo">
+      <p>YESNT is a computationally intensive game. Make sure your graphics card is not trash and you are using a decent browser before playing.</p>
+      <div class="block-choices">
+        <label class="block-choice">
+          <input type="radio" name="material" value="standard" checked>
+          <div class="block">
+            <div class="choice-name">Standard material</div>
+            <img src="./images/standard.png" alt="Screenshot of standard material lighting">
+            <div class="choice-desc">Fancier lighting.</div>
+          </div>
+        </label>
+        <label class="block-choice">
+          <input type="radio" name="material" value="lambert">
+          <div class="block">
+            <div class="choice-name">Lambert material</div>
+            <img src="./images/lambert.png" alt="Screenshot of standard material lighting">
+            <div class="choice-desc">Faster lighting.</div>
+          </div>
+        </label>
+        <label class="block-choice">
+          <input type="radio" name="material" value="emissive">
+          <div class="block">
+            <div class="choice-name">Emissive material</div>
+            <img src="./images/emissive.png" alt="Screenshot of emissive material lighting">
+            <div class="choice-desc">No lighting, but works on Safari.</div>
+          </div>
+        </label>
+      </div>
+      <p><img src="./images/audio-icon.svg" alt="Audio icon" class="icon"> This game has audio. Adjust your volume to best suit your environment.</p>
+      <div class="checkboxes">
+        <label class="checkbox">
+          <input type="radio" name="audio" value="audio" checked>
+          <div class="option">
+            <span class="name">Audio voices</span>
+            <span class="desc">Sounds nicer.</span>
+          </div>
+        </label>
+        <label class="checkbox">
+          <input type="radio" name="audio" value="tts">
+          <div class="option">
+            <span class="name">Browser TTS</span>
+            <span class="desc">Loads faster.</span>
+          </div>
+        </label>
+        <label class="checkbox">
+          <input type="radio" name="audio" value="none">
+          <div class="option">
+            <span class="name">Subtitles only</span>
+          </div>
+        </label>
+      </div>
+      <p>The YESNT Program is long, but a shorter one is available.</p>
+      <div class="block-choices">
+        <label class="block-choice">
+          <input type="radio" name="abridged" value="full" checked>
+          <div class="block">
+            <div class="choice-name">Full program</div>
+            <!-- <img src="./images/standard.png" alt="Screenshot of standard material lighting"> -->
+            <div class="choice-desc">Longer.</div>
+          </div>
+        </label>
+        <label class="block-choice">
+          <input type="radio" name="abridged" value="abridged">
+          <div class="block">
+            <div class="choice-name">Abridged program</div>
+            <!-- <img src="./images/standard.png" alt="Screenshot of standard material lighting"> -->
+            <div class="choice-desc">Less effective.</div>
+          </div>
+        </label>
+      </div>
+      <button type="button" class="button" id="play">Play</button>
+      <script type="text/javascript">
+        let options;
+        try {
+          options = JSON.parse(localStorage.getItem('[yesnt] options'));
+          if (options === null || typeof options !== 'object') throw new Error();
+        } catch (e) {
+          options = {};
+        }
+        if (options.material !== undefined) {
+          document.querySelector(`input[name=material][value=${['standard', 'lambert', 'emissive'][options.material]}]`).checked = true;
+        }
+        if (options.audio !== undefined) {
+          document.querySelector(`input[name=audio][value=${['none', 'tts', 'audio'][options.audio]}]`).checked = true;
+        }
+        if (options.abridged !== undefined) {
+          document.querySelector(`input[name=abridged][value=${options.abridged ? 'abridged' : 'full'}]`).checked = true;
+        }
+        document.getElementById('play').addEventListener('click', e => {
+          const material = document.querySelector('input[name=material]:checked').value;
+          const audio = document.querySelector('input[name=audio]:checked').value;
+          const abridged = document.querySelector('input[name=abridged]:checked').value;
+          options.material = material === 'emissive' ? 2 : material === 'lambert' ? 1 : 0;
+          options.audio = audio === 'audio' ? 2 : audio === 'tts' ? 1 : 0;
+          options.abridged = abridged === 'abridged';
+          localStorage.setItem('[yesnt] options', JSON.stringify(options));
+          window.location = './yesnt.html';
+        });
+      </script>
+    </div>
+  </body>
+</html>

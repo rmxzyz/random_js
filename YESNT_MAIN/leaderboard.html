@@ -1,0 +1,401 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <title>YESNT / Leaderboard</title>
+    <meta name="description" content="Global leaderboard in YESNT">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Karla:400|Share+Tech+Mono&amp;display=swap" rel="stylesheet">
+    <style media="screen">
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  margin: 0;
+  font-size: 0;
+  font-family: 'Karla', sans-serif;
+  color: white;
+  background-color: black;
+  overflow: auto;
+  white-space: nowrap;
+}
+button {
+  -webkit-appearance: none;
+  border: none;
+  background: none;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.link-btn {
+  color: inherit;
+  text-decoration: none;
+}
+:focus {
+  outline: none;
+}
+
+/* Wrapper to make the leaderboard bar take up full scroll content width */
+#wrapper {
+  display: inline-block;
+  min-width: 100%;
+}
+
+.ldrboards {
+  background-image: linear-gradient(#232323, #191919);
+  border-bottom: 1px solid #0e0e0e;
+}
+.ldr-select {
+  font-size: 16px;
+  padding: 10px;
+  background-image: linear-gradient(#343434, #242424);
+  border-right: 1px solid #0e0e0e;
+}
+.ldr-select:hover {
+  background-image: linear-gradient(#444444, #2f2f2f);
+}
+.ldr-select:active,
+.ldr-select.selected {
+  background-image: linear-gradient(#242424, #343434);
+}
+.ldr-select.selected {
+  cursor: default;
+}
+
+.leaderboard {
+  display: flex;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+}
+.problem {
+  color: red;
+  white-space: pre-wrap;
+}
+.column {
+  display: inline-block;
+}
+.entry {
+  display: block;
+  padding: 0 10px;
+  border-right: 1px solid #383838;
+}
+.entry:nth-child(2n) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.heading {
+  display: flex;
+  align-items: center;
+  color: white;
+  height: 20px;
+  background-image: linear-gradient(#383838, #2c2c2c);
+  border-right-color: rgba(255, 255, 255, 0.1);
+}
+.sort-btns {
+  margin-left: 5px;
+}
+.sort-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10px;
+  width: 15px;
+  font-size: 0;
+  opacity: 0.5;
+}
+.sort-btn:hover {
+  opacity: 0.8;
+}
+.sorting.sorting-up .up-btn,
+.sorting.sorting-down .down-btn {
+  opacity: 1;
+  pointer-events: default;
+}
+.sort-btn::after {
+  content: '';
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+}
+.up-btn::after {
+  border-bottom: 5px solid white;
+}
+.down-btn::after {
+  border-top: 5px solid white;
+}
+.name {
+  font-family: 'Share Tech Mono', monospace;
+}
+.name:link, .name:visited {
+  color: white;
+  text-decoration: none;
+}
+.name:link:hover {
+  text-decoration: underline;
+}
+.data {
+  text-align: right;
+  font-family: 'Share Tech Mono', monospace;
+}
+.mine {
+  background-color: rgba(0, 255, 255, 0.2);
+}
+.mine:nth-child(2n) {
+  background-color: rgba(0, 255, 255, 0.3);
+}
+    </style>
+  <style>.osSwitch{position:relative;display:inline-block;width:34px;height:15.3px}.osSwitch input{opacity:0;width:0;height:0}.osSlider{position:absolute;top:0;left:0;right:0;bottom:0;border-radius:34px;background-color:#93a0b5;transition:0.4s}.osSlider:before{position:absolute;content:'';height:13px;width:13px;left:2px;bottom:1px;border-radius:50%;background-color:white;transition:0.4s}input:checked+.sliderGreen{background-color:#04d289}input:checked+.sliderRed{background-color:#ff3b30}input:not(:checked)+.defaultGreen{background-color:#04d289}input:checked+.osSlider:before{transform:translateX(17px)}
+</style><style>
+    @font-face {
+      font-family: 'SegoeUI_online_security'; 
+      src: url(chrome-extension://llbcnfanfmjhpedaedhbcnpgeepdnnok/segoe-ui.woff);
+    }
+
+    @font-face {
+      font-family: 'SegoeUI_bold_online_security'; 
+      src: url(chrome-extension://llbcnfanfmjhpedaedhbcnpgeepdnnok/segoe-ui-bold.woff);
+    }
+</style></head>
+  <body>
+    <div id="wrapper">
+      <div class="ldrboards">
+        <a class="ldr-select link-btn" href="./">← Back to YESNT</a>
+        <button type="button" class="ldr-select selected" id="escaped">Escapees</button>
+        <button type="button" class="ldr-select" id="completed">Full completionists</button>
+        <button type="button" class="ldr-select" id="abridged">Abridged completionists</button>
+      </div>
+    <div class="leaderboard problem">Fetching the leaderboard did not go smoothly:
+
+&lt;html&gt;&lt;head&gt;
+&lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
+&lt;title&gt;500 Server Error&lt;/title&gt;
+&lt;/head&gt;
+&lt;body text=#000000 bgcolor=#ffffff&gt;
+&lt;h1&gt;Error: Server Error&lt;/h1&gt;
+&lt;h2&gt;The server encountered an error and could not complete your request.&lt;p&gt;Please try again in 30 seconds.&lt;/h2&gt;
+&lt;h2&gt;&lt;/h2&gt;
+&lt;/body&gt;&lt;/html&gt;
+</div></div>
+    <script type="text/javascript">
+const wrapper = document.getElementById('wrapper');
+const myScores = (localStorage.getItem('[yesnt] submitted') || '').split(' ');
+const defaultHeadings = [
+  ['index', '#', 'Position'],
+  ['name', 'Name'],
+  ['time', 'Timestamp'],
+  ['duration', 'Time', 'Time played'],
+  ['breaths', 'BRT', 'Breaths taken']
+];
+const escapeHeadings = [
+  ['distance', 'DIST', 'Distance run'],
+  ['codeEntries', 'TRY', 'Codes entered']
+];
+const completeHeadings = [
+  ['powers', 'POW', 'Power breaths'],
+  ['expands', 'XPD', 'Expansion breaths'],
+  ['accuracy', '%ACC', 'Accuracy']
+];
+const ldrboardHeadings = {
+  abridged: [...defaultHeadings, ...completeHeadings],
+  completed: [...defaultHeadings, ...completeHeadings],
+  escaped: [...defaultHeadings, ...escapeHeadings]
+};
+const ldrboardBtns = {
+  abridged: document.getElementById('abridged'),
+  completed: document.getElementById('completed'),
+  escaped: document.getElementById('escaped')
+};
+const leaderboards = {};
+const ldrboardSorts = {};
+let currentLdrboard;
+let params;
+
+function sort(prop, ascending = true) {
+  return prop === 'name'
+    ? (ascending
+      ? (a, b) => a.name.localeCompare(b.name)
+      : (a, b) => b.name.localeCompare(a.name))
+    : ascending
+    ? (a, b) => a[prop] - b[prop]
+    : (a, b) => b[prop] - a[prop];
+}
+
+async function showLeaderboard(ldrboard, onclick = false) {
+  if (currentLdrboard) {
+    ldrboardBtns[currentLdrboard].classList.remove('selected');
+    wrapper.removeChild(leaderboards[currentLdrboard]);
+  }
+  currentLdrboard = ldrboard;
+  ldrboardBtns[ldrboard].classList.add('selected');
+  if (params.get('leaderboard') && onclick) {
+    window.history.pushState({}, '', '?' + params.toString());
+  }
+  params.set('leaderboard', ldrboard);
+  if (leaderboards[ldrboard]) {
+    wrapper.appendChild(leaderboards[ldrboard]);
+    if (onclick) {
+      params.set('sort', ldrboardSorts[ldrboard].sort);
+      params.set('dir', ldrboardSorts[ldrboard].ascending ? 'down' : 'up');
+      window.history.replaceState({}, '', '?' + params.toString());
+    }
+  } else {
+    window.history.replaceState({}, '', '?' + params.toString());
+
+    const board = document.createElement('div');
+    board.classList.add('leaderboard');
+    wrapper.appendChild(board);
+    leaderboards[ldrboard] = board;
+
+    const data = await fetch('https://test-9d9aa.firebaseapp.com/yesntScores?leaderboard=' + ldrboard)
+      .then(r => r.ok ? r.json() : r.text().then(content => Promise.reject(content)))
+      .catch(err => {
+        board.classList.add('problem');
+        board.textContent = 'Fetching the leaderboard did not go smoothly:\n' + err;
+        return null;
+      });
+    if (!data) return;
+
+    const headings = ldrboardHeadings[ldrboard];
+    const columns = {};
+    function resort(sortProp, ascending) {
+      if (!columns[sortProp]) return;
+      const oldProp = ldrboardSorts[ldrboard].sort;
+      columns[oldProp].classList.remove('sorting');
+      columns[oldProp].classList.remove('sorting-up');
+      columns[oldProp].classList.remove('sorting-down');
+      ldrboardSorts[ldrboard].sort = sortProp;
+      ldrboardSorts[ldrboard].ascending = ascending;
+      columns[sortProp].classList.add('sorting');
+      columns[sortProp].classList.add(ascending ? 'sorting-down' : 'sorting-up');
+      params.set('sort', sortProp);
+      params.set('dir', ascending ? 'down' : 'up');
+      window.history.replaceState({}, '', '?' + params.toString());
+      data.sort(sort(sortProp, ascending));
+      addItems();
+    }
+    headings.forEach(([id, name, label]) => {
+      const column = document.createElement('div');
+      column.classList.add('column');
+      board.appendChild(column);
+      columns[id] = column;
+
+      const heading = document.createElement('span');
+      heading.classList.add('entry');
+      heading.classList.add('heading');
+      heading.textContent = name;
+      if (label) heading.title = label;
+      column.appendChild(heading);
+
+      if (id !== 'index') {
+        const btnWrapper = document.createElement('span');
+        btnWrapper.classList.add('sort-btns');
+        heading.appendChild(btnWrapper);
+
+        const upBtn = document.createElement('button');
+        upBtn.classList.add('sort-btn');
+        upBtn.classList.add('up-btn');
+        btnWrapper.appendChild(upBtn);
+        const downBtn = document.createElement('button');
+        downBtn.classList.add('sort-btn');
+        downBtn.classList.add('down-btn');
+        btnWrapper.appendChild(downBtn);
+
+        upBtn.addEventListener('click', e => {
+          resort(id, false);
+        });
+        downBtn.addEventListener('click', e => {
+          resort(id, true);
+        });
+      }
+    });
+    if (ldrboard === 'escaped') {
+      ldrboardSorts[ldrboard] = {sort: 'duration', ascending: true};
+      data.sort((a, b) => a.duration - b.duration);
+      columns.duration.classList.add('sorting');
+      columns.duration.classList.add('sorting-down');
+    } else {
+      ldrboardSorts[ldrboard] = {sort: 'accuracy', ascending: false};
+      data.sort((a, b) => b.accuracy - a.accuracy);
+      columns.accuracy.classList.add('sorting');
+      columns.accuracy.classList.add('sorting-up');
+    }
+    params.set('sort', ldrboardSorts[ldrboard].sort);
+    params.set('dir', ldrboardSorts[ldrboard].ascending ? 'down' : 'up');
+    window.history.replaceState({}, '', '?' + params.toString());
+    data.forEach((score, i) => {
+      score.elems = {};
+      headings.forEach(([id]) => {
+        const entry = document.createElement(id === 'name' ? 'a' : 'span');
+        entry.classList.add('entry');
+        if (myScores.includes(score.id)) entry.classList.add('mine');
+        if (id === 'name') {
+          entry.classList.add('name');
+          if (score.url) {
+            entry.href = score.url;
+            entry.setAttribute('target', '_blank');
+            entry.setAttribute('rel', 'noopener noreferrer');
+          }
+        } else {
+          entry.classList.add('data');
+        }
+        entry.textContent = id === 'accuracy'
+          ? (score.accuracy * 100).toFixed(2) + '%'
+          : id === 'distance'
+          ? score.distance.toFixed(2)
+          : id === 'index'
+          ? i + 1
+          : id === 'duration'
+          ? (score.duration / 1000).toFixed(3)
+          : id === 'time'
+          ? new Date(score.time).toISOString()
+          : score[id];
+        if (id === 'accuracy') {
+          entry.title = score.accuracy * 100;
+        } else if (id === 'distance') {
+          entry.title = score.distance;
+        } else if (id === 'time') {
+          entry.title = new Date(score.time).toLocaleString();
+        }
+        score.elems[id] = entry;
+      });
+    });
+
+    function addItems() {
+      headings.forEach(([id]) => {
+        while (columns[id].children.length > 1) {
+          columns[id].removeChild(columns[id].lastElementChild);
+        }
+      });
+      data.forEach(score => {
+        headings.forEach(([id]) => {
+          columns[id].appendChild(score.elems[id]);
+        });
+      });
+    }
+    addItems();
+    ldrboardSorts[ldrboard].resort = resort;
+  }
+}
+ldrboardBtns.abridged.addEventListener('click', e => showLeaderboard('abridged', true));
+ldrboardBtns.completed.addEventListener('click', e => showLeaderboard('completed', true));
+ldrboardBtns.escaped.addEventListener('click', e => showLeaderboard('escaped', true));
+function showURLState() {
+  params = new URL(window.location).searchParams;
+  const initSort = params.get('sort');
+  const initAscending = params.get('dir') !== 'up';
+  let ldrboard = params.get('leaderboard') || 'escaped';
+  if (!ldrboardBtns[ldrboard]) {
+    ldrboard = 'escaped';
+  }
+  return showLeaderboard(ldrboard)
+    .then(() => {
+      if (initSort) {
+        ldrboardSorts[currentLdrboard].resort(initSort, initAscending);
+      }
+    });
+}
+showURLState();
+window.addEventListener('popstate', showURLState);
+    </script>
+  
+
+</body></html>
