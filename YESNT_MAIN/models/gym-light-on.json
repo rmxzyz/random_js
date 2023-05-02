@@ -1,0 +1,127 @@
+{
+	"metadata": {
+		"version": 4.5,
+		"type": "Object",
+		"generator": "Object3D.toJSON"
+	},
+	"geometries": [
+		{
+			"uuid": "5C89BFAC-E5E5-4FC2-B7A7-8C954E1EE370",
+			"type": "CylinderBufferGeometry",
+			"radiusTop": 0.2,
+			"radiusBottom": 0.2,
+			"height": 3.2,
+			"radialSegments": 8,
+			"heightSegments": 1,
+			"openEnded": false
+		},
+		{
+			"uuid": "7102AFE6-D83A-4FA2-BB0A-1C793A47E146",
+			"type": "CylinderBufferGeometry",
+			"radiusTop": 1,
+			"radiusBottom": 1,
+			"height": 1,
+			"radialSegments": 8,
+			"heightSegments": 1,
+			"openEnded": false,
+			"thetaStart": 0,
+			"thetaLength": 6.283185
+		},
+		{
+			"uuid": "3EE98CCF-6EB4-453E-ACC6-2BC716754472",
+			"type": "SphereBufferGeometry",
+			"radius": 1,
+			"widthSegments": 8,
+			"heightSegments": 6,
+			"phiStart": 0,
+			"phiLength": 6.283185,
+			"thetaStart": 0,
+			"thetaLength": 3.141593
+		}],
+	"materials": [
+		{
+			"uuid": "872D810C-8979-4261-AB52-7558888ED37D",
+			"type": "MeshStandardMaterial",
+			"color": 16777215,
+			"roughness": 0.1,
+			"metalness": 0.9,
+			"emissive": 0,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true
+		},
+		{
+			"uuid": "0CDB2FB9-ECB4-4B89-A2FD-09C10A96F54D",
+			"type": "MeshStandardMaterial",
+			"name": "bulb",
+			"color": 16777215,
+			"roughness": 0.5,
+			"metalness": 0.5,
+			"emissive": 16056314,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true
+		}],
+	"object": {
+		"uuid": "58C1151E-26C8-47B1-B4AF-0B155FEBAB0B",
+		"type": "Group",
+		"name": "gym light on",
+		"layers": 1,
+		"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+		"children": [
+			{
+				"uuid": "730772CD-4F99-42C7-910E-FA0208EFAF41",
+				"type": "Mesh",
+				"name": "support",
+				"layers": 1,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,-1.5,0,1],
+				"geometry": "5C89BFAC-E5E5-4FC2-B7A7-8C954E1EE370",
+				"material": "872D810C-8979-4261-AB52-7558888ED37D"
+			},
+			{
+				"uuid": "744FD636-374C-4260-9B7B-1F9855E32052",
+				"type": "Mesh",
+				"name": "bulb",
+				"layers": 1,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,-4.5,0,1],
+				"geometry": "7102AFE6-D83A-4FA2-BB0A-1C793A47E146",
+				"material": "0CDB2FB9-ECB4-4B89-A2FD-09C10A96F54D"
+			},
+			{
+				"uuid": "B644CD23-9D3B-410C-8972-392B75F9319C",
+				"type": "Mesh",
+				"name": "bulbous bulb",
+				"layers": 1,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,-4,0,1],
+				"geometry": "3EE98CCF-6EB4-453E-ACC6-2BC716754472",
+				"material": "0CDB2FB9-ECB4-4B89-A2FD-09C10A96F54D",
+				"children": [
+					{
+						"uuid": "66A16004-8F9C-46DF-9E75-57340E3643EC",
+						"type": "PointLight",
+						"name": "light",
+						"layers": 1,
+						"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+						"color": 16056314,
+						"intensity": 0.03,
+						"distance": 0,
+						"decay": 1,
+						"shadow": {
+							"camera": {
+								"uuid": "37FE11C4-59D3-4F85-B310-F2586F97436A",
+								"type": "PerspectiveCamera",
+								"layers": 1,
+								"fov": 90,
+								"zoom": 1,
+								"near": 0.5,
+								"far": 500,
+								"focus": 10,
+								"aspect": 1,
+								"filmGauge": 35,
+								"filmOffset": 0
+							}
+						}
+					}]
+			}]
+	}
+}

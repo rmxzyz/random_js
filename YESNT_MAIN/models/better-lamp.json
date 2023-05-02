@@ -1,0 +1,124 @@
+{
+	"metadata": {
+		"version": 4.5,
+		"type": "Object",
+		"generator": "Object3D.toJSON"
+	},
+	"geometries": [
+		{
+			"uuid": "CE34F44A-FC77-45B0-AAEF-24F9DAFE2124",
+			"type": "CylinderBufferGeometry",
+			"radiusTop": 1,
+			"radiusBottom": 1.5,
+			"height": 2,
+			"radialSegments": 8,
+			"heightSegments": 1,
+			"openEnded": false
+		},
+		{
+			"uuid": "E6803C5C-748B-4374-982A-2A4449E95594",
+			"type": "CylinderBufferGeometry",
+			"radiusTop": 0.2,
+			"radiusBottom": 0.2,
+			"height": 2,
+			"radialSegments": 8,
+			"heightSegments": 1,
+			"openEnded": false
+		},
+		{
+			"uuid": "6F996C9E-FA10-48FC-A142-BA12E0419A1E",
+			"type": "CylinderBufferGeometry",
+			"radiusTop": 1,
+			"radiusBottom": 1,
+			"height": 0.3,
+			"radialSegments": 8,
+			"heightSegments": 1,
+			"openEnded": false
+		}],
+	"materials": [
+		{
+			"uuid": "12EB6836-F76A-49B0-9BA9-BA4B36AA0FE0",
+			"type": "MeshStandardMaterial",
+			"color": 14470816,
+			"roughness": 0.5,
+			"metalness": 0.5,
+			"emissive": 16766634,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true
+		},
+		{
+			"uuid": "0349D577-8B06-45A9-B55A-16E5255DD4DF",
+			"type": "MeshStandardMaterial",
+			"name": "lamp metal",
+			"color": 10971199,
+			"roughness": 0.9,
+			"metalness": 0.9,
+			"emissive": 0,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true
+		}],
+	"object": {
+		"uuid": "17540F31-28EB-41AB-9991-0A7662EA73EC",
+		"type": "Group",
+		"name": "better lamp",
+		"layers": 1,
+		"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+		"children": [
+			{
+				"uuid": "630F1E1A-9942-4DB7-A9E5-397836774954",
+				"type": "Mesh",
+				"name": "lampshade",
+				"layers": 1,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,3,0,1],
+				"geometry": "CE34F44A-FC77-45B0-AAEF-24F9DAFE2124",
+				"material": "12EB6836-F76A-49B0-9BA9-BA4B36AA0FE0",
+				"children": [
+					{
+						"uuid": "6796CB3F-1F0A-4E2E-99B3-6CDC208021E2",
+						"type": "PointLight",
+						"name": "lamp light",
+						"layers": 1,
+						"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+						"color": 16766634,
+						"intensity": 0.3,
+						"distance": 400,
+						"decay": 1,
+						"shadow": {
+							"camera": {
+								"uuid": "7A122E03-2175-478A-89A4-8BA7CF2127C5",
+								"type": "PerspectiveCamera",
+								"layers": 1,
+								"fov": 90,
+								"zoom": 1,
+								"near": 0.5,
+								"far": 500,
+								"focus": 10,
+								"aspect": 1,
+								"filmGauge": 35,
+								"filmOffset": 0
+							}
+						}
+					}]
+			},
+			{
+				"uuid": "4B0DF09C-6A77-4FF6-BAB9-FFD728FEFC35",
+				"type": "Mesh",
+				"name": "pole thingy",
+				"layers": 1,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1],
+				"geometry": "E6803C5C-748B-4374-982A-2A4449E95594",
+				"material": "0349D577-8B06-45A9-B55A-16E5255DD4DF"
+			},
+			{
+				"uuid": "94E93908-DC0C-46AE-8E3D-C421DB4CBFE2",
+				"type": "Mesh",
+				"name": "base",
+				"layers": 1,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0.15,0,1],
+				"geometry": "6F996C9E-FA10-48FC-A142-BA12E0419A1E",
+				"material": "0349D577-8B06-45A9-B55A-16E5255DD4DF"
+			}]
+	}
+}

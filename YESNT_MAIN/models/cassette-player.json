@@ -1,0 +1,231 @@
+{
+	"metadata": {
+		"version": 4.5,
+		"type": "Object",
+		"generator": "Object3D.toJSON"
+	},
+	"geometries": [
+		{
+			"uuid": "643A51F4-D94E-4A9D-95E1-2BE2B3FC3A25",
+			"type": "BoxBufferGeometry",
+			"width": 1,
+			"height": 1,
+			"depth": 1,
+			"widthSegments": 1,
+			"heightSegments": 1,
+			"depthSegments": 1
+		},
+		{
+			"uuid": "47EADF67-415D-4FBC-A6A2-8EC88362C835",
+			"type": "CylinderBufferGeometry",
+			"radiusTop": 1,
+			"radiusBottom": 1,
+			"height": 1,
+			"radialSegments": 8,
+			"heightSegments": 1,
+			"openEnded": false,
+			"thetaStart": 0,
+			"thetaLength": 6.283185
+		},
+		{
+			"uuid": "FA8700E2-734F-43F9-8361-609A6B1320D6",
+			"type": "BoxBufferGeometry",
+			"width": 1,
+			"height": 1,
+			"depth": 1,
+			"widthSegments": 1,
+			"heightSegments": 1,
+			"depthSegments": 1
+		},
+		{
+			"uuid": "EEB7F5B2-36BB-4D02-83FD-7C5252350BF9",
+			"type": "BoxBufferGeometry",
+			"width": 1,
+			"height": 1,
+			"depth": 1,
+			"widthSegments": 1,
+			"heightSegments": 1,
+			"depthSegments": 1
+		}],
+	"materials": [
+		{
+			"uuid": "C7CD7A4F-261D-4825-8377-39A813E2BB84",
+			"type": "MeshStandardMaterial",
+			"name": "cassette box",
+			"color": 5197647,
+			"roughness": 0.5,
+			"metalness": 0.5,
+			"emissive": 0,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true
+		},
+		{
+			"uuid": "B63FF865-FB47-43C8-AFB2-86D5FC2992E3",
+			"type": "MeshStandardMaterial",
+			"name": "button",
+			"color": 7237230,
+			"roughness": 0.5,
+			"metalness": 0.5,
+			"emissive": 0,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true
+		},
+		{
+			"uuid": "147711B2-19BE-466E-A49A-00EE9FC97650",
+			"type": "MeshStandardMaterial",
+			"name": "woofer thing",
+			"color": 3158064,
+			"roughness": 0.62,
+			"metalness": 0.9,
+			"emissive": 0,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true
+		},
+		{
+			"uuid": "CFA110A4-4F44-4155-BD55-006F75010680",
+			"type": "MeshStandardMaterial",
+			"name": "cassette insert",
+			"color": 4025664,
+			"roughness": 0.04,
+			"metalness": 0.7,
+			"emissive": 0,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true
+		}],
+	"object": {
+		"uuid": "BD847D92-A423-4A7D-9E3B-D560542BDCB7",
+		"type": "Group",
+		"name": "casette",
+		"layers": 1,
+		"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+		"children": [
+			{
+				"uuid": "60425C73-0EE6-4FE2-8200-F1F05E409F3D",
+				"type": "Group",
+				"name": "handle",
+				"layers": 1,
+				"matrix": [1,0,0,0,0,0.752576,-0.658506,0,0,0.658506,0.752576,0,0,0.85,0,1],
+				"children": [
+					{
+						"uuid": "6E7770CA-740C-4E02-B992-ACD5825E8096",
+						"type": "Mesh",
+						"name": "handle top",
+						"layers": 1,
+						"matrix": [1.2,0,0,0,0,0.05,0,0,0,0,0.05,0,0,0.375,0,1],
+						"geometry": "643A51F4-D94E-4A9D-95E1-2BE2B3FC3A25",
+						"material": "C7CD7A4F-261D-4825-8377-39A813E2BB84"
+					},
+					{
+						"uuid": "F7AE49B7-B0BF-47A4-B7B7-388FB2E5D0F2",
+						"type": "Mesh",
+						"name": "handle right",
+						"layers": 1,
+						"matrix": [0.05,0,0,0,0,0.4,0,0,0,0,0.05,0,0.6,0.2,0,1],
+						"geometry": "643A51F4-D94E-4A9D-95E1-2BE2B3FC3A25",
+						"material": "C7CD7A4F-261D-4825-8377-39A813E2BB84"
+					},
+					{
+						"uuid": "F5B7D5E6-E0B3-4B25-88C5-2B07D12B80CB",
+						"type": "Mesh",
+						"name": "handle left",
+						"layers": 1,
+						"matrix": [0.05,0,0,0,0,0.4,0,0,0,0,0.05,0,-0.6,0.2,0,1],
+						"geometry": "643A51F4-D94E-4A9D-95E1-2BE2B3FC3A25",
+						"material": "C7CD7A4F-261D-4825-8377-39A813E2BB84"
+					}]
+			},
+			{
+				"uuid": "B2906D8E-2344-4028-97A4-15AAE39B9973",
+				"type": "Group",
+				"name": "buttons",
+				"layers": 1,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0.75,0,1],
+				"children": [
+					{
+						"uuid": "F1334F28-3F5E-4976-AEE1-5989AC4F7529",
+						"type": "Mesh",
+						"name": "button 3",
+						"layers": 1,
+						"matrix": [0.04,0,0,0,0,0,-0.04,0,0,0.04,0,0,0,0,0.3,1],
+						"geometry": "47EADF67-415D-4FBC-A6A2-8EC88362C835",
+						"material": "B63FF865-FB47-43C8-AFB2-86D5FC2992E3"
+					},
+					{
+						"uuid": "ED441341-B012-41FA-BAB3-7B66364EB387",
+						"type": "Mesh",
+						"name": "button 4",
+						"layers": 1,
+						"matrix": [0.04,0,0,0,0,0,-0.04,0,0,0.04,0,0,0.1,0,0.3,1],
+						"geometry": "47EADF67-415D-4FBC-A6A2-8EC88362C835",
+						"material": "B63FF865-FB47-43C8-AFB2-86D5FC2992E3"
+					},
+					{
+						"uuid": "CD15375F-8A59-4E22-8786-C739E67187E8",
+						"type": "Mesh",
+						"name": "button 2",
+						"layers": 1,
+						"matrix": [0.04,0,0,0,0,0,-0.04,0,0,0.04,0,0,-0.1,0,0.3,1],
+						"geometry": "47EADF67-415D-4FBC-A6A2-8EC88362C835",
+						"material": "B63FF865-FB47-43C8-AFB2-86D5FC2992E3"
+					},
+					{
+						"uuid": "FE2FA41E-48BA-48BD-8723-D9000ABCF2B8",
+						"type": "Mesh",
+						"name": "button 5",
+						"layers": 1,
+						"matrix": [0.04,0,0,0,0,0,-0.04,0,0,0.04,0,0,0.2,0,0.3,1],
+						"geometry": "47EADF67-415D-4FBC-A6A2-8EC88362C835",
+						"material": "B63FF865-FB47-43C8-AFB2-86D5FC2992E3"
+					},
+					{
+						"uuid": "DD5B8C3F-BD41-4D09-AAF9-DAC39C257604",
+						"type": "Mesh",
+						"name": "button 1",
+						"layers": 1,
+						"matrix": [0.04,0,0,0,0,0,-0.04,0,0,0.04,0,0,-0.2,0,0.3,1],
+						"geometry": "47EADF67-415D-4FBC-A6A2-8EC88362C835",
+						"material": "B63FF865-FB47-43C8-AFB2-86D5FC2992E3"
+					}]
+			},
+			{
+				"uuid": "7FBADFB8-2811-4ECE-874E-953560A3F04B",
+				"type": "Mesh",
+				"name": "left woofer thing",
+				"layers": 1,
+				"matrix": [0.38,0,0,0,0,0,-0.1,0,0,0.38,0,0,-0.65,0.45,0.26,1],
+				"geometry": "47EADF67-415D-4FBC-A6A2-8EC88362C835",
+				"material": "147711B2-19BE-466E-A49A-00EE9FC97650"
+			},
+			{
+				"uuid": "3D4042B3-B146-4651-B222-02BB3AF37077",
+				"type": "Mesh",
+				"name": "right woofer thing",
+				"layers": 1,
+				"matrix": [0.38,0,0,0,0,0,-0.1,0,0,0.38,0,0,0.65,0.45,0.26,1],
+				"geometry": "47EADF67-415D-4FBC-A6A2-8EC88362C835",
+				"material": "147711B2-19BE-466E-A49A-00EE9FC97650"
+			},
+			{
+				"uuid": "12ECF655-DD5D-4822-9BBC-361AB4F7E3E2",
+				"type": "Mesh",
+				"name": "cassette insert",
+				"layers": 1,
+				"matrix": [0.5,0,0,0,0,0.35,0,0,0,0,0.1,0,0,0.45,0.26,1],
+				"geometry": "FA8700E2-734F-43F9-8361-609A6B1320D6",
+				"material": "CFA110A4-4F44-4155-BD55-006F75010680"
+			},
+			{
+				"uuid": "285C84FB-4D31-43DC-B200-243E31E54F7A",
+				"type": "Mesh",
+				"name": "cassette body",
+				"layers": 1,
+				"matrix": [2.2,0,0,0,0,0.9,0,0,0,0,0.6,0,0,0.450319,0,1],
+				"geometry": "EEB7F5B2-36BB-4D02-83FD-7C5252350BF9",
+				"material": "C7CD7A4F-261D-4825-8377-39A813E2BB84"
+			}]
+	}
+}
