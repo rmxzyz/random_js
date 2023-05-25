@@ -1,0 +1,1 @@
+javascript:(async()=>{var e=Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner["stateNode"];e.setState(e=>({...e,blooks:e.blooks.map(e=>({...e,price:[0,0,0,0]}))}))})();
