@@ -1,4 +1,4 @@
-//literally took so long for me to make, idk why. works with any website with a "video" element (youtube, or others). only 1 video at a time.
+//literally took so long for me to make, idk why. works with any website with a "video" element (youtube, tiktok, or others). only 1 video at a time.
 var lastKey = localStorage.getItem('lastKey') || 'AIzaSyA8NTol288WL_csT8DeSB3GE4v-eDIqfb4'
 function getYoutuberName() {
     var s2; try {document.getElementsByClassName('yt-simple-endpoint style-scope yt-formatted-string')[0].textContent.trim()}catch(error) {s2="Unkown / Guest"};
