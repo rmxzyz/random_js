@@ -1,0 +1,1 @@
+javascript:(async()=>{var e=document.createElement("iframe"),e=(document.body.append(e),window.prompt=e.contentWindow.prompt.bind(window),e.remove(),Number(parseInt(prompt("What do you want your multiplier to be?%22)))),t=Object.values(document.querySelector(%22body%20div[id]%20%3E%20div%20%3E%20div%22))[1].children[0]._owner[%22stateNode%22];t.setState({fossilMult:e})})();
