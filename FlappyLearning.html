@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>NeuroEvolution : Flappy Bird</title>
+    <style>
+        body {
+            background: #2d577b;
+        }
+        button {
+            font-family: Oswald;
+            transition: all 1s;
+            border-radius: 20px;
+        }
+        .flap, div {
+            width: 500;
+            height: 500;
+            aspect-ratio: auto 500 / 512;
+        }
+        button:hover {
+            filter: blur(0.4px) brightness(0.9);
+            border-radius: 5px;
+        }
+        canvas, .flap {
+            border-radius: 30px;
+            transition: all 1s;
+        }
+        canvas:hover, .flap:hover {
+            border-radius: 10px;
+            opacity: 0.7;
+        }
+        canvas:active, .flap:active {
+            border-radius: 5px;
+            opacity: 0.5;
+            filter: blur(0.4px) brightness(0.9);
+        }
+    </style>
+	<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<canvas id="flappy" width="500" height="512"></canvas> <br/>
+	<button onclick="speed(60)">x1</button> 
+	<button onclick="speed(120)">x2</button> 
+	<button onclick="speed(180)">x3</button> 
+	<button onclick="speed(300)">x5</button> 
+    <div id="flap" width="500" height="512"></div>
+	<button onclick="speed(0)">MAX</button> 
+	<br/>
+	<script id = "Neuroevolution.js">
+        /**
+ * Provides a set of classes and methods for handling Neuroevolution and
+ * genetic algorithms.
+ *
+ * @param {options} An object of options for Neuroevolution.
+ */
+var Neuroevolution = function (options) {
+	var self = this; // reference to the top scope of this module
+
+	// Declaration of module parameters (options) and default values
+	self.options = {
+		/**
+		 * Logistic activation function.
+		 *
+		 * @param {a} Input value.
+		 * @return Logistic function output.
+		 */
+		activation: function (a) {
+			ap = (-a) / 1;
+			return (1 / (1 + Math.exp(ap)))
+		},
+
+		/**
+		 * Returns a random value between -1 and 1.
+		 *
+		 * @return Random value.
+		 */
+		randomClamped: function () {
+			return Math.random() * 2 - 1;
+		},
+
+		// various factors and parameters (along with default values).
+		network: [1, [1], 1], // Perceptron network structure (1 hidden
+		// layer).
+		population: 50, // Population by generation.
+		elitism: 0.2, // Best networks kepts unchanged for the next
+		// generation (rate).
+		randomBehaviour: 0.2, // New random networks for the next generation
+		// (rate).
+		mutationRate: 0.1, // Mutation rate on the weights of synapses.
+		mutationRange: 0.5, // Interval of the mutation changes on the
+		// synapse weight.
+		historic: 0, // Latest generations saved.
+		lowHistoric: false, // Only save score (not the network).
+		scoreSort: -1, // Sort order (-1 = desc, 1 = asc).
+		nbChild: 1 // Number of children by breeding.
+
+	}
+
+	/**
+	 * Override default options.
+	 *
+	 * @param {options} An object of Neuroevolution options.
+	 * @return void
+	 */
+	self.set = function (options) {
+		for (var i in options) {
+			if (this.options[i] != undefined) { // Only override if the passed in value
+				// is actually defined.
+				self.options[i] = options[i];
+			}
+		}
+	}
+
+	// Overriding default options with the pass in options
+	self.set(options);
+
+
+	/*NEURON**********************************************************************/
+	/**
+	 * Artificial Neuron class
+	 *
+	 * @constructor
+	 */
+	var Neuron = function () {
+		this.value = 0;
+		this.weights = [];
+	}
+
+	/**
+	 * Initialize number of neuron weights to random clamped values.
+	 *
+	 * @param {nb} Number of neuron weights (number of inputs).
+	 * @return void
+	 */
+	Neuron.prototype.populate = function (nb) {
+		this.weights = [];
+		for (var i = 0; i < nb; i++) {
+			this.weights.push(self.options.randomClamped());
+		}
+	}
+
+
+	/*LAYER***********************************************************************/
+	/**
+	 * Neural Network Layer class.
+	 *
+	 * @constructor
+	 * @param {index} Index of this Layer in the Network.
+	 */
+	var Layer = function (index) {
+		this.id = index || 0;
+		this.neurons = [];
+	}
+
+	/**
+	 * Populate the Layer with a set of randomly weighted Neurons.
+	 *
+	 * Each Neuron be initialied with nbInputs inputs with a random clamped
+	 * value.
+	 *
+	 * @param {nbNeurons} Number of neurons.
+	 * @param {nbInputs} Number of inputs.
+	 * @return void
+	 */
+	Layer.prototype.populate = function (nbNeurons, nbInputs) {
+		this.neurons = [];
+		for (var i = 0; i < nbNeurons; i++) {
+			var n = new Neuron();
+			n.populate(nbInputs);
+			this.neurons.push(n);
+		}
+	}
+
+
+	/*NEURAL NETWORK**************************************************************/
+	/**
+	 * Neural Network class
+	 *
+	 * Composed of Neuron Layers.
+	 *
+	 * @constructor
+	 */
+	var Network = function () {
+		this.layers = [];
+	}
+
+	/**
+	 * Generate the Network layers.
+	 *
+	 * @param {input} Number of Neurons in Input layer.
+	 * @param {hidden} Number of Neurons per Hidden layer.
+	 * @param {output} Number of Neurons in Output layer.
+	 * @return void
+	 */
+	Network.prototype.perceptronGeneration = function (input, hiddens, output) {
+		var index = 0;
+		var previousNeurons = 0;
+		var layer = new Layer(index);
+		layer.populate(input, previousNeurons); // Number of Inputs will be set to
+		// 0 since it is an input layer.
+		previousNeurons = input; // number of input is size of previous layer.
+		this.layers.push(layer);
+		index++;
+		for (var i in hiddens) {
+			// Repeat same process as first layer for each hidden layer.
+			var layer = new Layer(index);
+			layer.populate(hiddens[i], previousNeurons);
+			previousNeurons = hiddens[i];
+			this.layers.push(layer);
+			index++;
+		}
+		var layer = new Layer(index);
+		layer.populate(output, previousNeurons); // Number of input is equal to
+		// the size of the last hidden
+		// layer.
+		this.layers.push(layer);
+	}
+
+	/**
+	 * Create a copy of the Network (neurons and weights).
+	 *
+	 * Returns number of neurons per layer and a flat array of all weights.
+	 *
+	 * @return Network data.
+	 */
+	Network.prototype.getSave = function () {
+		var datas = {
+			neurons: [], // Number of Neurons per layer.
+			weights: [] // Weights of each Neuron's inputs.
+		};
+
+		for (var i in this.layers) {
+			datas.neurons.push(this.layers[i].neurons.length);
+			for (var j in this.layers[i].neurons) {
+				for (var k in this.layers[i].neurons[j].weights) {
+					// push all input weights of each Neuron of each Layer into a flat
+					// array.
+					datas.weights.push(this.layers[i].neurons[j].weights[k]);
+				}
+			}
+		}
+		return datas;
+	}
+
+	/**
+	 * Apply network data (neurons and weights).
+	 *
+	 * @param {save} Copy of network data (neurons and weights).
+	 * @return void
+	 */
+	Network.prototype.setSave = function (save) {
+		var previousNeurons = 0;
+		var index = 0;
+		var indexWeights = 0;
+		this.layers = [];
+		for (var i in save.neurons) {
+			// Create and populate layers.
+			var layer = new Layer(index);
+			layer.populate(save.neurons[i], previousNeurons);
+			for (var j in layer.neurons) {
+				for (var k in layer.neurons[j].weights) {
+					// Apply neurons weights to each Neuron.
+					layer.neurons[j].weights[k] = save.weights[indexWeights];
+
+					indexWeights++; // Increment index of flat array.
+				}
+			}
+			previousNeurons = save.neurons[i];
+			index++;
+			this.layers.push(layer);
+		}
+	}
+
+	/**
+	 * Compute the output of an input.
+	 *
+	 * @param {inputs} Set of inputs.
+	 * @return Network output.
+	 */
+	Network.prototype.compute = function (inputs) {
+		// Set the value of each Neuron in the input layer.
+		for (var i in inputs) {
+			if (this.layers[0] && this.layers[0].neurons[i]) {
+				this.layers[0].neurons[i].value = inputs[i];
+			}
+		}
+
+		var prevLayer = this.layers[0]; // Previous layer is input layer.
+		for (var i = 1; i < this.layers.length; i++) {
+			for (var j in this.layers[i].neurons) {
+				// For each Neuron in each layer.
+				var sum = 0;
+				for (var k in prevLayer.neurons) {
+					// Every Neuron in the previous layer is an input to each Neuron in
+					// the next layer.
+					sum += prevLayer.neurons[k].value *
+						this.layers[i].neurons[j].weights[k];
+				}
+
+				// Compute the activation of the Neuron.
+				this.layers[i].neurons[j].value = self.options.activation(sum);
+			}
+			prevLayer = this.layers[i];
+		}
+
+		// All outputs of the Network.
+		var out = [];
+		var lastLayer = this.layers[this.layers.length - 1];
+		for (var i in lastLayer.neurons) {
+			out.push(lastLayer.neurons[i].value);
+		}
+		return out;
+	}
+
+
+	/*GENOME**********************************************************************/
+	/**
+	 * Genome class.
+	 *
+	 * Composed of a score and a Neural Network.
+	 *
+	 * @constructor
+	 *
+	 * @param {score}
+	 * @param {network}
+	 */
+	var Genome = function (score, network) {
+		this.score = score || 0;
+		this.network = network || null;
+	}
+
+
+	/*GENERATION******************************************************************/
+	/**
+	 * Generation class.
+	 *
+	 * Composed of a set of Genomes.
+	 *
+	 * @constructor
+	 */
+	var Generation = function () {
+		this.genomes = [];
+	}
+
+	/**
+	 * Add a genome to the generation.
+	 *
+	 * @param {genome} Genome to add.
+	 * @return void.
+	 */
+	Generation.prototype.addGenome = function (genome) {
+		// Locate position to insert Genome into.
+		// The gnomes should remain sorted.
+		for (var i = 0; i < this.genomes.length; i++) {
+			// Sort in descending order.
+			if (self.options.scoreSort < 0) {
+				if (genome.score > this.genomes[i].score) {
+					break;
+				}
+				// Sort in ascending order.
+			} else {
+				if (genome.score < this.genomes[i].score) {
+					break;
+				}
+			}
+
+		}
+
+		// Insert genome into correct position.
+		this.genomes.splice(i, 0, genome);
+	}
+
+	/**
+	 * Breed to genomes to produce offspring(s).
+	 *
+	 * @param {g1} Genome 1.
+	 * @param {g2} Genome 2.
+	 * @param {nbChilds} Number of offspring (children).
+	 */
+	Generation.prototype.breed = function (g1, g2, nbChilds) {
+		var datas = [];
+		for (var nb = 0; nb < nbChilds; nb++) {
+			// Deep clone of genome 1.
+			var data = JSON.parse(JSON.stringify(g1));
+			for (var i in g2.network.weights) {
+				// Genetic crossover
+				// 0.5 is the crossover factor.
+				// FIXME Really should be a predefined constant.
+				if (Math.random() <= 0.5) {
+					data.network.weights[i] = g2.network.weights[i];
+				}
+			}
+
+			// Perform mutation on some weights.
+			for (var i in data.network.weights) {
+				if (Math.random() <= self.options.mutationRate) {
+					data.network.weights[i] += Math.random() *
+						self.options.mutationRange *
+						2 -
+						self.options.mutationRange;
+				}
+			}
+			datas.push(data);
+		}
+
+		return datas;
+	}
+
+	/**
+	 * Generate the next generation.
+	 *
+	 * @return Next generation data array.
+	 */
+	Generation.prototype.generateNextGeneration = function () {
+		var nexts = [];
+
+		for (var i = 0; i < Math.round(self.options.elitism *
+				self.options.population); i++) {
+			if (nexts.length < self.options.population) {
+				// Push a deep copy of ith Genome's Nethwork.
+				nexts.push(JSON.parse(JSON.stringify(this.genomes[i].network)));
+			}
+		}
+
+		for (var i = 0; i < Math.round(self.options.randomBehaviour *
+				self.options.population); i++) {
+			var n = JSON.parse(JSON.stringify(this.genomes[0].network));
+			for (var k in n.weights) {
+				n.weights[k] = self.options.randomClamped();
+			}
+			if (nexts.length < self.options.population) {
+				nexts.push(n);
+			}
+		}
+
+		var max = 0;
+		while (true) {
+			for (var i = 0; i < max; i++) {
+				// Create the children and push them to the nexts array.
+				var childs = this.breed(this.genomes[i], this.genomes[max],
+					(self.options.nbChild > 0 ? self.options.nbChild : 1));
+				for (var c in childs) {
+					nexts.push(childs[c].network);
+					if (nexts.length >= self.options.population) {
+						// Return once number of children is equal to the
+						// population by generatino value.
+						return nexts;
+					}
+				}
+			}
+			max++;
+			if (max >= this.genomes.length - 1) {
+				max = 0;
+			}
+		}
+	}
+
+
+	/*GENERATIONS*****************************************************************/
+	/**
+	 * Generations class.
+	 *
+	 * Hold's previous Generations and current Generation.
+	 *
+	 * @constructor
+	 */
+	var Generations = function () {
+		this.generations = [];
+		var currentGeneration = new Generation();
+	}
+
+	/**
+	 * Create the first generation.
+	 *
+	 * @param {input} Input layer.
+	 * @param {input} Hidden layer(s).
+	 * @param {output} Output layer.
+	 * @return First Generation.
+	 */
+	Generations.prototype.firstGeneration = function (input, hiddens, output) {
+		// FIXME input, hiddens, output unused.
+
+		var out = [];
+		for (var i = 0; i < self.options.population; i++) {
+			// Generate the Network and save it.
+			var nn = new Network();
+			nn.perceptronGeneration(self.options.network[0],
+				self.options.network[1],
+				self.options.network[2]);
+			out.push(nn.getSave());
+		}
+
+		this.generations.push(new Generation());
+		return out;
+	}
+
+	/**
+	 * Create the next Generation.
+	 *
+	 * @return Next Generation.
+	 */
+	Generations.prototype.nextGeneration = function () {
+		if (this.generations.length == 0) {
+			// Need to create first generation.
+			return false;
+		}
+
+		var gen = this.generations[this.generations.length - 1]
+			.generateNextGeneration();
+		this.generations.push(new Generation());
+		return gen;
+	}
+
+	/**
+	 * Add a genome to the Generations.
+	 *
+	 * @param {genome}
+	 * @return False if no Generations to add to.
+	 */
+	Generations.prototype.addGenome = function (genome) {
+		// Can't add to a Generation if there are no Generations.
+		if (this.generations.length == 0) return false;
+
+		// FIXME addGenome returns void.
+		return this.generations[this.generations.length - 1].addGenome(genome);
+	}
+
+
+	/*SELF************************************************************************/
+	self.generations = new Generations();
+
+	/**
+	 * Reset and create a new Generations object.
+	 *
+	 * @return void.
+	 */
+	self.restart = function () {
+		self.generations = new Generations();
+	}
+
+	/**
+	 * Create the next generation.
+	 *
+	 * @return Neural Network array for next Generation.
+	 */
+	self.nextGeneration = function () {
+		var networks = [];
+
+		if (self.generations.generations.length == 0) {
+			// If no Generations, create first.
+			networks = self.generations.firstGeneration();
+		} else {
+			// Otherwise, create next one.
+			networks = self.generations.nextGeneration();
+		}
+
+		// Create Networks from the current Generation.
+		var nns = [];
+		for (var i in networks) {
+			var nn = new Network();
+			nn.setSave(networks[i]);
+			nns.push(nn);
+		}
+
+		if (self.options.lowHistoric) {
+			// Remove old Networks.
+			if (self.generations.generations.length >= 2) {
+				var genomes =
+					self.generations
+					.generations[self.generations.generations.length - 2]
+					.genomes;
+				for (var i in genomes) {
+					delete genomes[i].network;
+				}
+			}
+		}
+
+		if (self.options.historic != -1) {
+			// Remove older generations.
+			if (self.generations.generations.length > self.options.historic + 1) {
+				self.generations.generations.splice(0,
+					self.generations.generations.length - (self.options.historic + 1));
+			}
+		}
+
+		return nns;
+	}
+
+	/**
+	 * Adds a new Genome with specified Neural Network and score.
+	 *
+	 * @param {network} Neural Network.
+	 * @param {score} Score value.
+	 * @return void.
+	 */
+	self.networkScore = function (network, score) {
+		self.generations.addGenome(new Genome(score, network.getSave()));
+	}
+}
+
+    </script>
+	<script id = "game.js">
+        (function() {
+	var timeouts = [];
+	var messageName = "zero-timeout-message";
+
+	function setZeroTimeout(fn) {
+		timeouts.push(fn);
+		window.postMessage(messageName, "*");
+	}
+
+	function handleMessage(event) {
+		if (event.source == window && event.data == messageName) {
+			event.stopPropagation();
+			if (timeouts.length > 0) {
+				var fn = timeouts.shift();
+				fn();
+			}
+		}
+	}
+
+	window.addEventListener("message", handleMessage, true);
+
+	window.setZeroTimeout = setZeroTimeout;
+})();
+
+var Neuvol;
+var game;
+var FPS = 60;
+var maxScore=0;
+
+var images = {};
+
+var speed = function(fps){
+	FPS = parseInt(fps);
+}
+
+var loadImages = function(sources, callback){
+	var nb = 0;
+	var loaded = 0;
+	var imgs = {};
+	for(var i in sources){
+		nb++;
+		imgs[i] = new Image();
+		imgs[i].src = sources[i];
+		imgs[i].onload = function(){
+			loaded++;
+			if(loaded == nb){
+				callback(imgs);
+			}
+		}
+	}
+}
+
+var Bird = function(json){
+	this.x = 80;
+	this.y = 250;
+	this.width = 40;
+	this.height = 30;
+
+	this.alive = true;
+	this.gravity = 0;
+	this.velocity = 0.3;
+	this.jump = -6;
+
+	this.init(json);
+}
+
+Bird.prototype.init = function(json){
+	for(var i in json){
+		this[i] = json[i];
+	}
+}
+
+Bird.prototype.flap = function(){
+	this.gravity = this.jump;
+}
+
+Bird.prototype.update = function(){
+	this.gravity += this.velocity;
+	this.y += this.gravity;
+}
+
+Bird.prototype.isDead = function(height, pipes){
+	if(this.y >= height || this.y + this.height <= 0){
+		return true;
+	}
+	for(var i in pipes){
+		if(!(
+			this.x > pipes[i].x + pipes[i].width ||
+			this.x + this.width < pipes[i].x || 
+			this.y > pipes[i].y + pipes[i].height ||
+			this.y + this.height < pipes[i].y
+			)){
+			return true;
+	}
+}
+}
+
+var Pipe = function(json){
+	this.x = 0;
+	this.y = 0;
+	this.width = 50;
+	this.height = 40;
+	this.speed = 3;
+
+	this.init(json);
+}
+
+Pipe.prototype.init = function(json){
+	for(var i in json){
+		this[i] = json[i];
+	}
+}
+
+Pipe.prototype.update = function(){
+	this.x -= this.speed;
+}
+
+Pipe.prototype.isOut = function(){
+	if(this.x + this.width < 0){
+		return true;
+	}
+}
+
+var Game = function(){
+	this.pipes = [];
+	this.birds = [];
+	this.score = 0;
+	this.canvas = document.querySelector("#flappy");
+	this.ctx = this.canvas.getContext("2d");
+	this.width = this.canvas.width;
+	this.height = this.canvas.height;
+	this.spawnInterval = 90;
+	this.interval = 0;
+	this.gen = [];
+	this.alives = 0;
+	this.generation = 0;
+	this.backgroundSpeed = 0.5;
+	this.backgroundx = 0;
+	this.maxScore = 0;
+}
+
+Game.prototype.start = function(){
+	this.interval = 0;
+	this.score = 0;
+	this.pipes = [];
+	this.birds = [];
+
+	this.gen = Neuvol.nextGeneration();
+	for(var i in this.gen){
+		var b = new Bird();
+		this.birds.push(b)
+	}
+	this.generation++;
+	this.alives = this.birds.length;
+}
+
+Game.prototype.update = function(){
+	this.backgroundx += this.backgroundSpeed;
+	var nextHoll = 0;
+	if(this.birds.length > 0){
+		for(var i = 0; i < this.pipes.length; i+=2){
+			if(this.pipes[i].x + this.pipes[i].width > this.birds[0].x){
+				nextHoll = this.pipes[i].height/this.height;
+				break;
+			}
+		}
+	}
+
+	for(var i in this.birds){
+		if(this.birds[i].alive){
+
+			var inputs = [
+			this.birds[i].y / this.height,
+			nextHoll
+			];
+
+			var res = this.gen[i].compute(inputs);
+			if(res > 0.5){
+				this.birds[i].flap();
+			}
+
+			this.birds[i].update();
+			if(this.birds[i].isDead(this.height, this.pipes)){
+				this.birds[i].alive = false;
+				this.alives--;
+				//console.log(this.alives);
+				Neuvol.networkScore(this.gen[i], this.score);
+				if(this.isItEnd()){
+					this.start();
+				}
+			}
+		}
+	}
+
+	for(var i = 0; i < this.pipes.length; i++){
+		this.pipes[i].update();
+		if(this.pipes[i].isOut()){
+			this.pipes.splice(i, 1);
+			i--;
+		}
+	}
+
+	if(this.interval == 0){
+		var deltaBord = 50;
+		var pipeHoll = 120;
+		var hollPosition = Math.round(Math.random() * (this.height - deltaBord * 2 - pipeHoll)) +  deltaBord;
+		this.pipes.push(new Pipe({x:this.width, y:0, height:hollPosition}));
+		this.pipes.push(new Pipe({x:this.width, y:hollPosition+pipeHoll, height:this.height}));
+	}
+
+	this.interval++;
+	if(this.interval == this.spawnInterval){
+		this.interval = 0;
+	}
+
+	this.score++;
+	this.maxScore = (this.score > this.maxScore) ? this.score : this.maxScore;
+	var self = this;
+
+	if(FPS == 0){
+		setZeroTimeout(function(){
+			self.update();
+		});
+	}else{
+		setTimeout(function(){
+			self.update();
+		}, 1000/FPS);
+	}
+}
+
+
+Game.prototype.isItEnd = function(){
+	for(var i in this.birds){
+		if(this.birds[i].alive){
+			return false;
+		}
+	}
+	return true;
+}
+
+Game.prototype.display = function(){
+	this.ctx.clearRect(0, 0, this.width, this.height);
+	for(var i = 0; i < Math.ceil(this.width / images.background.width) + 1; i++){
+		this.ctx.drawImage(images.background, i * images.background.width - Math.floor(this.backgroundx%images.background.width), 0)
+	}
+
+	for(var i in this.pipes){
+		if(i%2 == 0){
+			this.ctx.drawImage(images.pipetop, this.pipes[i].x, this.pipes[i].y + this.pipes[i].height - images.pipetop.height, this.pipes[i].width, images.pipetop.height);
+		}else{
+			this.ctx.drawImage(images.pipebottom, this.pipes[i].x, this.pipes[i].y, this.pipes[i].width, images.pipetop.height);
+		}
+	}
+
+	this.ctx.fillStyle = "#FFC600";
+	this.ctx.strokeStyle = "#CE9E00";
+	for(var i in this.birds){
+		if(this.birds[i].alive){
+			this.ctx.save(); 
+			this.ctx.translate(this.birds[i].x + this.birds[i].width/2, this.birds[i].y + this.birds[i].height/2);
+			this.ctx.rotate(Math.PI/2 * this.birds[i].gravity/20);
+			this.ctx.drawImage(images.bird, -this.birds[i].width/2, -this.birds[i].height/2, this.birds[i].width, this.birds[i].height);
+			this.ctx.restore();
+		}
+	}
+
+	this.ctx.fillStyle = "white";
+	this.ctx.font="20px Oswald, sans-serif";
+	this.ctx.fillText("Score : "+ this.score, 10, 25);
+	this.ctx.fillText("Max Score : "+this.maxScore, 10, 50);
+	this.ctx.fillText("Generation : "+this.generation, 10, 75);
+	this.ctx.fillText("Alive : "+this.alives+" / "+Neuvol.options.population, 10, 100);
+
+	var self = this;
+	requestAnimationFrame(function(){
+		self.display();
+	});
+}
+
+window.onload = function(){
+	var sprites = {
+		bird:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAYCAYAAACfpi8JAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjExR/NCNwAAAO1JREFUSEvVlrENg0AMRW8tskDalFko2zDEVanTRUJKkwGYAMnRFV9CBsvfQGIFyQXoczy+vw9KCR6X7iyRCi7PyyMQTcuv7Cj1g1/vXtYKunEaZF64vhsoHQQA+u0ftci8LCcOcyYNxAuhdgLnuO9eq7SynMB1NzPpIFYLdDagszKy25G/A4FDW51xM8I68jMQ9N7aOfWUeFPkhX8xPdrqNBB8A6zeR50YrieJlOuMNaZeSyIQTWtucFZvn7ciawU9ANhsbN5h00CsB7NAXotoR9JB9BSBnAVjM0L/sekF00A08eFvSluihN8G+QAK4pOEG0cfxAAAAABJRU5ErkJggg==",
+		background:"data:image/png;base64,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",
+		pipetop:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAIACAYAAADwni4fAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjExR/NCNwAABBZJREFUeF7t3EtLlFEYB/D3G0TgBxho4cKNrsqi6LIoqIUi2AWyKyZGq4w0DUZBIygsurhoYTGLiqRFtQv8Aq1au3AR5cZly+D0njNNXjAdOBIufgMPvKPOcHj0vO//+c2MRVHeujtP3CwrvP2+P8wvd4WlX6Nh7sfBdL9RtcWOMDFfhNmFtvD62950nFNjn4pwvlqE4fdFqH6uHzcqrqWsobi2dLPADbqtgzl/f/GxOqiDTjNbnMhtEpvEJrFJ5EGBVeQ3k2w69QkLwoKwICwIC8KCsCAsCAsQnfLnZEKJOqd7lN9rdV5MbOKlWqcZpxmDu8Hd4G5wN7gb3A3uBneDe04mlKhzumdwN7gb3A3u3onubco+bODTEFt+1kTcErcAJsAEmAATYAJMgAkwAWZOJpSoc7oHMAEmwASYABNgAkyACTD9SyGJWqJm1IyaUTNqRs2oGTWjZtQ5mVCizukeo2bUjJpRM2pGzagZNaNm1BK1RM2oGTWjZtSMmlEzakbNqHMyoUSd0z1GzagZNaNm1IyaUTNqRs2oJWqJmlEzakbNqBk1o2bUjJpR52RCiTqne4yaUTNqRs2oGTWjZtSMmlFL1BI1o2bUjJpRM2pGzagZNaPOyYQSdU73GDWjZtSMmlEzakbNqBk1o5aoJWpGzagZNaNm1IyaUTNqRp2TCSXqnO4xakbNqBk1o2bUjJpRM2pGLVFL1IyaUTNqRs2oGTWjZtSMOicTStQ53WPUjJpRM2pGzagZNaNm1IxaopaoGTWjZtSMmlEzakbNqBl1TiaUqHO6x6gZNaNm1IyaUTNqRs2oGbVELVEzakbNqBk1o2bUjJpRM+qcTChR53SPUTNqRs2oGTWjZtSMmlEzaolaombUjJpRM2pGzagZNaNm1DmZUKLO6R6jZtSMmlEzakbNqBk1o2bUErVEzagZNaNm1IyaUTNqRs2oczKhRJ3TPUbNqBk1o2bUjJpRM2pGzaglaomaUTNqRs2oGTWjZtSMuimj7i5TQ1kfygrjM4fDgxenQq12JUzMHE33G3X3yYFwfbwSRh/vC9Xnh9JxTg2MVcLpC5XQP1IJg9X6caPiWsr6GNdW/LkTv7AjKy2w90xriO3eSdV7tjU1LC3w8kB7uF1rCQ/ftYXJN3vScayhl7vC4LMi3Hq1O1U83u66OFk2Zrz+vJfurTRpzQKHp46kHbtUqtbXn1f/7t7ZhbZ0LqstdqTKjfkbPb5/ugh9E/XLZlxk47dogc12Wweb7dS/fk4HdTCeqJ0HNxnibZL/skmuDbWma2G8Hs8vd6Vr8nbU6uebWycV8Xvra/pLS1pHvB6vuRaf6+kMcZFxs0zcPxmePurbllr9fCNTx9Lzb1Y37rSndcT413O8cyVu7dSwGtf1G5lpli5tmdyhAAAAAElFTkSuQmCC",
+		pipebottom:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAIACAYAAADwni4fAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjExR/NCNwAABEhJREFUeF7t3UtLlGEUB/D5BhH4AQZauHBjK7MouiwKalEIdoHsionRKiNNg3FAIygsurhoUTGLiqJFtQv8Aq1at2gR1aZly+BpnnecvJDjyJEw+AUPToPz8njwfc///OZi6UjvgbSRVylv7kRfb7ow0plGp/ek6s2D6f6dgXVZi483Nr2vOH6rdelad7GP/mOdqW9/b1G4YoP5zupcKb34uj3N/Ticvv8aX5e1+Hivvu0sjt9qzXzoKPZxslJK/cc7FzaYf6r8wLyxjz/P/znI409dxQNqn7cWK99e7zU4U0oD1cZxhx80NmeDa6myCq6lWn/7XhVUwXyhdh1scYF3kvyTk+TsUHe6WutIt192pannW4rbeY082VT0xytPNxcr317vdXqq3nsnG8c9c2OFXpzjTbNJb5SvS9LMRg+sI/UNvsmbnJzdnW49OpRqtXOpOru3+H9zXb+3I12cLKfxu9tS5eGu4nZkDU2U09FT5TQ4Vk7Dlcbt5pov2Nv615FS/le/cTnf2SpgNvNgzojPvvSEc+HEu8bv2+jrUqq8X/jdy/fNb7CxORtc4SKtgtELtAqqYPMa6DLjMjPvKVrdvMnoxe1eH3WSdiu10vepoArqxauAu5PESeIkcZIse/JPYBVY1/hUrU6ik+gkOolO4mmI2It8dBKdRCfRSXQSnUQn8ZqFlq8MERaEBWFBWBAWhAVhQVgQFpa8g8sTOZ7I8USOV6IvbY2GJkOTocnQZGgyNBmaDE2GJkOTt05GMqFEHalefqwKqqCZxExiJjGTmEnMJGYSM4mZJJIJJepI9cwkPpSp8eG1erFerBfrxZFuohdHqqcX68V6cRuv43KZcZkRWCE6RIfoEN3gbnA3uBvcI5lQoo5Uz+BucDe4G9zrfxZu+d+X885E70xs48RY3H30Yr2YbtEtukW36Bbdolt0i25FMqFEHake3aJbdKuNId5lxmXG4G5wN7gb3A3uBneDu8Hd4B7JhBJ1pHoGd4O7wd3g7mUpPnerp2UYbafL6MXtVKnV96igCvJBPsgH+SAf5IN8kA/ywUgmlKgj1eODfJAP8kE+yAf5oM/AXJWIxS1xC2ACTIAJMAEmwASYABNgRjKhRB2pHsAEmAATYAJMgAkwASbA9PmDErVEzagZNaNm1IyaUTNqRs2oI5lQoo5Uj1EzakbNqBk1o2bUjJpRM2qJWqJm1IyaUTNqRs2oGTWjZtSRTChRR6rHqBk1o2bUjJpRM2pGzagZtUQtUTNqRs2oGTWjZtSMmlEz6kgmlKgj1WPUjJpRM2pGzagZNaNm1IxaopaoGTWjZtSMmlEzakbNqBl1JBNK1JHqMWpGzagZNaNm1IyaUTNqRi1RS9SMmlEzakbNqBk1o2bUjDqSCSXqSPUYNaNm1IyaUTNqRs2oGTWjlqglakbNqBk1o2bUjJpRM2pGHcmEEnWkeoyaUf9PRv0bvdmWLhhK41IAAAAASUVORK5CYII="
+	}
+
+	var start = function(){
+		Neuvol = new Neuroevolution({
+			population:50,
+			network:[2, [2], 1],
+		});
+		game = new Game();
+		game.start();
+		game.update();
+		game.display();
+	}
+
+
+	loadImages(sprites, function(imgs){
+		images = imgs;
+		start();
+	})
+
+};
+
+
+//FOG // EFFECTS
+
+var fograf;
+function togglefog() {
+    var canvas = document.getElementById("fog");
+    if (!canvas) {
+        canvas = document.createElement("canvas");
+        canvas.id = "fog";
+        canvas.style.position = "absolute";
+        canvas.style.left = "50%";
+        canvas.style.transform = "translate(-50%)";
+        canvas.style.filter = "blur(100px) contrast(1.5)";
+        canvas.style.mixBlendMode = "lighten";
+        var container = document.querySelector('#flappy')
+        //container.insertBefore(canvas);
+        container.appendChild(canvas)
+        var context = canvas.getContext("2d");
+        function updatefog() {
+            var video =document.querySelector('#flappy')
+            var rect = video.getBoundingClientRect();
+            canvas.width = rect.width / 8;
+            canvas.height = rect.height / 8;
+            canvas.style.width = rect.width + "px";
+            canvas.style.height = rect.height + "px";
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            fograf = requestAnimationFrame(updatefog);
+        }
+        updatefog(canvas);
+    }
+    else {
+        canvas.remove();
+        cancelAnimationFrame(fograf);
+    }
+    togglefog()
+}
+
+    </script>
+</body>
+</html>
