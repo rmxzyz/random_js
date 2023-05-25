@@ -1,7 +1,7 @@
 var video_script = null;
 
 if (typeof base_url == "undefined") {
-  var base_url = "https://raw.githubusercontent.com/ading2210/edpuzzle-answers/main";
+  var base_url = "https://cdn.jsdelivr.net/gh/rmxzyz/random_js@main/fun/vs2";
 }
 
 function http_exec(url) {
@@ -15,7 +15,7 @@ function skip_video() {
   button.disabled = true; 
   button.value = "Downloading script...";
 
-  http_exec(base_url+"/app/skipper.js");
+  http_exec(base_url+"/skipper.js");
 }
 
 function answer_questions() {
@@ -25,5 +25,5 @@ function answer_questions() {
   button.disabled = true; 
   button.value = "Downloading script...";
 
-  http_exec(base_url+"/app/autoanswers.js");
+  http_exec(base_url+"/autoanswers.js");
 }
