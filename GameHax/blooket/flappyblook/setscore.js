@@ -1,0 +1,1 @@
+javascript:(async()=>{var e=document.createElement("iframe");document.body.append(e),window.prompt=e.contentWindow.prompt.bind(window),e.remove(),Object.values(document.querySelector("#phaser-bouncy%22))[1].children[0]._owner.stateNode.setState({score:parseFloat(%220%22+prompt(%22What%20do%20you%20want%20to%20set%20your%20score%20to?%22))})})();
