@@ -1,0 +1,1 @@
+javascript:(async()=>{var e=Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner["stateNode"];e.setState({isCheating:!1}),e.props.liveGameController.setVal({path:`c/${e.props.client.name}/ic`,val:!1})})();
