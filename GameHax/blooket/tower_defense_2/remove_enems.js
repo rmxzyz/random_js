@@ -1,0 +1,1 @@
+javascript:(async()=>{var e=Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner["stateNode"];e.state.game.scene.enemyQueue.length=0,e.state.game.scene.physics.world.bodies.entries.forEach(e=>e?.gameObject?.receiveDamage?.(e.gameObject.hp,1))})();
