@@ -1,0 +1,1 @@
+javascript:(async()=>{setInterval(()=>Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner.stateNode.setState({choices:[{type:"mult",val:3,rate:.075,blook:"Brainy Bot",text:"Triple Crypto"}]}),25)})();
