@@ -1,0 +1,1 @@
+javascript:(async()=>{Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner.stateNode.state.game.scene.physics.world.bodies.entries.forEach(e=>{try{e.gameObject.frame.texture.key.includes("obstacle")&&e.gameObject.destroy()}catch{}})})();
