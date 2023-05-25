@@ -1,0 +1,1 @@
+javascript:(async()=>{Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner.stateNode.state.towers.forEach(t=>{if(t.stats.dmg=1e6,t.stats.fireRate=50,t.stats.ghostDetect=!0,t.stats.maxTargets=1e6,t.stats.numProjectiles&&=100,t.stats.range=100,t.stats.auraBuffs)for(const s in t.stats.auraBuffs)t.stats.auraBuffs[s]*=100})})();
