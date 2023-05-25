@@ -1,0 +1,1 @@
+javascript:/* toggles ghost mode*/(async()=>{Object.values(document.querySelector("#phaser-bouncy%22))[1].children[0]._owner.stateNode.state.game.scene.physics.world.bodies.entries.forEach(e=%3Ee.gameObject.frame.texture.key.startsWith(%22blook%22)&&(e.checkCollision.none=1==e.gameObject.alpha,e.gameObject.setAlpha(1==e.gameObject.alpha?.5:1)))})();
