@@ -1,0 +1,1 @@
+javascript:(async()=>{for(const e of Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner.stateNode.state.game.scene.physics.world.colliders._active.filter(e=>e.callbackContext?.toString().includes(%22invulnerableTime%22)))e.collideCallback=()=%3E{}})();
