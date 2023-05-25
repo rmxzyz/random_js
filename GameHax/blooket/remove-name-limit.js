@@ -1,0 +1,1 @@
+javascript:(async()=>{var e=document.createElement("iframe");document.body.append(e),window.alert=e.contentWindow.alert.bind(window),e.remove(),document.querySelector('input[class*="nameInput"]').maxLength=120,alert("Removed name length limit")})();
