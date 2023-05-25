@@ -1,0 +1,1 @@
+javascript:(async()=>{Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner.stateNode.state.game.scene.physics.world.colliders._active.find(e=>e.collideCallback?.toString().includes(%22magnetTime%22)).collideCallback({active:!0},{active:!0,setActive(){},setVisible(){}})})();
